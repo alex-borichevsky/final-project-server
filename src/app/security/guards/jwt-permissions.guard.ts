@@ -40,9 +40,9 @@ export class JwtPermissionsGuard implements CanActivate {
       if(bearer !== 'Bearer' || !token) {
         throw new HttpException({message: "User unauthorized"}, HttpStatus.UNAUTHORIZED);
       }
-
+      
       const decodedUser = UserSessionDto.fromPayload(this.jwtService.verify(token));
-
+  
       const userEntity = await this.securityService.getUserById(decodedUser.id)
       if (!userEntity) {
         throw new HttpException({message: "User unauthorized"}, HttpStatus.UNAUTHORIZED);
@@ -54,12 +54,12 @@ export class JwtPermissionsGuard implements CanActivate {
         throw new HttpException({message: "User unauthorized"}, HttpStatus.UNAUTHORIZED);
       }
       req.user = decodedUser;
-
+      
       const roleEntity = await this.securityService.getRoleById(decodedUser.roleId);
       if (!roleEntity) {
         throw new HttpException({message: "User unauthorized"}, HttpStatus.UNAUTHORIZED);
       }
-
+      
       const role = RoleDto.fromEntity(roleEntity)
       
       return requiredPemissions.some((permission) => role.permissions?.includes(permission));

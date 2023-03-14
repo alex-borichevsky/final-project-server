@@ -14,5 +14,13 @@ export enum UserPermissions {
 
   // ============== users info ==========
   GetUserInfo = "get-user-info",
-  UpdateUserInfo = "update-user-info"
+  UpdateUserInfo = "update-user-info",
+
+  // ============== roles ==========
+  GetRoles = "get-roles",
+  GetRoleById = "get-role-by-id",
+  CreateRole = "create-role",
+  AssignRole = "assign-role",
+  DeleteRole = "delete-role",
+  UpdateRole = "update-role"
 }

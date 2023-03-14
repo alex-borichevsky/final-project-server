@@ -6,6 +6,8 @@ import { UserPermissions } from '../roles/enums/user-permissions.enum';
 import { RequirePermissions } from '../security/decorators/permissions.decorator';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserPasswordDto } from './dtos/update-user-password.dto';
+import { AddUserInfoDto } from './dtos/add-user-info.dto';
+import { AddRoleDto } from './dtos/add-role.dto';
 
 @Controller('users') 
 @UseGuards(JwtPermissionsGuard)
@@ -39,6 +41,7 @@ export class UsersController {
   }
 
   // User info
+  
   @Get('info/:id')
   @RequirePermissions(UserPermissions.GetUserInfo)
   async getUserUserById(@Param('id') id : string) {
@@ -47,8 +50,16 @@ export class UsersController {
 
   @Put('info/:id')
   @RequirePermissions(UserPermissions.UpdateUserInfo)
-  async updateUserInfo(@Param('id') id : string, @Body() body: UpdateUserPasswordDto) {
-    return await this.usersService.updateUserPassword(id, body);
+  async updateUserInfo(@Param('id') id : string, @Body() body: AddUserInfoDto) {
+    return await this.usersService.updateUserInfo(id, body);
+  }
+
+  // Assign role
+
+  @Put('assign/:id')
+  @RequirePermissions(UserPermissions.AssignRole)
+  async assignRoleToUser(@Param('id') id : string, @Body() body: AddRoleDto) {
+    return await this.usersService.assignRole(id, body);
   }
 
 }

@@ -9,27 +9,23 @@ import { UserRoleTypes } from "src/app/roles/enums/user-role-types.enum";
 @Entity('users')
 export class UserEntity extends UUIDEntity {
 
-  @Column()
-  email: string;
+  @Column({ name: "email" })
+  email!: string;
 
-  @Column()
-  password: string;
+  @Column({ name: "password" })
+  password!: string;
+
+  @Column({ name: "role_id" })
+  roleId!: number;
+
+  @Column({ name: "role_type" })
+  roleType!: UserRoleTypes;
 
   @Column({default: false})
   banned?: boolean;
 
   @Column({default: ''})
   banReason?: string;
-
-  @Column({ name: "role_type" })
-  roleType?: UserRoleTypes;
-
-  @Column({ name: "role_id" })
-  roleId?: number;
-
-  @ManyToOne(() => UserRoleEntity)
-  @JoinColumn({ name: "role_id", referencedColumnName: "id" })
-  userRole?: UserRoleEntity;
 
   @OneToOne(() => UserInfoEntity)
   @JoinColumn()
@@ -41,4 +37,8 @@ export class UserEntity extends UUIDEntity {
 
   @OneToMany(() => OrdersEntity, order => order.user)
   orders?: OrdersEntity[];
+
+  @ManyToOne(() => UserRoleEntity)
+  @JoinColumn({ name: "role_id", referencedColumnName: "id" })
+  userRole?: UserRoleEntity;
 }

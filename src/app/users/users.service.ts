@@ -5,9 +5,9 @@ import { AddUserInfoDto } from "./dtos/add-user-info.dto";
 import { UserInfoEntity } from "./entities/user-info.entity";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { UserEntity } from "./entities/users.entity";
 import { AddRoleDto } from './dtos/add-role.dto';
 import { RolesRepo } from '../roles/repos/roles.repo';
+import { UserRoleTypes } from '../roles/enums/user-role-types.enum';
 
 @Injectable()
 export class UsersService {
@@ -27,7 +27,11 @@ export class UsersService {
 
   async createUser(dto: CreateUserDto) {
     const newUser = this.usersRepository.create({
-      ...dto, created: new Date()
+      ...dto, 
+      created: new Date(),
+      updated: new Date(),
+      roleType: UserRoleTypes.Client,
+      roleId: 1
     });
 
     return await this.usersRepository.save(newUser);

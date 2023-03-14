@@ -36,11 +36,10 @@ export class CartService {
     const newCart = this.cartRepo.create({
       ...dto, created: new Date(), totalPrice: this.countPrice(dto)
     });
-    user.cart = newCart
+    user.cart = newCart;
     await this.usersRepo.save(user);
     return await this.cartRepo.save(newCart);
-
-    }
+  }
 
   public updateCart(updateId: number, dto: CreateCartDto) {
     return this.cartRepo.update(updateId, { ...dto, updated: new Date()});

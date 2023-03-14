@@ -9,7 +9,7 @@ import { OrdersEntity } from "../app/orders/entities/orders.entity";
 import { ProductsEntity } from "../app/products/entities/products.entity";
 import { RatingEntity } from "../app/rating/entities/rating.entity";
 import { UserRoleEntity } from "../app/roles/entities/user-role.entity";
-import { createTables1678756648129 } from '../migrations/1678756648129-create-tables';
+import { createTables1678804505188 } from "src/migrations/1678804505188-create-tables";
 
 config();
 
@@ -23,7 +23,7 @@ export const dataSourceOptions: DataSourceOptions = {
   database: 'final_db',
   synchronize: false,
   installExtensions: true,
-  migrations: [createTables1678756648129],
+  migrations: [createTables1678804505188],
   entities: [UserEntity, UserInfoEntity, BrandEntity, CartEntity, CategoryEntity, OrdersEntity, ProductsEntity, RatingEntity, UserRoleEntity],
 
 };

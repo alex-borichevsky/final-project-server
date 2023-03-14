@@ -3,8 +3,7 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
-  ManyToOne,
-  PrimaryGeneratedColumn
+  ManyToOne
 } from "typeorm";
 
 import { UserRoleEntity } from "../../roles/entities/user-role.entity";
@@ -16,12 +15,6 @@ export class OrdersEntity extends UUIDEntity{
 
   @Column({name: 'name'})
   name: string;
-
-  @Column({name: 'createdAt'})
-  createdAt: Date;
-
-  @Column({name: 'modifiedAt'})
-  modifiedAt: Date;
 
   @Column({name: 'totalPrice'})
   totalPrice: number;

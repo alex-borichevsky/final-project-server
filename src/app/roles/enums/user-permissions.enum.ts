@@ -6,8 +6,13 @@ export enum UserPermissions {
   // ============== users ==========
   GetUsers = "get-users",
   GetUserById = "get-user-by-id",
-  GetUserInfo = "get-user-info",
-  AddUser = "add-user",
+  GetUserRole = "get-user-role",
   DeleteUser = "delete-user",
+  UpdatePassword = "update-password",
+  UpdateBanStatus = "update-ban-status",
+  UpdateBanReason = "update-ban-reason",
+
+  // ============== users info ==========
+  GetUserInfo = "get-user-info",
   UpdateUserInfo = "update-user-info"
 }

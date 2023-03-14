@@ -28,17 +28,17 @@ export class OrdersService {
     return totalPrice;
   }
 
-  async createOrder(dto: CreateOrderDto) {
-    const user = await this.usersRepo.getUserById(dto.userId);
+  // async createOrder(dto: CreateOrderDto) {
+  //   const user = await this.usersRepo.getUserById(dto.userId);
 
-    const newOrder = this.ordersRepo.create({
-      ...dto, totalPrice: this.countPrice(dto), created: new Date()
-    })
+  //   const newOrder = this.ordersRepo.create({
+  //     ...dto, totalPrice: this.countPrice(dto), created: new Date()
+  //   })
 
-    user.orders.push(newOrder);
-    await this.usersRepo.save(user);
-    return await this.ordersRepo.save(newOrder);
-  }
+  //   user.orders.push(newOrder);
+  //   await this.usersRepo.save(user);
+  //   return await this.ordersRepo.save(newOrder);
+  // }
 
   public updateOrder(updateId: number, dto: CreateOrderDto) {
     return this.ordersRepo.update(updateId, { ...dto, updated: new Date() });

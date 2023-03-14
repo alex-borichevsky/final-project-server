@@ -1,9 +1,9 @@
-import { IsString } from "class-validator";
+import { IsEmail, IsString } from "class-validator";
 
 export class AddUserInfoDto {
-
   @IsString({message: "must be a string"})
-  userId: string
+  @IsEmail({}, {message: "got incorrect email"})
+  readonly email: string;
 
   @IsString({message: "must be a string"})
   firstName!: string;

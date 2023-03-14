@@ -8,7 +8,7 @@ export class RolesService {
     private readonly roleRepository: RolesRepo,
   ) { }
 
-  async getUsers() {
+  async getAllRoles() {
     return await this.roleRepository.getAllRoles();
   }
 
@@ -28,7 +28,7 @@ export class RolesService {
     return this.roleRepository.update(updateId, { ...dto, updated: new Date()});
   }
 
-  public delete(id: number) {
+  public deleteRole(id: number) {
     return this.roleRepository.delete(id);
   }
 

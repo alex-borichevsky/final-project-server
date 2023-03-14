@@ -21,5 +21,14 @@ export enum UserPermissions {
   GetCategoryById = 'get-category-by-id',
   CreateCategory = 'create-category',
   UpdateCategory = 'update-category',
-  DeleteCategory = 'delete-category'
+  DeleteCategory = 'delete-category',
+
+  // ============== roles ==========
+  GetRoles = "get-roles",
+  GetRoleById = "get-role-by-id",
+  CreateRole = "create-role",
+  AssignRole = "assign-role",
+  DeleteRole = "delete-role",
+  UpdateRole = "update-role"
+
 }

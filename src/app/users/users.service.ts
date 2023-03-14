@@ -30,29 +30,21 @@ export class UsersService {
   }
 
   async createUser(dto: CreateUserDto) {
-
+    const role = await this.rolesRepository.getRoleByName('user')
     const newUser = this.usersRepository.create({
       ...dto, 
       created: new Date(),
       updated: new Date(),
       roleType: UserRoleTypes.Client,
-      roleId: 1
+      roleId: role.id
     });
-    // const newUserInfo = await this.infoRepository.create({
-    //   id: newUser.id,
-    //   firstName: '',
-    //   lastName: '',
-    //   phone: '',
-    //   address: ''
-    // });
-    const newUserInfo : AddUserInfoDto = {
-      userId: newUser.id,
+    const userInfo = await this.infoRepository.save( {
+      id: newUser.id,
       firstName: '',
       lastName: '',
       phone: '',
       address: ''
-    }
-    const userInfo = await this.infoRepository.save(newUserInfo);
+    });
     newUser.userInfo = userInfo;
     return await this.usersRepository.save(newUser);
   }
@@ -89,18 +81,27 @@ export class UsersService {
     return await this.infoRepository.findOne({ where: { id } });
   }
 
-  public async updateUserInfo(dto: AddUserInfoDto) {
-    const user = await this.usersRepository.getUserById(dto.userId);
-    const userInfo = await this.infoRepository.save(dto);
-    user.userInfo = userInfo;
-    return await this.usersRepository.save(user);
+  public async updateUserInfo(userId: string, dto: AddUserInfoDto) {
+    const user = await this.usersRepository.getUserById(userId);
+
+    if (user.email !== dto.email) {
+      throw new HttpException({message: "Forbidden to update personal info"}, HttpStatus.FORBIDDEN);
+    }
+    const userInfo = await this.infoRepository.findOne({ where: { id: user.userInfo.id } });
+    return this.infoRepository.update(userInfo.id, { 
+      firstName: dto.firstName,
+      lastName: dto.lastName,
+      phone: dto.phone,
+      address: dto.address,
+      updated: new Date() 
+    });
   }
 
 
   // Roles
 
-  public async addRole(dto: AddRoleDto) {
-    const id = dto.userId;
+  public async assignRole(userId: string, dto: AddRoleDto) {
+    const id = userId;
     const user = await this.usersRepository.getUserById(id);
     const role = await this.rolesRepository.getRoleByName(dto.name);
     if(user && role) {

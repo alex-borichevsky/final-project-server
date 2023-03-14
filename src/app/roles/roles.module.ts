@@ -6,6 +6,7 @@ import { RolesService } from './roles.service';
 import { RolesController } from './roles.controller';
 import { RolesRepo } from './repos/roles.repo';
 import { UserRoleEntity } from './entities/user-role.entity';
+import { SecurityModule } from '../security/security.module';
 
 @Module({
   providers: [RolesService,RolesRepo],
@@ -16,7 +17,8 @@ import { UserRoleEntity } from './entities/user-role.entity';
   imports: [
     TypeOrmModule.forFeature([
       UserRoleEntity
-    ])
+    ]),
+    SecurityModule
   ]
 })
 export class RolesModule {}

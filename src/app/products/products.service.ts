@@ -3,10 +3,12 @@ import { Injectable } from '@nestjs/common';
 import { ProductsRepo } from './repos/products.repo';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { FilesService } from '../files/files.service';
+import { CategoryRepo } from '../categories/repos/category.repo';
 
 @Injectable()
 export class ProductsService {
   constructor(private readonly productsRepository: ProductsRepo,
+              private readonly categoryRepository: CategoryRepo,
               private fileService: FilesService
               ) {}
 
@@ -21,18 +23,30 @@ export class ProductsService {
   async createProduct(dto: CreateProductDto, image: any) {
 
     const fileName = await this.fileService.createFile(image);
+    let category = null;
+
+    if (!dto.categoryName) {
+      category = await this.categoryRepository.getCategoryByName('Furniture');
+
+    }
+    category = await this.categoryRepository.getCategoryByName(dto.categoryName);
 
     const newProduct = this.productsRepository.create({
-      ...dto, image: fileName
+      name: dto.name,
+      price: dto.price,
+      description: dto.description,
+      quantity: dto.quantity,
+      brand: dto.brand,
+      category: category
     });
       return await this.productsRepository.save(newProduct);
   }
 
-  async updateProduct(updateId: number, dto: CreateProductDto) {
+  async updateProduct(updateId: string, dto: CreateProductDto) {
     return await this.productsRepository.update(updateId, {...dto, updated: new Date()});
   }
 
-  async delete(id: number) {
+  async delete(id: string) {
     return await this.productsRepository.delete(id);
   }
 } 

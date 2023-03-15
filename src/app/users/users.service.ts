@@ -71,10 +71,11 @@ export class UsersService {
     return await this.usersRepository.update(updateId,{password: newHashPassword, updated: new Date()});
   }
 
+
   public async deleteUser(id: string) {
-    const user = await this.getUserById(id);
-    user.status = false;
-    return await this.usersRepository.save(user);
+      const user = await this.getUserById(id);
+      user.status = false;
+      return await this.usersRepository.save(user);
   }
 
   // User Info
@@ -98,7 +99,6 @@ export class UsersService {
       updated: new Date() 
     });
   }
-
 
   // Roles
 

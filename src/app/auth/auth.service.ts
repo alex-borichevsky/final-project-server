@@ -17,10 +17,10 @@ export class AuthService {
   async registration(dto: RegistrationDto) {
 
     const user = await this.usersRepo.getUserByEmail(dto.email);
+
     if (user) {
       throw new BadRequestException("User exists");
     }
-
     if (dto.password != dto.confirmPassword) {
       throw new BadRequestException("Passwords does not match");
     }
@@ -29,8 +29,7 @@ export class AuthService {
     const newUser = await this.usersService.createUser({
       ...dto, password: hashPassword
     })
-
-    const payload = { email: newUser.email, id: newUser.id, roleId: newUser.roleId  };
+    const payload = { email: newUser.email, id: newUser.id, roleId: newUser.roleId };
     return {
       access_token: this.jwtService.sign(payload),
     }

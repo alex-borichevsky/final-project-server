@@ -50,8 +50,7 @@ export class JwtPermissionsGuard implements CanActivate {
       }
 
       const user = UserDto.fromEntity(userEntity)
-
-      if (!(Number(decodedUser.roleId) === user.roleId)) {
+      if (!(decodedUser.roleId === user.roleId)) {
         throw new HttpException({message: "User unauthorized"}, HttpStatus.UNAUTHORIZED);
       }
       req.user = decodedUser;

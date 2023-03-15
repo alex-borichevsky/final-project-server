@@ -12,14 +12,14 @@ export class UsersRepo extends Repository<UserEntity> {
   }
 
   async getUserById(id : string) {
-    return await this.findOne({ where: { id }, relations: ["userInfo", "cart"] });
+    return await this.findOne({ where: { id }, relations: ["userInfo"] });
   }
 
   async getAllUsers() {
-    return await this.find({ relations: ["userInfo", "cart"] });
+    return await this.find({ relations: ["userInfo"] });
   }
 
   async getUserByEmail(email: string) {
-    return await this.findOne({ where: {email}, relations: ["userInfo", "cart"] });
+    return await this.findOne({ where: {email}, relations: ["userInfo"] });
   }
 }

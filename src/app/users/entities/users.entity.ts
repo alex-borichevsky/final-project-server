@@ -28,9 +28,8 @@ export class UserEntity extends UUIDEntity {
   @JoinColumn()
   userInfo?: UserInfoEntity;
 
-  @OneToOne(() => CartEntity)
-  @JoinColumn()
-  cart?: CartEntity;
+  @OneToMany(() => CartEntity, cart => cart.user)
+  carts?: CartEntity[];
 
   @OneToMany(() => OrdersEntity, order => order.user)
   orders?: OrdersEntity[];

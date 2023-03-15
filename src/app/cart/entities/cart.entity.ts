@@ -1,13 +1,25 @@
-import { Column, Entity, JoinTable, ManyToMany, OneToMany } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany } from "typeorm";
 import { ProductsEntity } from "../../products/entities/products.entity";
 import { UUIDEntity } from '../../../shared/entities/uuid.entity';
+import { UserEntity } from "src/app/users/entities/users.entity";
 
 @Entity("carts")
 export class CartEntity extends UUIDEntity{
 
-  @Column({name: 'totalPrice'})
-  totalPrice: number;
+  @Column({name: 'quantity'})
+  quantity: number;
 
-  @OneToMany(() => ProductsEntity, (product) => product.cart)
-  products: ProductsEntity[];
+  @Column({name: 'product_id'})
+  productId: string;
+
+  @Column({name: 'user_id'})
+  userId: string;
+
+  @ManyToOne(() => ProductsEntity, (product) => product.cart)
+  @JoinColumn({ name: "product_id", referencedColumnName: "id" })
+  products: ProductsEntity;
+
+  @ManyToOne(() => UserEntity, user => user.carts)
+  @JoinColumn({ name: "user_id", referencedColumnName: "id" })
+  user : UserEntity;
 }

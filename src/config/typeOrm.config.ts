@@ -18,7 +18,7 @@ export const dataSourceOptions: DataSourceOptions = {
   username: 'postgres',
   password: 'postgres',
   database: 'final_db',
-  synchronize: false,
+  synchronize: true,
   installExtensions: true,
   migrations: [createTables1678888257865],
   entities: [UserEntity, UserInfoEntity, CartEntity, CategoryEntity, OrdersEntity, ProductsEntity,  UserRoleEntity],

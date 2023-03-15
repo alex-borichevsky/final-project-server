@@ -1,5 +1,5 @@
 import { Controller } from '@nestjs/common';
-import { Body, Get, Param, Patch, Post } from '@nestjs/common/decorators';
+import { Body, Get, Param, Post, Put } from '@nestjs/common/decorators';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dtos/create-category.dto';
 
@@ -12,7 +12,7 @@ export class CategoriesController {
     return this.categoriesService.createCategory(category);
   }
 
-  @Patch(':id')
+  @Put(':id')
   updateCategory(
     @Param('id') id: number,
     @Body() updateCategoryDto: CreateCategoryDto,

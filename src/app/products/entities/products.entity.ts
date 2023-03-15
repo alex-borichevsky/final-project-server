@@ -15,22 +15,21 @@ import { RatingEntity } from "../../rating/entities/rating.entity";
 import { UUIDEntity } from '../../../shared/entities/uuid.entity';
 
 @Entity('products')
-export class ProductsEntity extends UUIDEntity{
-
-  @Column({name: 'name'})
+export class ProductsEntity extends UUIDEntity {
+  @Column({ name: 'name' })
   name: string;
 
-  @Column({name: 'price'})
+  @Column({ name: 'price' })
   price: number;
 
-  @Column({name: 'description'})
+  @Column({ name: 'description' })
   description: string;
 
-  @Column({name: 'quantity'})
+  @Column({ name: 'quantity' })
   quantity: number;
 
-  @Column({default: ''})
-  image: string
+  @Column({ default: '' })
+  image: string;
 
   @ManyToMany(() => CartEntity, (cart) => cart.products)
   cart: CartEntity[];
@@ -38,12 +37,12 @@ export class ProductsEntity extends UUIDEntity{
   @ManyToMany(() => OrdersEntity, (order) => order.products)
   orders: OrdersEntity[];
 
-  @ManyToOne(() => ProductsEntity)
+  @ManyToOne(() => CategoryEntity)
   category?: CategoryEntity;
 
   @ManyToOne(() => BrandEntity)
   brand?: BrandEntity;
 
-  @OneToMany(() => RatingEntity, rating => rating.product)
+  @OneToMany(() => RatingEntity, (rating) => rating.product)
   ratings?: RatingEntity[];
 }

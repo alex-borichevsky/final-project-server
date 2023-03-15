@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { CartRepo } from "./repos/cart.repo";
-import { CreateCartDto } from "./dtos/create-cart.dto";
 import { UsersRepo } from '../users/repos/users.repo';
 import { AddProductToCartDto } from './dtos/add-product-to-cart.dto';
+import { UpdateQuantityDto } from './dtos/update-quantity.dto';
 
 @Injectable()
 export class CartService {
@@ -29,34 +29,11 @@ export class CartService {
     return await this.cartRepo.save(cartRecord);
   }
 
-  private countPrice(dto: CreateCartDto) : number {
-    let totalPrice = 0;
-
-    dto.products.forEach(product => {
-      totalPrice += product.price;
-    })
-    return totalPrice;
+  async deleteProductToCart(recordId : string) {
+    return await this.cartRepo.delete(recordId);
   }
 
-
-  async createCart(dto: CreateCartDto) {
-    const user = await this.usersRepo.getUserById(dto.userId);
-
-    // const newCart = this.cartRepo.create({
-    //   ...dto, created: new Date(), totalPrice: this.countPrice(dto)
-    // });
-    // user.carts.push(newCart);
-    // await this.usersRepo.save(user);
-    // return await this.cartRepo.save(newCart);
+  updateProdictQuantity(dto: UpdateQuantityDto) {
+    return this.cartRepo.update(dto.recordId, { quantity: dto.quantity, updated: new Date()});
   }
-
-  public updateCart(updateId: number, dto: CreateCartDto) {
-   // return this.cartRepo.update(updateId, { ...dto, updated: new Date()});
-  }
-
-  public deleteCart(id: number) {
-    return this.cartRepo.delete(id);
-  }
-
-
 }

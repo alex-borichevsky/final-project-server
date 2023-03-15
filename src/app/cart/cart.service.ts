@@ -45,7 +45,7 @@ export class CartService {
     return this.cartRepo.update(updateId, { ...dto, updated: new Date()});
   }
 
-  public delete(id: number) {
+  public deleteCart(id: number) {
     return this.cartRepo.delete(id);
   }
 

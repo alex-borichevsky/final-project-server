@@ -35,7 +35,7 @@ export class OrdersService {
     return await this.ordersRepo.save(newOrder);
   }
 
-  public deleteOrder(id: number) {
-    return this.ordersRepo.delete(id);
+  async deleteOrder(id: string) {
+    return await this.ordersRepo.delete(id);
   }
 }

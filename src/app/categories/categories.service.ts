@@ -16,13 +16,20 @@ export class CategoriesService {
 
   async createCategory(dto: CreateCategoryDto) {
     const newCategory = this.categoryRepository.create({
-      ...dto, created: new Date()
+      ...dto,
+      created: new Date(),
     });
     return await this.categoryRepository.save(newCategory);
   }
 
-
   public updateCategory(updateId: number, dto: CreateCategoryDto) {
-    return this.categoryRepository.update(updateId, { ...dto, updated: new Date()});
+    return this.categoryRepository.update(updateId, {
+      ...dto,
+      updated: new Date(),
+    });
+  }
+
+  async deleteCategory(id: number) {
+    return await this.categoryRepository.delete(id);
   }
 }

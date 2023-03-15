@@ -17,10 +17,10 @@ export class AuthService {
   async registration(dto: RegistrationDto) {
 
     const user = await this.usersRepo.getUserByEmail(dto.email);
-
     if (user) {
       throw new BadRequestException("User exists");
     }
+
     if (dto.password != dto.confirmPassword) {
       throw new BadRequestException("Passwords does not match");
     }

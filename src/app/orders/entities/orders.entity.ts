@@ -3,7 +3,8 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
-  ManyToOne
+  ManyToOne,
+  OneToMany
 } from "typeorm";
 
 import { UserRoleEntity } from "../../roles/entities/user-role.entity";
@@ -22,8 +23,7 @@ export class OrdersEntity extends UUIDEntity{
   @ManyToOne(() => UserRoleEntity)
   user?: UserRoleEntity;
 
-  @ManyToMany(() => ProductsEntity, (product) => product.orders)
-  @JoinTable()
+  @OneToMany(() => ProductsEntity, (product) => product.orders)
   products: ProductsEntity[];
 
 }

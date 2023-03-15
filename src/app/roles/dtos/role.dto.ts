@@ -11,6 +11,7 @@ export class RoleDto extends UUIDDto {
   static fromEntity(entity: UserRoleEntity) {
     const it = new RoleDto();
     it.id = entity.id;
+    it.type = entity.type;
     it.created = entity.created.valueOf();
     it.updated = entity.updated.valueOf();
     it.permissions = entity.permissions;

@@ -30,7 +30,7 @@ export class UsersService {
   }
 
   async createUser(dto: CreateUserDto) {
-    const role = await this.rolesRepository.getRoleByName('user')
+    const role = await this.rolesRepository.getRoleByName('user');
     const newUser = this.usersRepository.create({
       ...dto, 
       created: new Date(),
@@ -71,8 +71,10 @@ export class UsersService {
     return await this.usersRepository.update(updateId,{password: newHashPassword, updated: new Date()});
   }
 
-  public deleteUser(id: string) {
-    return this.usersRepository.delete(id);
+  public async deleteUser(id: string) {
+    const user = await this.getUserById(id);
+    user.status = false;
+    return await this.usersRepository.save(user);
   }
 
   // User Info

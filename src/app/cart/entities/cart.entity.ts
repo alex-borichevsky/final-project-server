@@ -1,4 +1,4 @@
-import { Column, Entity, JoinTable, ManyToMany } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, OneToMany } from "typeorm";
 import { ProductsEntity } from "../../products/entities/products.entity";
 import { UUIDEntity } from '../../../shared/entities/uuid.entity';
 
@@ -8,7 +8,6 @@ export class CartEntity extends UUIDEntity{
   @Column({name: 'totalPrice'})
   totalPrice: number;
 
-  @ManyToMany(() => ProductsEntity, (product) => product.cart)
-  @JoinTable()
+  @OneToMany(() => ProductsEntity, (product) => product.cart)
   products: ProductsEntity[];
 }

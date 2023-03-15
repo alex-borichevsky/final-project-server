@@ -30,7 +30,7 @@ export class ProductsEntity extends UUIDEntity {
   brand: string;
 
   @OneToMany(() => CartEntity, (cart) => cart.products)
-  cart: CartEntity;
+  cart?: CartEntity;
 
   @ManyToOne(() => CategoryEntity)
   category?: CategoryEntity;

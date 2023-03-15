@@ -12,5 +12,6 @@ import { SecurityModule } from './../security/security.module';
   providers: [CategoriesService, CategoryRepo],
   controllers: [CategoriesController],
   imports: [TypeOrmModule.forFeature([CategoryEntity]), SecurityModule],
+  exports: [CategoryRepo]
 })
 export class CategoriesModule {}

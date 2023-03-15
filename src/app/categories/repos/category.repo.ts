@@ -18,6 +18,15 @@ export class CategoryRepo extends Repository<CategoryEntity> {
     });
   }
 
+  async getCategoryByName(name: string) {
+    return await this.findOne({
+      where: { name },
+      relations: ['products', 'brands'],
+    });
+  }
+
+
+
   async getAllCategories() {
     return await this.find({
       relations: ['products', 'brands'],

@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UsersRepo } from '../users/repos/users.repo';
 import { UsersService } from '../users/users.service';
 import { RegistrationDto } from './dtos/registration.dto';
-import * as bcrypt from 'bcrypt'
+import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dtos/login.dto';
 import { Payload } from './dtos/payload.dto';
 
@@ -37,6 +37,9 @@ export class AuthService {
 
   async login(dto: LoginDto) {
     const user = await this.usersRepo.getUserByEmail(dto.email);
+    if (!user) {
+      throw new BadRequestException("User doesn't exist");
+    }
     const payload = { email: user.email, id: user.id, roleId: user.roleId };
     const isMatch = await bcrypt.compare(dto.password, user.password);
     if (isMatch) {

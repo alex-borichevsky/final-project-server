@@ -15,17 +15,14 @@ export class UserEntity extends UUIDEntity {
   @Column({ name: "password" })
   password!: string;
 
+  @Column({ name: "status", default : true})
+  status!: boolean;
+
   @Column({ name: "role_id" })
   roleId!: number;
 
   @Column({ name: "role_type" })
   roleType!: UserRoleTypes;
-
-  @Column({default: false})
-  banned?: boolean;
-
-  @Column({default: ''})
-  banReason?: string;
 
   @OneToOne(() => UserInfoEntity)
   @JoinColumn()

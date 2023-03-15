@@ -1,6 +1,7 @@
-import { Entity, Column } from "typeorm";
+import { Entity, Column, OneToOne } from "typeorm";
 
 import { UUIDEntity } from "src/shared/entities/uuid.entity";
+import { UserEntity } from "./users.entity";
 
 @Entity({ name: "user_info"})
 

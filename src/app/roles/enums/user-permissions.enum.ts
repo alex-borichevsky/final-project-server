@@ -4,17 +4,30 @@ export enum UserPermissions {
   SignOut = 'sign-out',
 
   // ============== users ==========
-  GetUsers = 'get-users',
-  GetUserById = 'get-user-by-id',
-  GetUserInfo = 'get-user-info',
-  AddUser = 'add-user',
-  DeleteUser = 'delete-user',
-  UpdateUserInfo = 'update-user-info',
+  GetUsers = "get-users",
+  GetUserById = "get-user-by-id",
+  GetUserRole = "get-user-role",
+  DeleteUser = "delete-user",
+  UpdatePassword = "update-password",
+  UpdateBanStatus = "update-ban-status",
+  UpdateBanReason = "update-ban-reason",
 
-  // ============== users ==========
+  // ============== users info ==========
+  GetUserInfo = "get-user-info",
+  UpdateUserInfo = "update-user-info",
+
+  // ============= categories ===========
   GetAllCategories = 'get-all-categories',
   GetCategoryById = 'get-category-by-id',
   CreateCategory = 'create-category',
   UpdateCategory = 'update-category',
-  DeleteCategory = 'delete-category'
+  DeleteCategory = 'delete-category',
+
+  // ============== roles ==========
+  GetRoles = "get-roles",
+  GetRoleById = "get-role-by-id",
+  CreateRole = "create-role",
+  AssignRole = "assign-role",
+  DeleteRole = "delete-role",
+  UpdateRole = "update-role"
 }

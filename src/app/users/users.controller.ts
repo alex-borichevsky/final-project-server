@@ -1,26 +1,23 @@
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Patch, Post, Put, UseGuards } from '@nestjs/common';
 
 import { UsersService } from './users.service';
 import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
 import { UserPermissions } from '../roles/enums/user-permissions.enum';
 import { RequirePermissions } from '../security/decorators/permissions.decorator';
-import { I18n, I18nContext } from "nestjs-i18n";
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { CreateUserDto } from './dtos/create-user.dto';
+import { UpdateUserPasswordDto } from './dtos/update-user-password.dto';
+import { AddUserInfoDto } from './dtos/add-user-info.dto';
+import { AddRoleDto } from './dtos/add-role.dto';
 
 @Controller('users') 
-// @UseGuards(JwtPermissionsGuard)
+@UseGuards(JwtPermissionsGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Get('/hello')
-  getHello(@I18n() i18n: I18nContext) {
-    return i18n.t(`test.here`);
-  }
-
+  // Users 
 
   @Get()
-  // @RequirePermissions(UserPermissions.GetUsers)
-  @UseGuards(JwtAuthGuard)
+  @RequirePermissions(UserPermissions.GetUsers)
   async getUsers() {
     return await this.usersService.getUsers();
   }
@@ -30,4 +27,39 @@ export class UsersController {
   async getUserById(@Param('id') id : string) {
     return await this.usersService.getUserById(id);
   }
+
+  @Delete(':id')
+  @RequirePermissions(UserPermissions.DeleteUser)
+  async deleteUser(@Param('id') id : string) {
+    return await this.usersService.deleteUser(id);
+  }
+
+  @Put(':id')
+  @RequirePermissions(UserPermissions.UpdatePassword)
+  async updateUserPassword(@Param('id') id : string, @Body() body: UpdateUserPasswordDto) {
+    return await this.usersService.updateUserPassword(id, body);
+  }
+
+  // User info
+  
+  @Get('info/:id')
+  @RequirePermissions(UserPermissions.GetUserInfo)
+  async getUserUserById(@Param('id') id : string) {
+    return await this.usersService.getUserInfo(id);
+  }
+
+  @Put('info/:id')
+  @RequirePermissions(UserPermissions.UpdateUserInfo)
+  async updateUserInfo(@Param('id') id : string, @Body() body: AddUserInfoDto) {
+    return await this.usersService.updateUserInfo(id, body);
+  }
+
+  // Assign role
+
+  @Put('assign/:id')
+  @RequirePermissions(UserPermissions.AssignRole)
+  async assignRoleToUser(@Param('id') id : string, @Body() body: AddRoleDto) {
+    return await this.usersService.assignRole(id, body);
+  }
+
 }

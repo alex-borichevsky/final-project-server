@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UsersRepo } from './repos/users.repo';
 import { CreateUserDto } from "./dtos/create-user.dto";
 import { AddUserInfoDto } from "./dtos/add-user-info.dto";
@@ -8,6 +8,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { AddRoleDto } from './dtos/add-role.dto';
 import { RolesRepo } from '../roles/repos/roles.repo';
 import { UserRoleTypes } from '../roles/enums/user-role-types.enum';
+import { UpdateUserPasswordDto } from './dtos/update-user-password.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -16,6 +18,8 @@ export class UsersService {
     private readonly rolesRepository: RolesRepo,
     @InjectRepository(UserInfoEntity) private infoRepository: Repository<UserInfoEntity>
   ) { }
+
+  // Users
 
   async getUsers() {
     return await this.usersRepository.getAllUsers();
@@ -26,34 +30,80 @@ export class UsersService {
   }
 
   async createUser(dto: CreateUserDto) {
+    const role = await this.rolesRepository.getRoleByName('user');
     const newUser = this.usersRepository.create({
       ...dto, 
       created: new Date(),
       updated: new Date(),
       roleType: UserRoleTypes.Client,
-      roleId: 1
+      roleId: role.id
     });
-
+    const userInfo = await this.infoRepository.save( {
+      id: newUser.id,
+      firstName: '',
+      lastName: '',
+      phone: '',
+      address: ''
+    });
+    newUser.userInfo = userInfo;
     return await this.usersRepository.save(newUser);
   }
 
-  public updateUser(updateId: number, dto: CreateUserDto) {
-    return this.usersRepository.update(updateId, { ...dto, updated: new Date() });
+  public async updateUserPassword(updateId: string, dto: UpdateUserPasswordDto) {
+    const user = await this.getUserById(updateId);
+
+    if (user.email !== dto.email) {
+      throw new HttpException({message: "Forbidden to change the password"}, HttpStatus.FORBIDDEN);
+    }
+
+    // Check current password
+    const isMatch = await bcrypt.compare(dto.password, user.password);
+    if (!isMatch) {
+      throw new BadRequestException("Invalid current password");
+    }
+
+    // Check new password
+    if (dto.newPassword != dto.newPasswordConfirm) {
+      throw new BadRequestException("New passwords does not match");
+    }
+
+    const newHashPassword = await bcrypt.hash(dto.newPassword, 10);
+    return await this.usersRepository.update(updateId,{password: newHashPassword, updated: new Date()});
   }
 
-  public delete(id: number) {
-    return this.usersRepository.delete(id);
+
+  public async deleteUser(id: string) {
+      const user = await this.getUserById(id);
+      user.status = false;
+      return await this.usersRepository.save(user);
   }
 
-  public async addUserInfo(dto: AddUserInfoDto) {
-    const user = await this.usersRepository.getUserById(dto.userId);
-    const userInfo = await this.infoRepository.save(dto);
-    user.userInfo = userInfo;
-    return await this.usersRepository.save(user);
+  // User Info
+
+  public async getUserInfo(id: string) {
+    return await this.infoRepository.findOne({ where: { id } });
   }
 
-  public async addRole(dto: AddRoleDto) {
-    const id = dto.userId;
+  public async updateUserInfo(userId: string, dto: AddUserInfoDto) {
+    const user = await this.usersRepository.getUserById(userId);
+
+    if (user.email !== dto.email) {
+      throw new HttpException({message: "Forbidden to update personal info"}, HttpStatus.FORBIDDEN);
+    }
+    const userInfo = await this.infoRepository.findOne({ where: { id: user.userInfo.id } });
+    return this.infoRepository.update(userInfo.id, { 
+      firstName: dto.firstName,
+      lastName: dto.lastName,
+      phone: dto.phone,
+      address: dto.address,
+      updated: new Date() 
+    });
+  }
+
+  // Roles
+
+  public async assignRole(userId: string, dto: AddRoleDto) {
+    const id = userId;
     const user = await this.usersRepository.getUserById(id);
     const role = await this.rolesRepository.getRoleByName(dto.name);
     if(user && role) {
@@ -64,6 +114,4 @@ export class UsersService {
     }
     throw new HttpException("User or Role not found", HttpStatus.NOT_FOUND);
   }
-
-
 }

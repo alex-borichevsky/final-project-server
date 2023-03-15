@@ -43,14 +43,14 @@ export class JwtPermissionsGuard implements CanActivate {
       }
       
       const decodedUser = UserSessionDto.fromPayload(this.jwtService.verify(token));
-  
+
       const userEntity = await this.securityService.getUserById(decodedUser.id)
       if (!userEntity) {
         throw new HttpException({message: "User unauthorized"}, HttpStatus.UNAUTHORIZED);
       }
 
       const user = UserDto.fromEntity(userEntity)
-      if (!(decodedUser.roleId === user.roleId)) {
+      if (!(Number(decodedUser.roleId) === user.roleId)) {
         throw new HttpException({message: "User unauthorized"}, HttpStatus.UNAUTHORIZED);
       }
       req.user = decodedUser;

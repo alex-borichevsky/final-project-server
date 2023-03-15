@@ -9,23 +9,32 @@ import { OrdersEntity } from "../app/orders/entities/orders.entity";
 import { ProductsEntity } from "../app/products/entities/products.entity";
 import { RatingEntity } from "../app/rating/entities/rating.entity";
 import { UserRoleEntity } from "../app/roles/entities/user-role.entity";
+
 import { createTables1678804505188 } from "src/migrations/1678804505188-create-tables";
 
 config();
 
 export const dataSourceOptions: DataSourceOptions = {
-
-  type: "postgres",
+  type: 'postgres',
   host: 'localhost',
   port: 5432,
   username: 'postgres',
-  password: 'postgres',
+  password: 'regina',
   database: 'final_db',
   synchronize: false,
   installExtensions: true,
   migrations: [createTables1678804505188],
-  entities: [UserEntity, UserInfoEntity, BrandEntity, CartEntity, CategoryEntity, OrdersEntity, ProductsEntity, RatingEntity, UserRoleEntity],
-
+  entities: [
+    UserEntity,
+    UserInfoEntity,
+    BrandEntity,
+    CartEntity,
+    CategoryEntity,
+    OrdersEntity,
+    ProductsEntity,
+    RatingEntity,
+    UserRoleEntity,
+  ],
 };
 
 const dataSource = new DataSource(dataSourceOptions);

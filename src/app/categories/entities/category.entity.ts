@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, OneToMany } from "typeorm";
 import { ProductsEntity } from "../../products/entities/products.entity";
 import { BrandEntity } from "../../brand/entities/brand.entity";
 import { IDEntity } from '../../../shared/entities/id.entity';

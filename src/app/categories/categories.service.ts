@@ -21,7 +21,7 @@ export class CategoriesService {
     return await this.categoryRepository.save(newCategory);
   }
 
-
+  
   public updateCategory(updateId: number, dto: CreateCategoryDto) {
     return this.categoryRepository.update(updateId, { ...dto, updated: new Date()});
   }

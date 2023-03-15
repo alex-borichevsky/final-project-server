@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CartService } from './cart.service';
+import { AddProductToCartDto } from './dtos/add-product-to-cart.dto';
 import { CreateCartDto } from './dtos/create-cart.dto';
 
 @Controller('cart')
@@ -8,7 +9,7 @@ export class CartController {
         private readonly cartService: CartService
     ) { }
 
-    @Get('get')
+    @Get()
     getCarts() {
         return this.cartService.getCarts();
     }
@@ -18,18 +19,8 @@ export class CartController {
         return this.cartService.getCartById(id);
     }
 
-    @Post('')
-    crateOrder(@Body() dto: CreateCartDto) {
-        return this.cartService.createCart(dto)
-    }
-
-    @Post('update')
-    updateCart(@Body() id: number, dto: CreateCartDto) {
-        return this.cartService.updateCart(id, dto)
-    }
-
-    @Post('delete')
-    deleteCart(@Body() id: number) {
-        return this.cartService.deleteCart(id)
+    @Post()
+    addProductToCart( @Body() body : AddProductToCartDto) {
+        return this.cartService.addProductToCart(body);
     }
 }

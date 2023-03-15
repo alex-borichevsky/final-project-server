@@ -18,18 +18,8 @@ export class OrdersController {
         return this.ordersService.getOrderById(id);
     }
 
-    @Post('')
+    @Post()
     createOrder(@Body() dto: CreateOrderDto) {
-        return this.ordersService.createOrder(dto)
-    }
-
-    @Post('update')
-    updateCart(@Body() id: number, dto: CreateOrderDto) {
-        return this.ordersService.updateOrder(id, dto)
-    }
-
-    @Post('delete')
-    deleteCart(@Body() id: number) {
-        return this.ordersService.deleteOrder(id)
+        return this.ordersService.createOrder(dto);
     }
 }

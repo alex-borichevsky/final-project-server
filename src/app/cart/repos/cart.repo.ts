@@ -12,11 +12,11 @@ export class CartRepo extends Repository<CartEntity> {
   }
 
   async getCartById(id : string) {
-    return await this.findOne({ where: { id }, relations: ["products"] });
+    return await this.findOne({ where: { id }, relations: ["products", "user"] });
   }
 
   async getAllCarts() {
-    return await this.find({relations: ["products"]});
+    return await this.find({relations: ["products", "user"]});
   }
 
 }

@@ -2,10 +2,10 @@ import {
   Column,
   Entity,
   ManyToOne,
+  OneToMany,
 } from "typeorm";
 
 import { CartEntity } from "../../cart/entities/cart.entity";
-import { OrdersEntity } from "../../orders/entities/orders.entity";
 import { CategoryEntity } from "../../categories/entities/category.entity";
 import { UUIDEntity } from '../../../shared/entities/uuid.entity';
 
@@ -29,11 +29,8 @@ export class ProductsEntity extends UUIDEntity {
   @Column({default: ''})
   brand: string;
 
-  @ManyToOne(() => CartEntity, (cart) => cart.products)
-  cart: CartEntity[];
-
-  @ManyToOne(() => OrdersEntity, (order) => order.products)
-  orders: OrdersEntity[];
+  @OneToMany(() => CartEntity, (cart) => cart.products)
+  cart: CartEntity;
 
   @ManyToOne(() => CategoryEntity)
   category?: CategoryEntity;

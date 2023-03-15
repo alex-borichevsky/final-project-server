@@ -1,29 +1,26 @@
 import {
   Column,
   Entity,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
-  OneToMany
+  JoinColumn,
+  ManyToOne
 } from "typeorm";
 
-import { UserRoleEntity } from "../../roles/entities/user-role.entity";
-import { ProductsEntity } from "../../products/entities/products.entity";
 import { UUIDEntity } from '../../../shared/entities/uuid.entity';
+import { ProductOrderDto } from "../dtos/order-products.dto";
+import { UserEntity } from "src/app/users/entities/users.entity";
 
 @Entity('orders')
 export class OrdersEntity extends UUIDEntity{
-
-  @Column({name: 'name'})
-  name: string;
-
   @Column({name: 'totalPrice'})
   totalPrice: number;
 
-  @ManyToOne(() => UserRoleEntity)
-  user?: UserRoleEntity;
+  @Column({name:"user_id"})
+  userId: string;
 
-  @OneToMany(() => ProductsEntity, (product) => product.orders)
-  products: ProductsEntity[];
+  @Column("text", { name: "products", array: true })
+  products?: ProductOrderDto[];
 
+  @ManyToOne(() => UserEntity)
+  @JoinColumn({ name: "user_id", referencedColumnName: "id" })
+  user?: UserEntity;
 }

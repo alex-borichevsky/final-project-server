@@ -1,9 +1,10 @@
-import { ProductsEntity } from '../../products/entities/products.entity';
+import { ProductOrderDto } from './order-products.dto';
 
 export class CreateOrderDto {
-  readonly name: string;
 
-  readonly products: ProductsEntity[];
+  readonly products: ProductOrderDto[];
 
   readonly userId: string;
+
+  readonly totalPrice: number;
 }

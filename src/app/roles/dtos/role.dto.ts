@@ -3,9 +3,13 @@ import { UserPermissions } from "../enums/user-permissions.enum";
 
 import { UserRoleEntity } from "../entities/user-role.entity";
 import { UUIDDto } from "src/shared/dtos/id.dto";
+import { ApiProperty } from "@nestjs/swagger";
 
 export class RoleDto extends UUIDDto {
+  @ApiProperty()
   type: UserRoleTypes;
+
+  @ApiProperty()
   permissions: UserPermissions[];
 
   static fromEntity(entity: UserRoleEntity) {

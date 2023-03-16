@@ -10,10 +10,12 @@ import { UserDto } from 'src/app/users/dtos/user.dto';
 import { PERMISSION_KEY } from '../decorators/permissions.decorator';
 import { UserSessionDto } from '../dtos/userSession.dto';
 import { SecurityService } from '../security.service';
+import {I18nService} from "nestjs-i18n";
 
 @Injectable()
 export class JwtPermissionsGuard implements CanActivate {
   constructor(
+      private readonly i18n: I18nService,
     private readonly jwtService: JwtService,
     private readonly reflector: Reflector,
     private readonly securityService: SecurityService
@@ -39,25 +41,25 @@ export class JwtPermissionsGuard implements CanActivate {
       const token = authHeader.split(' ')[1];
 
       if(bearer !== 'Bearer' || !token) {
-        throw new HttpException({message: "User unauthorized"}, HttpStatus.UNAUTHORIZED);
+        throw new HttpException({message: `${this.i18n.t('errors.ERRORS.UserUnauthorizedException')}`}, HttpStatus.UNAUTHORIZED);
       }
       
       const decodedUser = UserSessionDto.fromPayload(this.jwtService.verify(token));
 
       const userEntity = await this.securityService.getUserById(decodedUser.id)
       if (!userEntity) {
-        throw new HttpException({message: "User unauthorized"}, HttpStatus.UNAUTHORIZED);
+        throw new HttpException({message:`${this.i18n.t('errors.ERRORS.UserUnauthorizedException')}` }, HttpStatus.UNAUTHORIZED);
       }
 
       const user = UserDto.fromEntity(userEntity)
       if (!(Number(decodedUser.roleId) === user.roleId)) {
-        throw new HttpException({message: "User unauthorized"}, HttpStatus.UNAUTHORIZED);
+        throw new HttpException({message:`${this.i18n.t('errors.ERRORS.UserUnauthorizedException')}`}, HttpStatus.UNAUTHORIZED);
       }
       req.user = decodedUser;
       
       const roleEntity = await this.securityService.getRoleById(decodedUser.roleId);
       if (!roleEntity) {
-        throw new HttpException({message: "User unauthorized"}, HttpStatus.UNAUTHORIZED);
+        throw new HttpException({message: `${this.i18n.t('errors.ERRORS.UserUnauthorizedException')}`}, HttpStatus.UNAUTHORIZED);
       }
       
       const role = RoleDto.fromEntity(roleEntity)
@@ -67,7 +69,7 @@ export class JwtPermissionsGuard implements CanActivate {
       
       return requiredPemissions.some((permission) => role.permissions?.includes(permission));
     } catch (error) {
-      throw new HttpException({message: "User unauthorized"}, HttpStatus.UNAUTHORIZED);
+      throw new HttpException({message: `${this.i18n.t('errors.ERRORS.UserUnauthorizedException')}`}, HttpStatus.UNAUTHORIZED);
     }
   }
 }

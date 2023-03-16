@@ -1,0 +1,15 @@
+{
+  "ERRORS": {
+    "UserExistsException": "User exists",
+    "PasswordsDoesntMatchException": "Passwords does not match",
+    "UserDoesntExistException": "User doesn't exist",
+    "IncorrectPasswordException": "Incorrect password",
+    "FileWriteException": "An error occurred while writing the file",
+    "InvalidUserIdException": "Invalid user id",
+    "ChangePasswordException": "Forbidden to change the password",
+    "NewPasswordException": "New passwords does not match",
+    "UpdateInfoException": "Forbidden to update personal info",
+    "NotFoundException": "User or Role not found",
+    "UserUnauthorizedException": "User unauthorized"
+  }
+}

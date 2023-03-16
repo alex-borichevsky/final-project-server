@@ -10,10 +10,12 @@ import { RolesRepo } from '../roles/repos/roles.repo';
 import { UserRoleTypes } from '../roles/enums/user-role-types.enum';
 import { UpdateUserPasswordDto } from './dtos/update-user-password.dto';
 import * as bcrypt from 'bcrypt';
+import {I18nService} from "nestjs-i18n";
 
 @Injectable()
 export class UsersService {
   constructor(
+      private readonly i18n: I18nService,
     private readonly usersRepository: UsersRepo,
     private readonly rolesRepository: RolesRepo,
     @InjectRepository(UserInfoEntity) private infoRepository: Repository<UserInfoEntity>
@@ -53,18 +55,18 @@ export class UsersService {
     const user = await this.getUserById(updateId);
 
     if (user.email !== dto.email) {
-      throw new HttpException({message: "Forbidden to change the password"}, HttpStatus.FORBIDDEN);
+      throw new HttpException({message: `${this.i18n.t('errors.ERRORS.ChangePasswordException')}`}, HttpStatus.FORBIDDEN);
     }
 
     // Check current password
     const isMatch = await bcrypt.compare(dto.password, user.password);
     if (!isMatch) {
-      throw new BadRequestException("Invalid current password");
+      throw new BadRequestException(this.i18n.t('errors.ERRORS.IncorrectPasswordException'));
     }
 
     // Check new password
     if (dto.newPassword != dto.newPasswordConfirm) {
-      throw new BadRequestException("New passwords does not match");
+      throw new BadRequestException(this.i18n.t('errors.ERRORS.NewPasswordException'));
     }
 
     const newHashPassword = await bcrypt.hash(dto.newPassword, 10);
@@ -88,7 +90,7 @@ export class UsersService {
     const user = await this.usersRepository.getUserById(userId);
 
     if (user.email !== dto.email) {
-      throw new HttpException({message: "Forbidden to update personal info"}, HttpStatus.FORBIDDEN);
+      throw new HttpException({message: `${this.i18n.t('errors.ERRORS.UpdateInfoException')}`}, HttpStatus.FORBIDDEN);
     }
     const userInfo = await this.infoRepository.findOne({ where: { id: user.userInfo.id } });
     return this.infoRepository.update(userInfo.id, { 
@@ -112,6 +114,7 @@ export class UsersService {
       return await this.usersRepository.save(user);
 
     }
-    throw new HttpException("User or Role not found", HttpStatus.NOT_FOUND);
+    throw new HttpException(`${this.i18n.t('errors.ERRORS.NotFoundException')}`, HttpStatus.NOT_FOUND);
   }
+
 }

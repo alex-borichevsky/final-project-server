@@ -2,11 +2,13 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { OrdersRepo } from "./repos/orders.repo";
 import { CreateOrderDto } from "./dtos/create-order.dto";
 import { UsersRepo } from '../users/repos/users.repo';
+import {I18nService} from "nestjs-i18n";
 
 @Injectable()
 export class OrdersService {
 
   constructor(
+      private readonly i18n: I18nService,
     private readonly ordersRepo: OrdersRepo,
     private readonly usersRepo: UsersRepo
   ) { }
@@ -22,7 +24,7 @@ export class OrdersService {
   async createOrder(dto: CreateOrderDto) {
     const user = await this.usersRepo.getUserById(dto.userId);
     if (!user) {
-      throw new BadRequestException("Invalid user id");
+      throw new BadRequestException(this.i18n.t('errors.ERRORS.InvalidUserIdException'));
     } 
     const newOrder = this.ordersRepo.create({
       created: new Date(),

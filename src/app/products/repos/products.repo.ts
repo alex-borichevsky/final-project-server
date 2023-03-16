@@ -13,11 +13,11 @@ export class ProductsRepo extends Repository<ProductsEntity> {
   async getProductById(id: string) {
     return await this.findOne({
       where: { id },
-      relations: ['cart', 'orders', 'category', 'brand', 'ratings'],
+      relations: ['cart', 'category' ],
     });
   }
 
   async getAllProducts() {
-    return await this.find({relations: ['cart', 'orders', 'category', 'brand', 'ratings']});
+    return await this.find({relations: ['cart', 'category']});
   }
 }

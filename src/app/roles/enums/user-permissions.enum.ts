@@ -29,5 +29,25 @@ export enum UserPermissions {
   CreateRole = "create-role",
   AssignRole = "assign-role",
   DeleteRole = "delete-role",
-  UpdateRole = "update-role"
+  UpdateRole = "update-role",
+
+  // ============== cart ==========
+  GetCart = 'get-cart',
+  GetCartById = 'get-cart-by-id',
+  AddProductToCart = 'add-product-to-cart',
+  DeleteProductFromCart = 'delete-product-from-cart',
+  UpdateProductQuantity = 'update-product-quantity',
+
+  // ============== orders ==========
+  GetOrders = 'get-orders',
+  GetOrderById = 'get-carts-by-id',
+  CreateOrder = 'create-order',
+  DeleteOrder = 'delete-order',
+
+  // ============== products ==========
+  CreateProduct = 'create-product',
+  GetProductById = 'get-product-by-id',
+  GetAllProducts = 'get-all-products',
+  DeleteProduct = 'delete-product',
+  UpdateProduct = 'update-product',
 }

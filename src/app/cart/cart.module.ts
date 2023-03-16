@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from "@nestjs/typeorm";
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 // ============ App ================
 import { CartController } from './cart.controller';
@@ -8,7 +8,7 @@ import { CartEntity } from "./entities/cart.entity";
 import { CartRepo } from "./repos/cart.repo";
 import { UsersRepo } from '../users/repos/users.repo';
 import { UserEntity } from '../users/entities/users.entity';
-
+import { SecurityModule } from '../security/security.module';
 
 @Module({
   providers: [CartService, CartRepo, UsersRepo],
@@ -16,7 +16,8 @@ import { UserEntity } from '../users/entities/users.entity';
   imports: [
     TypeOrmModule.forFeature([
         CartEntity, UserEntity
-    ])
+    ]),
+    SecurityModule,
   ]
 })
 export class CartModule {}

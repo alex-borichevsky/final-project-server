@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from "@nestjs/typeorm";
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 // ============ App ================
 import { ProductsController } from './products.controller';
@@ -9,15 +9,15 @@ import { ProductsRepo } from './repos/products.repo';
 import { FilesModule } from '../files/files.module';
 import { CategoryRepo } from '../categories/repos/category.repo';
 import { CategoryEntity } from '../categories/entities/category.entity';
+import { SecurityModule } from '../security/security.module';
 
 @Module({
   providers: [ProductsService, ProductsRepo, CategoryRepo],
   controllers: [ProductsController],
   imports: [
-  TypeOrmModule.forFeature([
-        ProductsEntity, CategoryEntity
-    ]),
-    FilesModule
-  ]
+    TypeOrmModule.forFeature([ProductsEntity, CategoryEntity]),
+    FilesModule,
+    SecurityModule
+  ],
 })
 export class ProductsModule {}

@@ -18,6 +18,6 @@ export class ProductsRepo extends Repository<ProductsEntity> {
   }
 
   async getAllProducts() {
-    return await this.find({relations: ['cart', 'category']});
+    return await this.find({ relations: ['cart', 'category'] });
   }
 }

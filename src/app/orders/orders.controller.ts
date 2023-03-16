@@ -1,30 +1,44 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
+import { UserPermissions } from '../roles/enums/user-permissions.enum';
+import { RequirePermissions } from '../security/decorators/permissions.decorator';
+import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { OrdersService } from './orders.service';
 
 @Controller('orders')
+@UseGuards(JwtPermissionsGuard)
 export class OrdersController {
-    constructor(
-        private readonly ordersService: OrdersService
-    ){}
+  constructor(private readonly ordersService: OrdersService) {}
 
-    @Get('get')
-    getOrders() {
-        return this.ordersService.getOrders();
-    }
+  @Get()
+  @RequirePermissions(UserPermissions.GetOrders)
+  getOrders() {
+    return this.ordersService.getOrders();
+  }
 
-    @Get(':id')
-    getCartsById(@Body() id: string) {
-        return this.ordersService.getOrderById(id);
-    }
+  @Get(':id')
+  @RequirePermissions(UserPermissions.GetOrderById)
+  getOrderById(@Body() id: string) {
+    return this.ordersService.getOrderById(id);
+  }
 
-    @Post()
-    createOrder(@Body() dto: CreateOrderDto) {
-        return this.ordersService.createOrder(dto);
-    }
+  @Post()
+  @RequirePermissions(UserPermissions.CreateOrder)
+  createOrder(@Body() dto: CreateOrderDto) {
+    return this.ordersService.createOrder(dto);
+  }
 
-    @Delete(':id') 
-    deleteOrder(@Param() orderId : string) {
-        return this.ordersService.deleteOrder(orderId);
-    }
+  @Delete(':id')
+  @RequirePermissions(UserPermissions.DeleteOrder)
+  deleteOrder(@Param() orderId: string) {
+    return this.ordersService.deleteOrder(orderId);
+  }
 }

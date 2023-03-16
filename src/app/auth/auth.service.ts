@@ -6,10 +6,12 @@ import { RegistrationDto } from './dtos/registration.dto';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dtos/login.dto';
 import { Payload } from './dtos/payload.dto';
+import {I18nService} from "nestjs-i18n";
 
 @Injectable()
 export class AuthService {
   constructor(
+      private readonly i18n: I18nService,
     private usersRepo: UsersRepo,
     private usersService: UsersService,
     private jwtService: JwtService,
@@ -19,10 +21,10 @@ export class AuthService {
     const user = await this.usersRepo.getUserByEmail(dto.email);
 
     if (user) {
-      throw new BadRequestException("User exists");
+      throw new BadRequestException(this.i18n.t('errors.ERRORS.UserExistsException'));
     }
     if (dto.password != dto.confirmPassword) {
-      throw new BadRequestException("Passwords does not match");
+      throw new BadRequestException(this.i18n.t('errors.ERRORS.PasswordsDoesntMatchException'));
     }
 
     const hashPassword = await bcrypt.hash(dto.password, 10);
@@ -38,7 +40,7 @@ export class AuthService {
   async login(dto: LoginDto) {
     const user = await this.usersRepo.getUserByEmail(dto.email);
     if (!user) {
-      throw new BadRequestException("User doesn't exist");
+      throw new BadRequestException(this.i18n.t('errors.ERRORS.UserDoesntExistException'));
     }
     const payload = { email: user.email, id: user.id, roleId: user.roleId };
     const isMatch = await bcrypt.compare(dto.password, user.password);
@@ -47,7 +49,7 @@ export class AuthService {
         access_token: this.jwtService.sign(payload),
       }
     }
-    throw new BadRequestException("Incorrect password");
+    throw new BadRequestException(this.i18n.t('errors.ERRORS.IncorrectPasswordException'));
   }
 
 
@@ -56,6 +58,6 @@ export class AuthService {
     if (user) {
       return user;
     }
-    throw new BadRequestException("User does not exist");
+    throw new BadRequestException(this.i18n.t('errors.ERRORS.UserDoesntExistException'));
   }
 }

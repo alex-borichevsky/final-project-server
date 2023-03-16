@@ -12,11 +12,11 @@ export class OrdersRepo extends Repository<OrdersEntity> {
   }
 
   async getOrderById(id : string) {
-    return await this.findOne({ where: { id }, relations: ["user", "products"] });
+    return await this.findOne({ where: { id }, relations: ["user"] });
   }
 
   async getAllOrders() {
-    return await this.find({relations: ["user", "products"]});
+    return await this.find({relations: ["user"]});
   }
 
 }

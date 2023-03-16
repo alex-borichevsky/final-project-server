@@ -14,14 +14,14 @@ export class CategoryRepo extends Repository<CategoryEntity> {
   async getCategoryById(id: number) {
     return await this.findOne({
       where: { id },
-      relations: ['products', 'brands'],
+      relations: ['products'],
     });
   }
 
   async getCategoryByName(name: string) {
     return await this.findOne({
       where: { name },
-      relations: ['products', 'brands'],
+      relations: ['products'],
     });
   }
 
@@ -29,7 +29,7 @@ export class CategoryRepo extends Repository<CategoryEntity> {
 
   async getAllCategories() {
     return await this.find({
-      relations: ['products', 'brands'],
+      relations: ['products'],
     });
   }
 }

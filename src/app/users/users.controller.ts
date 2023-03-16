@@ -8,13 +8,14 @@ import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserPasswordDto } from './dtos/update-user-password.dto';
 import { AddUserInfoDto } from './dtos/add-user-info.dto';
 import { AddRoleDto } from './dtos/add-role.dto';
+import {I18n, I18nContext} from "nestjs-i18n";
 
 @Controller('users') 
 @UseGuards(JwtPermissionsGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  // Users 
+  // Users
 
   @Get()
   @RequirePermissions(UserPermissions.GetUsers)

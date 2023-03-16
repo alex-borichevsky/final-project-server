@@ -7,7 +7,8 @@ import { CategoryEntity } from "../app/categories/entities/category.entity";
 import { OrdersEntity } from "../app/orders/entities/orders.entity";
 import { ProductsEntity } from "../app/products/entities/products.entity";
 import { UserRoleEntity } from "../app/roles/entities/user-role.entity";
-import { createTables1678888257865 } from "src/migrations/1678888257865-create-tables";
+import {createTables1678974868027} from "../migrations/1678974868027-create-tables";
+import {DmlMigration1679006037816} from "../migrations/1679006037816-DmlMigration";
 
 config();
 
@@ -18,9 +19,9 @@ export const dataSourceOptions: DataSourceOptions = {
   username: 'postgres',
   password: 'postgres',
   database: 'final_db',
-  synchronize: true,
+  synchronize: false,
   installExtensions: true,
-  migrations: [createTables1678888257865],
+  migrations: [createTables1678974868027,DmlMigration1679006037816],
   entities: [UserEntity, UserInfoEntity, CartEntity, CategoryEntity, OrdersEntity, ProductsEntity,  UserRoleEntity],
 
 };

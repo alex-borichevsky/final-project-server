@@ -33,7 +33,7 @@ export class CartService {
     return await this.cartRepo.delete(recordId);
   }
 
-  updateProdictQuantity(dto: UpdateQuantityDto) {
+  updateProductQuantity(dto: UpdateQuantityDto) {
     return this.cartRepo.update(dto.recordId, { quantity: dto.quantity, updated: new Date()});
   }
 }

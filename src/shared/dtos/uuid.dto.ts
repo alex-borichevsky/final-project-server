@@ -1,12 +1,18 @@
 import { ApiProperty } from "@nestjs/swagger";
 
 export abstract class UUIDDto {
-  @ApiProperty()
+  @ApiProperty({
+    description: "Id"
+  })
   id!: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: "Created time"
+  })
   created!: number;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: "Updated time"
+  })
   updated!: number;
 }

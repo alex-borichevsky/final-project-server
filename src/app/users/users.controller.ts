@@ -9,32 +9,37 @@ import { UpdateUserPasswordDto } from './dtos/update-user-password.dto';
 import { AddUserInfoDto } from './dtos/add-user-info.dto';
 import { AddRoleDto } from './dtos/add-role.dto';
 import {I18n, I18nContext} from "nestjs-i18n";
+import { ApiOperation, ApiTags } from '@nestjs/swagger/dist';
 
+@ApiTags('users')
 @Controller('users') 
 @UseGuards(JwtPermissionsGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   // Users
-
+  @ApiOperation({ summary: "Get user list" })
   @Get()
   @RequirePermissions(UserPermissions.GetUsers)
   async getUsers() {
     return await this.usersService.getUsers();
   }
 
+  @ApiOperation({ summary: "Get user" })
   @Get(':id')
   @RequirePermissions(UserPermissions.GetUserById)
   async getUserById(@Param('id') id : string) {
     return await this.usersService.getUserById(id);
   }
 
+  @ApiOperation({ summary: "Delete user" })
   @Delete(':id')
   @RequirePermissions(UserPermissions.DeleteUser)
   async deleteUser(@Param('id') id : string) {
     return await this.usersService.deleteUser(id);
   }
 
+  @ApiOperation({ summary: "Update user" })
   @Put(':id')
   @RequirePermissions(UserPermissions.UpdatePassword)
   async updateUserPassword(@Param('id') id : string, @Body() body: UpdateUserPasswordDto) {
@@ -43,12 +48,14 @@ export class UsersController {
 
   // User info
   
+  @ApiOperation({ summary: "Get user info" })
   @Get('info/:id')
   @RequirePermissions(UserPermissions.GetUserInfo)
   async getUserUserById(@Param('id') id : string) {
     return await this.usersService.getUserInfo(id);
   }
 
+  @ApiOperation({ summary: "Update user info" })
   @Put('info/:id')
   @RequirePermissions(UserPermissions.UpdateUserInfo)
   async updateUserInfo(@Param('id') id : string, @Body() body: AddUserInfoDto) {
@@ -56,7 +63,7 @@ export class UsersController {
   }
 
   // Assign role
-
+  @ApiOperation({ summary: "Assign role to user" })
   @Put('assign/:id')
   @RequirePermissions(UserPermissions.AssignRole)
   async assignRoleToUser(@Param('id') id : string, @Body() body: AddRoleDto) {

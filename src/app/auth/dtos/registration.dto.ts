@@ -1,13 +1,19 @@
 import { ApiProperty } from "@nestjs/swagger";
 
 export class RegistrationDto {
-  @ApiProperty()
+  @ApiProperty({
+    description: "User email"
+  })
   readonly email: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: "User password"
+  })
   readonly password: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: "Confirm password"
+  })
   readonly confirmPassword: string;
 
 }

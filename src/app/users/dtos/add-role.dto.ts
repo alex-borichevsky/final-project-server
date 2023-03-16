@@ -2,9 +2,14 @@ import { ApiProperty } from '@nestjs/swagger';
 import { UserRoleTypes } from '../../roles/enums/user-role-types.enum';
 
 export class AddRoleDto {
-  @ApiProperty()
+  @ApiProperty({
+    description: "Role types",
+    enum: UserRoleTypes
+  })
   readonly type: UserRoleTypes;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: "Role name"
+  })
   readonly name: string;
 }

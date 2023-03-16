@@ -6,10 +6,15 @@ import { UUIDDto } from "src/shared/dtos/id.dto";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class RoleDto extends UUIDDto {
-  @ApiProperty()
+  @ApiProperty({
+    description: "Role types",
+    enum: UserRoleTypes
+  })
   type: UserRoleTypes;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: "Permissions"
+  })
   permissions: UserPermissions[];
 
   static fromEntity(entity: UserRoleEntity) {

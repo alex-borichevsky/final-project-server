@@ -5,13 +5,20 @@ import { UserEntity } from "../entities/users.entity";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class UserDto extends UUIDDto {
-  @ApiProperty()
+  @ApiProperty({
+    description: "User email"
+  })
   email!: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: "Role id"
+  })
   roleId!: number;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: "Role type",
+    enum: UserRoleTypes
+  })
   roleType!: UserRoleTypes;
 
   static fromEntity(entity: UserEntity) {

@@ -2,22 +2,30 @@
 import { IsEmail, IsString, Length, validate } from "class-validator";
 
 export class UpdateUserPasswordDto {
-  @ApiProperty()
+  @ApiProperty({
+    description: "User email"
+  })
   @IsString({message: "must be a string"})
   @IsEmail({}, {message: "got incorrect email"})
   readonly email: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: "User old password"
+  })
   @IsString({message: "must be a string"})
   @Length(4, 16, {message: "range: 4-16 symbols"})
   readonly password: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: "User new password"
+  })
   @IsString({message: "must be a string"})
   @Length(4, 16, {message: "range: 4-16 symbols"})
   readonly newPassword: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: "New password confirm"
+  })
   @IsString({message: "must be a string"})
   @Length(4, 16, {message: "range: 4-16 symbols"})
   readonly newPasswordConfirm: string;

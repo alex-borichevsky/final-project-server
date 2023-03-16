@@ -1,21 +1,37 @@
 import { ApiProperty } from "@nestjs/swagger";
 
 export class CreateProductDto {
-  @ApiProperty()
+  @ApiProperty({
+    description: "Product name"
+  })
   readonly name: string;
   
-  @ApiProperty()
+  @ApiProperty({
+    description: "Product price"
+  })
   readonly price: number;
   
-  @ApiProperty()
+  @ApiProperty({
+    description: "Product description",
+    required: false
+  })
   readonly description?: string;
   
-  @ApiProperty()
+  @ApiProperty({
+    description: "Product quantity",
+    required: false
+  })
   readonly quantity?: number;
   
-  @ApiProperty()
+  @ApiProperty({
+    description: "Product brand",
+    required: false
+  })
   readonly brand?: string;
   
-  @ApiProperty()
+  @ApiProperty({
+    description: "Product category",
+    required: false
+  })
   readonly categoryName?: string;
 }

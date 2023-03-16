@@ -1,9 +1,13 @@
 import { ApiProperty } from "@nestjs/swagger";
 
 export class UpdateQuantityDto {
-  @ApiProperty()
+  @ApiProperty({
+    description: "Update record id"
+  })
   recordId: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: "Update quantity"
+  })
   quantity: number;
 }

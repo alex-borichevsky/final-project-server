@@ -7,8 +7,7 @@ import { UpdateQuantityDto } from './dtos/update-quantity.dto';
 @Injectable()
 export class CartService {
   constructor(
-    private readonly cartRepo: CartRepo,
-    private readonly usersRepo: UsersRepo
+    private readonly cartRepo: CartRepo
   ) { }
 
   async getCarts() {
@@ -29,7 +28,7 @@ export class CartService {
     return await this.cartRepo.save(cartRecord);
   }
 
-  async deleteProductToCart(recordId : string) {
+  async deleteProductFromCart(recordId : string) {
     return await this.cartRepo.delete(recordId);
   }
 

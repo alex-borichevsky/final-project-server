@@ -1,9 +1,23 @@
+import { ApiProperty } from "@nestjs/swagger";
+
 export class Payload {
-    email: string;
+    @ApiProperty({
+        description: "User email"
+      })
+    email!: string;
 
-    id: string;
+    @ApiProperty({
+        description: "User id"
+      })
+    id!: string;
 
-    iat: Date;
+    @ApiProperty({
+        description: "Creation date"
+      })
+    iat!: Date;
 
-    exp: Date;
+    @ApiProperty({
+        description: "Expiration date"
+      })
+    exp!: Date;
 }

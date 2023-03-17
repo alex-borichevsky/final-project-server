@@ -2,12 +2,23 @@ import { UUIDDto } from "src/shared/dtos/uuid.dto";
 
 import { UserRoleTypes } from "src/app/roles/enums/user-role-types.enum";
 import { UserEntity } from "../entities/users.entity";
+import { ApiProperty } from "@nestjs/swagger";
 
 export class UserDto extends UUIDDto {
+  @ApiProperty({
+    description: "User email"
+  })
   email!: string;
 
+  @ApiProperty({
+    description: "Role id"
+  })
   roleId!: number;
 
+  @ApiProperty({
+    description: "Role type",
+    enum: UserRoleTypes
+  })
   roleType!: UserRoleTypes;
 
   static fromEntity(entity: UserEntity) {

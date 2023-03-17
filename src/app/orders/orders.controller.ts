@@ -45,7 +45,7 @@ export class OrdersController {
       })
     @Get(':id')
     @RequirePermissions(UserPermissions.GetOrderById)
-    getCartsById(@Body() id: string) {
+    getOrderById(@Param("id") id: string) {
         return this.ordersService.getOrderById(id);
     }
 
@@ -70,7 +70,7 @@ export class OrdersController {
       })
     @Delete(':id') 
     @RequirePermissions(UserPermissions.DeleteOrder)
-    deleteOrder(@Param() orderId : string) {
+    deleteOrder(@Param("id") orderId : string) {
         return this.ordersService.deleteOrder(orderId);
     }
 }

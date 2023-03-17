@@ -46,7 +46,7 @@ export class CartController {
       })
     @Get(':id')
     @RequirePermissions(UserPermissions.GetCartById)
-    getCartsById(@Param() id: string) {
+    getCartById(@Param("id") id: string) {
         return this.cartService.getCartById(id);
     }
 
@@ -71,8 +71,8 @@ export class CartController {
       })
     @Delete(':id')
     @RequirePermissions(UserPermissions.DeleteProductFromCart)
-    deleteProductFromCart(@Param() recordId : string) {
-        return this.cartService.deleteProductToCart(recordId);
+    deleteProductFromCart(@Param("recordId") recordId : string) {
+        return this.cartService.deleteProductFromCart(recordId);
     }
 
     @ApiOperation({ summary: "Update product quantity" })

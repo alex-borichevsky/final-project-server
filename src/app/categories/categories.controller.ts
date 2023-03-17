@@ -20,7 +20,7 @@ export class CategoriesController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: "HttpStatus:200:OK",
-    type: CategoryEntity,
+    type: CreateCategoryDto,
   })
   @Post()
   @RequirePermissions(UserPermissions.CreateCategory)
@@ -33,7 +33,7 @@ export class CategoriesController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: "HttpStatus:200:OK",
-    type: UpdateResult,
+    type: CreateCategoryDto,
   })
   @Put(':id')
   @RequirePermissions(UserPermissions.UpdateCategory)
@@ -48,7 +48,7 @@ export class CategoriesController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: "HttpStatus:200:OK",
-    type: CategoryEntity
+    type: CreateCategoryDto
   })
   @Get(':id')
   @RequirePermissions(UserPermissions.GetCategoryById)
@@ -60,7 +60,7 @@ export class CategoriesController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: "HttpStatus:200:OK",
-    type: CategoryEntity,
+    type: CreateCategoryDto,
     isArray: true
   })
   @Get()
@@ -73,7 +73,7 @@ export class CategoriesController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: "HttpStatus:200:OK",
-    type: DeleteResult
+    type: CreateCategoryDto
   })
   @Delete(':id')
   @RequirePermissions(UserPermissions.DeleteCategory)

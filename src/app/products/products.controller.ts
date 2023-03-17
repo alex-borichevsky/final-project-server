@@ -27,6 +27,11 @@ export class ProductsController {
 
   @ApiOperation({ summary: "Create product" })
   @ApiBody({ type: CreateProductDto })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: "HttpStatus:200:OK",
+    type: CreateProductDto
+  })
   @UseInterceptors(FileInterceptor('image'))
   @Post()
   @RequirePermissions(UserPermissions.CreateProduct)
@@ -38,7 +43,7 @@ export class ProductsController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: "HttpStatus:200:OK",
-    type: ProductsEntity
+    type: CreateProductDto
   })
   @Get(':id')
   @RequirePermissions(UserPermissions.GetProductById)
@@ -50,7 +55,7 @@ export class ProductsController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: "HttpStatus:200:OK",
-    type: ProductsEntity,
+    type: CreateProductDto,
     isArray: true
   })
   @Get()
@@ -63,7 +68,7 @@ export class ProductsController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: "HttpStatus:200:OK",
-    type: DeleteResult
+    type: CreateProductDto
   })
   @Delete(':id')
   @RequirePermissions(UserPermissions.DeleteProduct)
@@ -76,7 +81,7 @@ export class ProductsController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: "HttpStatus:200:OK",
-    type: UpdateResult,
+    type: CreateProductDto,
   })
   @Put(':id')
   @RequirePermissions(UserPermissions.UpdateProduct)

@@ -55,7 +55,7 @@ export class CartController {
     @ApiResponse({
         status: HttpStatus.OK,
         description: "HttpStatus:200:OK",
-        type: CartEntity,
+        type: AddProductToCartDto,
       })
     @Post()
     @RequirePermissions(UserPermissions.AddProductToCart)
@@ -80,7 +80,7 @@ export class CartController {
     @ApiResponse({
         status: HttpStatus.OK,
         description: "HttpStatus:200:OK",
-        type: UpdateResult,
+        type: UpdateQuantityDto,
       })
     @Put()
     @RequirePermissions(UserPermissions.UpdateProductQuantity)

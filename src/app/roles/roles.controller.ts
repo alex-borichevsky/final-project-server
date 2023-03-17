@@ -3,7 +3,9 @@ import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger/dis
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { RequirePermissions } from '../security/decorators/permissions.decorator';
 import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
+import { UserDto } from '../users/dtos/user.dto';
 import { CreateRoleDto } from './dtos/create-role.dto';
+import { RoleDto } from './dtos/role.dto';
 import { UserRoleEntity } from './entities/user-role.entity';
 import { UserPermissions } from './enums/user-permissions.enum';
 import { RolesService } from './roles.service';
@@ -18,7 +20,7 @@ export class RolesController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: "HttpStatus:200:OK",
-    type: UserRoleEntity,
+    type: RoleDto,
     isArray: true
   })
   @Get()
@@ -31,7 +33,7 @@ export class RolesController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: "HttpStatus:200:OK",
-    type: UserRoleEntity
+    type: RoleDto
   })
   @Get(':id')
   @RequirePermissions(UserPermissions.GetRoleById)
@@ -44,7 +46,7 @@ export class RolesController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: "HttpStatus:200:OK",
-    type: UserRoleEntity,
+    type: RoleDto,
   })
   @Post()
   @RequirePermissions(UserPermissions.CreateRole)
@@ -56,7 +58,7 @@ export class RolesController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: "HttpStatus:200:OK",
-    type: DeleteResult
+    type: RoleDto
   })
   @Delete(':id')
   @RequirePermissions(UserPermissions.DeleteRole)
@@ -69,7 +71,7 @@ export class RolesController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: "HttpStatus:200:OK",
-    type: UpdateResult,
+    type: RoleDto,
   })
   @Put(':id')
   @RequirePermissions(UserPermissions.UpdateRole)

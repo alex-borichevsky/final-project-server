@@ -14,6 +14,7 @@ import { RegistrationDto } from '../auth/dtos/registration.dto';
 import { UserEntity } from './entities/users.entity';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { UserInfoEntity } from './entities/user-info.entity';
+import { UserDto } from './dtos/user.dto';
 
 @ApiTags('users')
 @Controller('users') 
@@ -27,7 +28,7 @@ export class UsersController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: "HttpStatus:200:OK",
-    type: UserEntity,
+    type: UserDto,
     isArray: true
   })
   @Get()
@@ -40,7 +41,7 @@ export class UsersController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: "HttpStatus:200:OK",
-    type: UserEntity
+    type: UserDto
   })
   @Get(':id')
   @RequirePermissions(UserPermissions.GetUserById)
@@ -52,7 +53,7 @@ export class UsersController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: "HttpStatus:200:OK",
-    type: DeleteResult
+    type: UserDto,
   })
   @Delete(':id')
   @RequirePermissions(UserPermissions.DeleteUser)
@@ -64,7 +65,7 @@ export class UsersController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: "HttpStatus:200:OK",
-    type: UpdateResult,
+    type: UserDto,
   })
   @Put(':id')
   @RequirePermissions(UserPermissions.UpdatePassword)
@@ -78,7 +79,7 @@ export class UsersController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: "HttpStatus:200:OK",
-    type: UserInfoEntity
+    type: AddUserInfoDto
   })
   @Get('info/:id')
   @RequirePermissions(UserPermissions.GetUserInfo)
@@ -90,7 +91,7 @@ export class UsersController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: "HttpStatus:200:OK",
-    type: UpdateResult,
+    type: AddUserInfoDto,
   })
   @Put('info/:id')
   @RequirePermissions(UserPermissions.UpdateUserInfo)
@@ -103,7 +104,7 @@ export class UsersController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: "HttpStatus:200:OK",
-    type: UserEntity,
+    type: UserDto,
   })
   @Put('assign/:id')
   @RequirePermissions(UserPermissions.AssignRole)

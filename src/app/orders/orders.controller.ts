@@ -16,6 +16,7 @@ import { CreateOrderDto } from './dtos/create-order.dto';
 import { OrdersService } from './orders.service';
 import { OrdersEntity } from './entities/orders.entity';
 import { DeleteResult } from 'typeorm';
+import { ProductOrderDto } from './dtos/order-products.dto';
 
 @ApiTags('orders')
 @Controller('orders')
@@ -27,7 +28,7 @@ export class OrdersController {
     @ApiResponse({
         status: HttpStatus.OK,
         description: "HttpStatus:200:OK",
-        type: OrdersEntity,
+        type: ProductOrderDto,
         isArray: true
       })
     @Get('get')
@@ -40,7 +41,7 @@ export class OrdersController {
     @ApiResponse({
         status: HttpStatus.OK,
         description: "HttpStatus:200:OK",
-        type: OrdersEntity
+        type: ProductOrderDto
       })
     @Get(':id')
     @RequirePermissions(UserPermissions.GetOrderById)
@@ -53,7 +54,7 @@ export class OrdersController {
     @ApiResponse({
         status: HttpStatus.OK,
         description: "HttpStatus:200:OK",
-        type: OrdersEntity,
+        type: CreateOrderDto,
       })
     @Post()
     @RequirePermissions(UserPermissions.CreateOrder)
@@ -65,7 +66,7 @@ export class OrdersController {
     @ApiResponse({
         status: HttpStatus.OK,
         description: "HttpStatus:200:OK",
-        type: DeleteResult
+        type: ProductOrderDto
       })
     @Delete(':id') 
     @RequirePermissions(UserPermissions.DeleteOrder)

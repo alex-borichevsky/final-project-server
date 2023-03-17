@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   Param,
   Post,
   Put,
@@ -14,8 +15,9 @@ import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
 import { CartService } from './cart.service';
 import { AddProductToCartDto } from './dtos/add-product-to-cart.dto';
 import { UpdateQuantityDto } from './dtos/update-quantity.dto';
-import { UpdateResult } from 'typeorm';
-import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger/dist';
+import { DeleteResult, UpdateResult } from 'typeorm';
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger/dist';
+import { CartEntity } from './entities/cart.entity';
 
 @ApiTags('cart')
 @Controller('cart')
@@ -24,6 +26,12 @@ export class CartController {
   constructor(private readonly cartService: CartService) {}
 
     @ApiOperation({ summary: "Get carts list" })
+    @ApiResponse({
+        status: HttpStatus.OK,
+        description: "HttpStatus:200:OK",
+        type: CartEntity,
+        isArray: true,
+      })
     @Get()
     @RequirePermissions(UserPermissions.GetCart)
     getCarts() {
@@ -31,6 +39,11 @@ export class CartController {
     }
 
     @ApiOperation({ summary: "Get cart" })
+    @ApiResponse({
+        status: HttpStatus.OK,
+        description: "HttpStatus:200:OK",
+        type: CartEntity,
+      })
     @Get(':id')
     @RequirePermissions(UserPermissions.GetCartById)
     getCartsById(@Param() id: string) {
@@ -39,6 +52,11 @@ export class CartController {
 
     @ApiOperation({ summary: "Add product to cart" })
     @ApiBody({ type: AddProductToCartDto })
+    @ApiResponse({
+        status: HttpStatus.OK,
+        description: "HttpStatus:200:OK",
+        type: CartEntity,
+      })
     @Post()
     @RequirePermissions(UserPermissions.AddProductToCart)
     addProductToCart(@Body() body : AddProductToCartDto) {
@@ -46,6 +64,11 @@ export class CartController {
     }
 
     @ApiOperation({ summary: "Delete product from cart" })
+    @ApiResponse({
+        status: HttpStatus.OK,
+        description: "HttpStatus:200:OK",
+        type: DeleteResult,
+      })
     @Delete(':id')
     @RequirePermissions(UserPermissions.DeleteProductFromCart)
     deleteProductFromCart(@Param() recordId : string) {
@@ -54,9 +77,14 @@ export class CartController {
 
     @ApiOperation({ summary: "Update product quantity" })
     @ApiBody({ type: UpdateQuantityDto })
+    @ApiResponse({
+        status: HttpStatus.OK,
+        description: "HttpStatus:200:OK",
+        type: UpdateResult,
+      })
     @Put()
     @RequirePermissions(UserPermissions.UpdateProductQuantity)
     updateProductQuantity(@Body() body : UpdateQuantityDto) {
-        return this.cartService.updateProdictQuantity(body);
+        return this.cartService.updateProductQuantity(body);
     }
 }

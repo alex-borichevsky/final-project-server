@@ -1,8 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger/dist';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger/dist';
+import { DeleteResult, UpdateResult } from 'typeorm';
 import { RequirePermissions } from '../security/decorators/permissions.decorator';
 import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
 import { CreateRoleDto } from './dtos/create-role.dto';
+import { UserRoleEntity } from './entities/user-role.entity';
 import { UserPermissions } from './enums/user-permissions.enum';
 import { RolesService } from './roles.service';
 
@@ -13,6 +15,12 @@ export class RolesController {
   constructor(private readonly rolesService : RolesService) {}
 
   @ApiOperation({ summary: "Get roles list" })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: "HttpStatus:200:OK",
+    type: UserRoleEntity,
+    isArray: true
+  })
   @Get()
   @RequirePermissions(UserPermissions.GetRoles)
   async getRoles() {
@@ -20,6 +28,11 @@ export class RolesController {
   }
 
   @ApiOperation({ summary: "Get role" })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: "HttpStatus:200:OK",
+    type: UserRoleEntity
+  })
   @Get(':id')
   @RequirePermissions(UserPermissions.GetRoleById)
   async getRoleById(@Param('id') id : number) {
@@ -28,6 +41,11 @@ export class RolesController {
 
   @ApiOperation({ summary: "Crdate role" })
   @ApiBody({ type: CreateRoleDto })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: "HttpStatus:200:OK",
+    type: UserRoleEntity,
+  })
   @Post()
   @RequirePermissions(UserPermissions.CreateRole)
   async createRole(@Body() body : CreateRoleDto) {
@@ -35,6 +53,11 @@ export class RolesController {
   }
 
   @ApiOperation({ summary: "Delete role" })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: "HttpStatus:200:OK",
+    type: DeleteResult
+  })
   @Delete(':id')
   @RequirePermissions(UserPermissions.DeleteRole)
   async deleteRole(@Param('id') id : number) {
@@ -43,6 +66,11 @@ export class RolesController {
 
   @ApiOperation({ summary: "Update role" })
   @ApiBody({type: CreateRoleDto})
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: "HttpStatus:200:OK",
+    type: UpdateResult,
+  })
   @Put(':id')
   @RequirePermissions(UserPermissions.UpdateRole)
   async updateRole(@Param('id') id : number, @Body() body: CreateRoleDto) {

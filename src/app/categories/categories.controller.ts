@@ -1,11 +1,13 @@
-import { Controller, UseGuards } from '@nestjs/common';
+import { Controller, HttpStatus, UseGuards } from '@nestjs/common';
 import { Body, Delete, Get, Param, Post, Put } from '@nestjs/common/decorators';
-import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger/dist';
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger/dist';
+import { DeleteResult, UpdateResult } from 'typeorm';
 import { UserPermissions } from '../roles/enums/user-permissions.enum';
 import { RequirePermissions } from '../security/decorators/permissions.decorator';
 import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dtos/create-category.dto';
+import { CategoryEntity } from './entities/category.entity';
 
 @ApiTags('categories')
 @Controller('categories')
@@ -15,6 +17,11 @@ export class CategoriesController {
 
   @ApiOperation({ summary: "Create category" })
   @ApiBody({ type: CreateCategoryDto })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: "HttpStatus:200:OK",
+    type: CategoryEntity,
+  })
   @Post()
   @RequirePermissions(UserPermissions.CreateCategory)
   createCategory(@Body() category: CreateCategoryDto) {
@@ -23,6 +30,11 @@ export class CategoriesController {
 
   @ApiOperation({ summary: "Update category" })
   @ApiBody({ type: CreateCategoryDto })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: "HttpStatus:200:OK",
+    type: UpdateResult,
+  })
   @Put(':id')
   @RequirePermissions(UserPermissions.UpdateCategory)
   updateCategory(
@@ -33,6 +45,11 @@ export class CategoriesController {
   }
 
   @ApiOperation({ summary: "Get category" })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: "HttpStatus:200:OK",
+    type: CategoryEntity
+  })
   @Get(':id')
   @RequirePermissions(UserPermissions.GetCategoryById)
   getCategoryById(@Param('id') id: number) {
@@ -40,6 +57,12 @@ export class CategoriesController {
   }
 
   @ApiOperation({ summary: "Get categories list" })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: "HttpStatus:200:OK",
+    type: CategoryEntity,
+    isArray: true
+  })
   @Get()
   @RequirePermissions(UserPermissions.GetAllCategories)
   getAllCategories() {
@@ -47,6 +70,11 @@ export class CategoriesController {
   }
 
   @ApiOperation({ summary: "Delete category" })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: "HttpStatus:200:OK",
+    type: DeleteResult
+  })
   @Delete(':id')
   @RequirePermissions(UserPermissions.DeleteCategory)
   deleteCategory(@Param('id') id: number) {

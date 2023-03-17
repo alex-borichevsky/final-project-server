@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  HttpStatus,
   Post,
   UploadedFile,
   UseInterceptors,
@@ -14,7 +15,9 @@ import { RequirePermissions } from '../security/decorators/permissions.decorator
 import { UserPermissions } from '../roles/enums/user-permissions.enum';
 import { CreateCategoryDto } from '../categories/dtos/create-category.dto';
 import { ApiBody } from '@nestjs/swagger';
-import { ApiOperation, ApiTags } from '@nestjs/swagger/dist';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger/dist';
+import { ProductsEntity } from './entities/products.entity';
+import { DeleteResult, UpdateResult } from 'typeorm';
 
 @ApiTags('products')
 @Controller('products')
@@ -32,6 +35,11 @@ export class ProductsController {
   }
 
   @ApiOperation({ summary: "Get product" })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: "HttpStatus:200:OK",
+    type: ProductsEntity
+  })
   @Get(':id')
   @RequirePermissions(UserPermissions.GetProductById)
   getProductById(@Param('id') id: string) {
@@ -39,6 +47,12 @@ export class ProductsController {
   }
 
   @ApiOperation({ summary: "Get products list" })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: "HttpStatus:200:OK",
+    type: ProductsEntity,
+    isArray: true
+  })
   @Get()
   @RequirePermissions(UserPermissions.GetAllProducts)
   getAllProducts() {
@@ -46,6 +60,11 @@ export class ProductsController {
   }
 
   @ApiOperation({ summary: "Delete product" })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: "HttpStatus:200:OK",
+    type: DeleteResult
+  })
   @Delete(':id')
   @RequirePermissions(UserPermissions.DeleteProduct)
   deleteProduct(@Param('id') id: string) {
@@ -54,6 +73,11 @@ export class ProductsController {
 
   @ApiOperation({ summary: "Update product" })
   @ApiBody({ type: CreateProductDto })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: "HttpStatus:200:OK",
+    type: UpdateResult,
+  })
   @Put(':id')
   @RequirePermissions(UserPermissions.UpdateProduct)
   updateProduct(@Param('id') id: string, @Body() dto: CreateProductDto) {

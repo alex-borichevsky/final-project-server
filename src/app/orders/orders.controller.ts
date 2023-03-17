@@ -1,9 +1,10 @@
-import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger/dist';
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger/dist';
 import {
   Body,
   Controller,
   Delete,
   Get,
+  HttpStatus,
   Param,
   Post,
   UseGuards,
@@ -13,6 +14,8 @@ import { RequirePermissions } from '../security/decorators/permissions.decorator
 import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { OrdersService } from './orders.service';
+import { OrdersEntity } from './entities/orders.entity';
+import { DeleteResult } from 'typeorm';
 
 @ApiTags('orders')
 @Controller('orders')
@@ -21,6 +24,12 @@ export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
     @ApiOperation({ summary: "Get orders list" })
+    @ApiResponse({
+        status: HttpStatus.OK,
+        description: "HttpStatus:200:OK",
+        type: OrdersEntity,
+        isArray: true
+      })
     @Get('get')
     @RequirePermissions(UserPermissions.GetOrders)
     getOrders() {
@@ -28,6 +37,11 @@ export class OrdersController {
     }
 
     @ApiOperation({ summary: "Get order" })
+    @ApiResponse({
+        status: HttpStatus.OK,
+        description: "HttpStatus:200:OK",
+        type: OrdersEntity
+      })
     @Get(':id')
     @RequirePermissions(UserPermissions.GetOrderById)
     getCartsById(@Body() id: string) {
@@ -36,6 +50,11 @@ export class OrdersController {
 
     @ApiOperation({ summary: "Create order"})
     @ApiBody({ type: CreateOrderDto })
+    @ApiResponse({
+        status: HttpStatus.OK,
+        description: "HttpStatus:200:OK",
+        type: OrdersEntity,
+      })
     @Post()
     @RequirePermissions(UserPermissions.CreateOrder)
     createOrder(@Body() dto: CreateOrderDto) {
@@ -43,6 +62,11 @@ export class OrdersController {
     }
 
     @ApiOperation({ summary: "Delete order" })
+    @ApiResponse({
+        status: HttpStatus.OK,
+        description: "HttpStatus:200:OK",
+        type: DeleteResult
+      })
     @Delete(':id') 
     @RequirePermissions(UserPermissions.DeleteOrder)
     deleteOrder(@Param() orderId : string) {

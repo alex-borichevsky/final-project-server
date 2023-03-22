@@ -64,7 +64,6 @@ export class CategoriesController {
     isArray: true
   })
   @Get()
-  @RequirePermissions(UserPermissions.GetAllCategories)
   getAllCategories() {
     return this.categoriesService.getAllCategories();
   }

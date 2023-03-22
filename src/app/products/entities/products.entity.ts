@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
 } from "typeorm";
@@ -29,9 +30,13 @@ export class ProductsEntity extends UUIDEntity {
   @Column({default: ''})
   brand: string;
 
+  @Column({ name: "category_id" })
+  categoryId!: number;
+
   @OneToMany(() => CartEntity, (cart) => cart.products)
   cart?: CartEntity;
 
   @ManyToOne(() => CategoryEntity)
+  @JoinColumn({ name: "category_id", referencedColumnName: "id" })
   category?: CategoryEntity;
 }

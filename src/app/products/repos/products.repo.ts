@@ -1,7 +1,9 @@
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ProductsEntity } from '../entities/products.entity';
 
+@Injectable()
 export class ProductsRepo extends Repository<ProductsEntity> {
   constructor(
     @InjectRepository(ProductsEntity)
@@ -14,6 +16,12 @@ export class ProductsRepo extends Repository<ProductsEntity> {
     return await this.findOne({
       where: { id },
       relations: ['cart', 'category'],
+    });
+  }
+
+  async getProductsByCategoryId(id: number) {
+    return await this.find({
+      where: { categoryId: id }
     });
   }
 

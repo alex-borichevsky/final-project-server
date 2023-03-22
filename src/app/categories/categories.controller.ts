@@ -2,6 +2,7 @@ import { Controller, HttpStatus, UseGuards } from '@nestjs/common';
 import { Body, Delete, Get, Param, Post, Put } from '@nestjs/common/decorators';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger/dist';
 import { DeleteResult, UpdateResult } from 'typeorm';
+import { CreateProductDto } from '../products/dtos/create-product.dto';
 import { UserPermissions } from '../roles/enums/user-permissions.enum';
 import { RequirePermissions } from '../security/decorators/permissions.decorator';
 import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
@@ -66,6 +67,18 @@ export class CategoriesController {
   @Get()
   getAllCategories() {
     return this.categoriesService.getAllCategories();
+  }
+
+  @ApiOperation({ summary: "Get product" })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: "HttpStatus:200:OK",
+    type: Array<CreateProductDto>
+  })
+  @Get('products/:id')
+  @RequirePermissions(UserPermissions.GetProductById)
+  getProductsByCategoryId(@Param('id') id: number) {
+    return this.categoriesService.getProductsByCategoryId(id);
   }
 
   @ApiOperation({ summary: "Delete category" })

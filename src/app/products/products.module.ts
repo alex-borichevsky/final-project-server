@@ -19,5 +19,6 @@ import { SecurityModule } from '../security/security.module';
     FilesModule,
     SecurityModule
   ],
+  exports: [ProductsRepo]
 })
 export class ProductsModule {}

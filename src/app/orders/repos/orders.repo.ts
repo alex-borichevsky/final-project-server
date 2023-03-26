@@ -19,4 +19,8 @@ export class OrdersRepo extends Repository<OrdersEntity> {
     return await this.find({relations: ["user"]});
   }
 
+  async getOrdersByUserId(id: string) {
+    return await this.find({where:{userId: id}});
+  }
+
 }

@@ -17,7 +17,14 @@ export class OrdersEntity extends UUIDEntity{
   @Column({name:"user_id"})
   userId: string;
 
-  @Column("text", { name: "products", array: true })
+
+  @Column({
+    type: 'jsonb',
+    array: false,
+    default: () => "'[]'",
+    nullable: false,
+    name: "products"
+  })
   products?: ProductOrderDto[];
 
   @ManyToOne(() => UserEntity)

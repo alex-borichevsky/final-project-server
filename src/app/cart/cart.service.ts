@@ -14,6 +14,10 @@ export class CartService {
     return await this.cartRepo.getAllCarts();
   }
 
+  async getCartByUserId(id: string) {
+    return await this.cartRepo.getCartByUserId(id);
+  }
+
   async getCartById(id : string) {
     return await this.cartRepo.getCartById(id);
   }

@@ -21,6 +21,10 @@ export class OrdersService {
     return await this.ordersRepo.getOrderById(id);
   }
 
+  async getOrdersByUserId(id: string) {
+    return await this.ordersRepo.getOrdersByUserId(id);
+  }
+
   async createOrder(dto: CreateOrderDto) {
     const user = await this.usersRepo.getUserById(dto.userId);
     if (!user) {

@@ -11,6 +11,7 @@ import { UserRoleTypes } from '../roles/enums/user-role-types.enum';
 import { UpdateUserPasswordDto } from './dtos/update-user-password.dto';
 import * as bcrypt from 'bcrypt';
 import {I18nService} from "nestjs-i18n";
+import { UserSessionDto } from '../security/dtos/userSession.dto';
 
 @Injectable()
 export class UsersService {
@@ -51,8 +52,8 @@ export class UsersService {
     return await this.usersRepository.save(newUser);
   }
 
-  public async updateUserPassword(updateId: string, dto: UpdateUserPasswordDto) {
-    const user = await this.getUserById(updateId);
+  public async updateUserPassword(userDto: UserSessionDto, dto: UpdateUserPasswordDto) {
+    const user = await this.getUserById(userDto.id);
 
     // Check current password
     const isMatch = await bcrypt.compare(dto.password, user.password);
@@ -66,7 +67,7 @@ export class UsersService {
     }
 
     const newHashPassword = await bcrypt.hash(dto.newPassword, 10);
-    return await this.usersRepository.update(updateId,{password: newHashPassword, updated: new Date()});
+    return await this.usersRepository.update(userDto.id,{password: newHashPassword, updated: new Date()});
   }
 
 
@@ -78,14 +79,13 @@ export class UsersService {
 
   // User Info
 
-  public async getUserInfo(id: string) {
-    console.log(id)
-    const user = await this.usersRepository.getUserById(id);
+  public async getUserInfo(userDto: UserSessionDto) {
+    const user = await this.usersRepository.getUserById(userDto.id);
     return user.userInfo;
   }
 
-  public async updateUserInfo(userId: string, dto: AddUserInfoDto) {
-    const user = await this.usersRepository.getUserById(userId);
+  public async updateUserInfo(userDto: UserSessionDto, dto: AddUserInfoDto) {
+    const user = await this.usersRepository.getUserById(userDto.id);
 
     const userInfo = await this.infoRepository.findOne({ where: { id: user.userInfo.id } });
     return this.infoRepository.update(userInfo.id, {

@@ -1,7 +1,8 @@
 import { IsNumber, IsString, IsUUID } from "class-validator";
+import { UUIDDto } from '../../../shared/dtos/uuid.dto';
 
 
-export class UserSessionDto {
+export class UserSessionDto{
   @IsUUID()
   id: string;
 
@@ -19,7 +20,7 @@ export class UserSessionDto {
     return {
       id: dto.id,
       email: dto.email,
-      roleId: dto.roleId
+      roleId: dto.roleId,
     };
   }
 }

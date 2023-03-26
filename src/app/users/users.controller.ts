@@ -15,6 +15,8 @@ import { UserEntity } from './entities/users.entity';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { UserInfoEntity } from './entities/user-info.entity';
 import { UserDto } from './dtos/user.dto';
+import { User } from './decorators/user.decorator';
+import { UserSessionDto } from '../security/dtos/userSession.dto';
 
 @ApiTags('users')
 @Controller('users') 
@@ -67,10 +69,10 @@ export class UsersController {
     description: "HttpStatus:200:OK",
     type: UserDto,
   })
-  @Put(':id')
+  @Put()
   @RequirePermissions(UserPermissions.UpdatePassword)
-  async updateUserPassword(@Param('id') id : string, @Body() body: UpdateUserPasswordDto) {
-    return await this.usersService.updateUserPassword(id, body);
+  async updateUserPassword(@User() user: UserSessionDto, @Body() body: UpdateUserPasswordDto) {
+    return await this.usersService.updateUserPassword(user, body);
   }
 
   // User info
@@ -81,10 +83,10 @@ export class UsersController {
     description: "HttpStatus:200:OK",
     type: AddUserInfoDto
   })
-  @Get('info/:id')
+  @Get('/info/user')
   @RequirePermissions(UserPermissions.GetUserInfo)
-  async getUserUserById(@Param('id') id : string) {
-    return await this.usersService.getUserInfo(id);
+  async getUserInfoById(@User() user: UserSessionDto) {
+    return await this.usersService.getUserInfo(user);
   }
 
   @ApiOperation({ summary: "Update user info" })
@@ -93,10 +95,10 @@ export class UsersController {
     description: "HttpStatus:200:OK",
     type: AddUserInfoDto,
   })
-  @Put('info/:id')
+  @Put('/info/user')
   @RequirePermissions(UserPermissions.UpdateUserInfo)
-  async updateUserInfo(@Param('id') id : string, @Body() body: AddUserInfoDto) {
-    return await this.usersService.updateUserInfo(id, body);
+  async updateUserInfo(@User() user: UserSessionDto, @Body() body: AddUserInfoDto) {
+    return await this.usersService.updateUserInfo(user, body);
   }
 
   // Assign role

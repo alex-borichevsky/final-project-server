@@ -23,5 +23,9 @@ export class CartRepo extends Repository<CartEntity> {
     return await this.find({where:{userId: id}, relations: ["products"]});
   }
 
+  async deleteByUserId(id: string) {
+    return await this.delete({"userId": id});
+  }
+
 
 }

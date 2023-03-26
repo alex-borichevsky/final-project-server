@@ -3,6 +3,8 @@ import { OrdersRepo } from "./repos/orders.repo";
 import { CreateOrderDto } from "./dtos/create-order.dto";
 import { UsersRepo } from '../users/repos/users.repo';
 import {I18nService} from "nestjs-i18n";
+import { UserSessionDto } from '../security/dtos/userSession.dto';
+import { CartRepo } from '../cart/repos/cart.repo';
 
 @Injectable()
 export class OrdersService {
@@ -10,7 +12,8 @@ export class OrdersService {
   constructor(
       private readonly i18n: I18nService,
     private readonly ordersRepo: OrdersRepo,
-    private readonly usersRepo: UsersRepo
+    private readonly usersRepo: UsersRepo,
+    private readonly cartRepo: CartRepo,
   ) { }
 
   async getOrders() {
@@ -21,20 +24,29 @@ export class OrdersService {
     return await this.ordersRepo.getOrderById(id);
   }
 
-  async getOrdersByUserId(id: string) {
-    return await this.ordersRepo.getOrdersByUserId(id);
+  async getOrdersByUserId(user: UserSessionDto) {
+    return await this.ordersRepo.getOrdersByUserId(user.id);
   }
 
-  async createOrder(dto: CreateOrderDto) {
-    const user = await this.usersRepo.getUserById(dto.userId);
+  async createOrder(user: UserSessionDto, dto: CreateOrderDto) {
+
     if (!user) {
       throw new BadRequestException(this.i18n.t('errors.ERRORS.InvalidUserIdException'));
-    } 
+    }
+
+    const userCart = await this.cartRepo.getCartByUserId(user.id);
+
+    const products = [];
+
+    userCart.forEach(cart => {
+      products.push(cart.products)
+    })
+
     const newOrder = this.ordersRepo.create({
       created: new Date(),
       updated: new Date(),
-      userId: dto.userId,
-      products: dto.products,
+      userId: user.id,
+      products: products,
       totalPrice: dto.totalPrice
     })
 

@@ -6,6 +6,8 @@ import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { OrdersService } from './orders.service';
 import { ProductOrderDto } from './dtos/order-products.dto';
+import { User } from '../users/decorators/user.decorator';
+import { UserSessionDto } from '../security/dtos/userSession.dto';
 
 @ApiTags('orders')
 @Controller('orders')
@@ -32,16 +34,16 @@ export class OrdersController {
         description: "HttpStatus:200:OK",
         type: ProductOrderDto
       })
-    @Get(':id')
+    @Get('user/:id')
     @RequirePermissions(UserPermissions.GetOrderById)
     getOrderById(@Param("id") id: string) {
         return this.ordersService.getOrderById(id);
     }
 
     @RequirePermissions(UserPermissions.GetOrderByUserId)
-    @Get('/user/:id')
-    getOrderByUserId(@Param('id') id: string) {
-      return this.ordersService.getOrdersByUserId(id);
+    @Get('/user')
+    getOrderByUserId(@User() user: UserSessionDto) {
+      return this.ordersService.getOrdersByUserId(user);
     }
 
 
@@ -54,8 +56,8 @@ export class OrdersController {
       })
     @Post()
     @RequirePermissions(UserPermissions.CreateOrder)
-    createOrder(@Body() dto: CreateOrderDto) {
-        return this.ordersService.createOrder(dto);
+    createOrder(@User() user: UserSessionDto, @Body() dto: CreateOrderDto) {
+        return this.ordersService.createOrder(user, dto);
     }
 
     @ApiOperation({ summary: "Delete order" })

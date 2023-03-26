@@ -12,6 +12,7 @@ import { SecurityModule } from '../security/security.module';
 
 @Module({
   providers: [CartService, CartRepo, UsersRepo],
+  exports: [CartRepo],
   controllers: [CartController],
   imports: [
     TypeOrmModule.forFeature([

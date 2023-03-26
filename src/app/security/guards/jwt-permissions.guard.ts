@@ -52,6 +52,7 @@ export class JwtPermissionsGuard implements CanActivate {
       }
 
       const user = UserDto.fromEntity(userEntity)
+
       if (!(Number(decodedUser.roleId) === user.roleId)) {
         throw new HttpException({message:`${this.i18n.t('errors.ERRORS.UserUnauthorizedException')}`}, HttpStatus.UNAUTHORIZED);
       }
@@ -63,10 +64,9 @@ export class JwtPermissionsGuard implements CanActivate {
       }
       
       const role = RoleDto.fromEntity(roleEntity)
-
       if (role.type === UserRoleTypes.SuperAdmin)
         return true;
-      
+
       return requiredPemissions.some((permission) => role.permissions?.includes(permission));
     } catch (error) {
       throw new HttpException({message: `${this.i18n.t('errors.ERRORS.UserUnauthorizedException')}`}, HttpStatus.UNAUTHORIZED);

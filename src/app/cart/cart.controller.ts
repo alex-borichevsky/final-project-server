@@ -8,6 +8,8 @@ import { UpdateQuantityDto } from './dtos/update-quantity.dto';
 import { DeleteResult } from 'typeorm';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger/dist';
 import { CartEntity } from './entities/cart.entity';
+import { User } from '../users/decorators/user.decorator';
+import { UserSessionDto } from '../security/dtos/userSession.dto';
 
 @ApiTags('cart')
 @Controller('cart')
@@ -28,17 +30,17 @@ export class CartController {
         return this.cartService.getCarts();
     }
 
-    @ApiOperation({ summary: "Get cart" })
-    @ApiResponse({
-        status: HttpStatus.OK,
-        description: "HttpStatus:200:OK",
-        type: CartEntity,
-      })
-    @Get(':id')
-    @RequirePermissions(UserPermissions.GetCartById)
-    getCartById(@Param("id") id: string) {
-        return this.cartService.getCartById(id);
-    }
+    // @ApiOperation({ summary: "Get cart" })
+    // @ApiResponse({
+    //     status: HttpStatus.OK,
+    //     description: "HttpStatus:200:OK",
+    //     type: CartEntity,
+    //   })
+    // @Get(':id')
+    // @RequirePermissions(UserPermissions.GetCartById)
+    // getCartById(@Param("id") id: string) {
+    //     //return this.cartService.getCartById(id);
+    // }
 
     @ApiOperation({ summary: "Add product to cart" })
     @ApiBody({ type: AddProductToCartDto })
@@ -47,11 +49,18 @@ export class CartController {
         description: "HttpStatus:200:OK",
         type: AddProductToCartDto,
       })
-    @Post()
+    @Post('/product')
     @RequirePermissions(UserPermissions.AddProductToCart)
-    addProductToCart(@Body() body : AddProductToCartDto) {
-        return this.cartService.addProductToCart(body);
+    addProductToCart(@User() user: UserSessionDto, @Body() dto : AddProductToCartDto) {
+        return this.cartService.addProductToCart(user, dto);
     }
+
+    @Delete()
+    @RequirePermissions(UserPermissions.DeleteCartByUserId)
+    deleteCartByUserId(@User() user: UserSessionDto) {
+    return this.cartService.deleteCartByUserId(user);
+    }
+
 
     @ApiOperation({ summary: "Delete product from cart" })
     @ApiResponse({
@@ -79,8 +88,8 @@ export class CartController {
     }
 
     @RequirePermissions(UserPermissions.GetCartByUserId)
-    @Get('/user/:id')
-    getCartByUserId(@Param('id') id: string) {
-    return this.cartService.getCartByUserId(id);
+    @Get('/user')
+    getCartByUserId(@User() user:UserSessionDto) {
+    return this.cartService.getCartByUserId(user);
   }
 }

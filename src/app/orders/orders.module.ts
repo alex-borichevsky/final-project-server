@@ -9,13 +9,17 @@ import { OrdersRepo } from "./repos/orders.repo";
 import { UsersRepo } from '../users/repos/users.repo';
 import { UserEntity } from '../users/entities/users.entity';
 import { SecurityModule } from '../security/security.module';
+import { CartModule } from '../cart/cart.module';
+import { CartRepo } from '../cart/repos/cart.repo';
+import { CartEntity } from '../cart/entities/cart.entity';
 
 
 @Module({
-  providers: [OrdersService, OrdersRepo, UsersRepo],
+  providers: [OrdersService, OrdersRepo, UsersRepo, CartRepo],
   controllers: [OrdersController],
   imports: [
-    TypeOrmModule.forFeature([OrdersEntity, UserEntity]),
+    CartModule,
+    TypeOrmModule.forFeature([OrdersEntity, UserEntity, CartEntity]),
     SecurityModule
   ],
 })

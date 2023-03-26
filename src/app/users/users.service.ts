@@ -15,7 +15,7 @@ import {I18nService} from "nestjs-i18n";
 @Injectable()
 export class UsersService {
   constructor(
-      private readonly i18n: I18nService,
+    private readonly i18n: I18nService,
     private readonly usersRepository: UsersRepo,
     private readonly rolesRepository: RolesRepo,
     @InjectRepository(UserInfoEntity) private infoRepository: Repository<UserInfoEntity>
@@ -34,7 +34,7 @@ export class UsersService {
   async createUser(dto: CreateUserDto) {
     const role = await this.rolesRepository.getRoleByName('user');
     const newUser = this.usersRepository.create({
-      ...dto, 
+      ...dto,
       created: new Date(),
       updated: new Date(),
       roleType: UserRoleTypes.Client,
@@ -42,10 +42,10 @@ export class UsersService {
     });
     const userInfo = await this.infoRepository.save( {
       id: newUser.id,
-      firstName: '',
-      lastName: '',
-      phone: '',
-      address: ''
+      firstName: 'first name',
+      lastName: 'last name',
+      phone: 'phone',
+      address: 'address'
     });
     newUser.userInfo = userInfo;
     return await this.usersRepository.save(newUser);
@@ -53,10 +53,6 @@ export class UsersService {
 
   public async updateUserPassword(updateId: string, dto: UpdateUserPasswordDto) {
     const user = await this.getUserById(updateId);
-
-    if (user.email !== dto.email) {
-      throw new HttpException({message: `${this.i18n.t('errors.ERRORS.ChangePasswordException')}`}, HttpStatus.FORBIDDEN);
-    }
 
     // Check current password
     const isMatch = await bcrypt.compare(dto.password, user.password);
@@ -83,22 +79,21 @@ export class UsersService {
   // User Info
 
   public async getUserInfo(id: string) {
-    return await this.infoRepository.findOne({ where: { id } });
+    console.log(id)
+    const user = await this.usersRepository.getUserById(id);
+    return user.userInfo;
   }
 
   public async updateUserInfo(userId: string, dto: AddUserInfoDto) {
     const user = await this.usersRepository.getUserById(userId);
 
-    if (user.email !== dto.email) {
-      throw new HttpException({message: `${this.i18n.t('errors.ERRORS.UpdateInfoException')}`}, HttpStatus.FORBIDDEN);
-    }
     const userInfo = await this.infoRepository.findOne({ where: { id: user.userInfo.id } });
-    return this.infoRepository.update(userInfo.id, { 
+    return this.infoRepository.update(userInfo.id, {
       firstName: dto.firstName,
       lastName: dto.lastName,
       phone: dto.phone,
       address: dto.address,
-      updated: new Date() 
+      updated: new Date()
     });
   }
 

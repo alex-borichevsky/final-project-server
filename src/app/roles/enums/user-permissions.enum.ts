@@ -37,12 +37,14 @@ export enum UserPermissions {
   AddProductToCart = 'add-product-to-cart',
   DeleteProductFromCart = 'delete-product-from-cart',
   UpdateProductQuantity = 'update-product-quantity',
+  GetCartByUserId = 'get-cart-by-user-id',
 
   // ============== orders ==========
   GetOrders = 'get-orders',
   GetOrderById = 'get-carts-by-id',
   CreateOrder = 'create-order',
   DeleteOrder = 'delete-order',
+  GetOrderByUserId = 'get-order-by-user-id',
 
   // ============== products ==========
   CreateProduct = 'create-product',

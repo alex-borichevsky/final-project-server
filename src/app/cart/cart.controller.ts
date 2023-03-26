@@ -1,21 +1,11 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpStatus,
-  Param,
-  Post,
-  Put,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { UserPermissions } from '../roles/enums/user-permissions.enum';
 import { RequirePermissions } from '../security/decorators/permissions.decorator';
 import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
 import { CartService } from './cart.service';
 import { AddProductToCartDto } from './dtos/add-product-to-cart.dto';
 import { UpdateQuantityDto } from './dtos/update-quantity.dto';
-import { DeleteResult, UpdateResult } from 'typeorm';
+import { DeleteResult } from 'typeorm';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger/dist';
 import { CartEntity } from './entities/cart.entity';
 
@@ -87,4 +77,10 @@ export class CartController {
     updateProductQuantity(@Body() body : UpdateQuantityDto) {
         return this.cartService.updateProductQuantity(body);
     }
+
+    @RequirePermissions(UserPermissions.GetCartByUserId)
+    @Get('/user/:id')
+    getCartByUserId(@Param('id') id: string) {
+    return this.cartService.getCartByUserId(id);
+  }
 }

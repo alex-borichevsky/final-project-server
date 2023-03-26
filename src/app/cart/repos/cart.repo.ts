@@ -19,4 +19,9 @@ export class CartRepo extends Repository<CartEntity> {
     return await this.find({relations: ["products", "user"]});
   }
 
+  async getCartByUserId(id: string) {
+    return await this.find({where:{userId: id}, relations: ["products"]});
+  }
+
+
 }

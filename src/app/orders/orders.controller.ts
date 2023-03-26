@@ -1,21 +1,10 @@
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger/dist';
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpStatus,
-  Param,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, UseGuards } from '@nestjs/common';
 import { UserPermissions } from '../roles/enums/user-permissions.enum';
 import { RequirePermissions } from '../security/decorators/permissions.decorator';
 import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { OrdersService } from './orders.service';
-import { OrdersEntity } from './entities/orders.entity';
-import { DeleteResult } from 'typeorm';
 import { ProductOrderDto } from './dtos/order-products.dto';
 
 @ApiTags('orders')
@@ -48,6 +37,13 @@ export class OrdersController {
     getOrderById(@Param("id") id: string) {
         return this.ordersService.getOrderById(id);
     }
+
+    @RequirePermissions(UserPermissions.GetOrderByUserId)
+    @Get('/user/:id')
+    getOrderByUserId(@Param('id') id: string) {
+      return this.ordersService.getOrdersByUserId(id);
+    }
+
 
     @ApiOperation({ summary: "Create order"})
     @ApiBody({ type: CreateOrderDto })

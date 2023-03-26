@@ -1,18 +1,15 @@
 import { Controller, HttpStatus, UseGuards } from '@nestjs/common';
 import { Body, Delete, Get, Param, Post, Put } from '@nestjs/common/decorators';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger/dist';
-import { DeleteResult, UpdateResult } from 'typeorm';
 import { CreateProductDto } from '../products/dtos/create-product.dto';
 import { UserPermissions } from '../roles/enums/user-permissions.enum';
 import { RequirePermissions } from '../security/decorators/permissions.decorator';
 import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dtos/create-category.dto';
-import { CategoryEntity } from './entities/category.entity';
 
 @ApiTags('categories')
 @Controller('categories')
-@UseGuards(JwtPermissionsGuard)
 export class CategoriesController {
   constructor(private categoriesService: CategoriesService) { }
 
@@ -24,6 +21,7 @@ export class CategoriesController {
     type: CreateCategoryDto,
   })
   @Post()
+  @UseGuards(JwtPermissionsGuard)
   @RequirePermissions(UserPermissions.CreateCategory)
   createCategory(@Body() category: CreateCategoryDto) {
     return this.categoriesService.createCategory(category);
@@ -37,6 +35,7 @@ export class CategoriesController {
     type: CreateCategoryDto,
   })
   @Put(':id')
+  @UseGuards(JwtPermissionsGuard)
   @RequirePermissions(UserPermissions.UpdateCategory)
   updateCategory(
     @Param('id') id: number,
@@ -52,7 +51,6 @@ export class CategoriesController {
     type: CreateCategoryDto
   })
   @Get(':id')
-  @RequirePermissions(UserPermissions.GetCategoryById)
   getCategoryById(@Param('id') id: number) {
     return this.categoriesService.getCategoryById(id);
   }
@@ -76,7 +74,6 @@ export class CategoriesController {
     type: Array<CreateProductDto>
   })
   @Get('products/:id')
-  @RequirePermissions(UserPermissions.GetProductById)
   getProductsByCategoryId(@Param('id') id: number) {
     return this.categoriesService.getProductsByCategoryId(id);
   }
@@ -88,6 +85,7 @@ export class CategoriesController {
     type: CreateCategoryDto
   })
   @Delete(':id')
+  @UseGuards(JwtPermissionsGuard)
   @RequirePermissions(UserPermissions.DeleteCategory)
   deleteCategory(@Param('id') id: number) {
     return this.categoriesService.deleteCategory(id);

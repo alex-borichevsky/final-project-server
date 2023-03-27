@@ -67,6 +67,6 @@ export class AuthController {
   @RequirePermissions(UserPermissions.RefreshToken)
   async refreshToken(@User() user: UserSessionDto) {
       const currentUser = await this.securityService.getUser(user);
-      return await this.securityService.generateToken(user);
+      return await this.securityService.generateToken(currentUser);
   }
 }

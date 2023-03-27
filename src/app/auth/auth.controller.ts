@@ -10,12 +10,20 @@ import { RegistrationDto } from './dtos/registration.dto';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Payload } from './dtos/payload.dto';
 import { PostLoginResponse } from './dtos/post-login.response.dto';
+import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
+import { RequirePermissions } from '../security/decorators/permissions.decorator';
+import { UserPermissions } from '../roles/enums/user-permissions.enum';
+import { User } from '../users/decorators/user.decorator';
+import { UserSessionDto } from '../security/dtos/userSession.dto';
+import { SecurityService } from '../security/security.service';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+              private securityService: SecurityService
+              ) { }
 
   @ApiOperation({ summary: "Registration with email, password and confirm password" })
   @ApiBody({ type: RegistrationDto })
@@ -52,5 +60,13 @@ export class AuthController {
   @Get('logout')
   async logOut() {
     return null;
+  }
+
+  @Get('/refresh-token')
+  @UseGuards(JwtPermissionsGuard)
+  @RequirePermissions(UserPermissions.RefreshToken)
+  async refreshToken(@User() user: UserSessionDto) {
+      const currentUser = await this.securityService.getUser(user);
+      return await this.securityService.generateToken(user);
   }
 }

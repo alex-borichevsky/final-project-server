@@ -2,13 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from "@nestjs/jwt";
 import { RolesRepo } from '../roles/repos/roles.repo';
 import { UsersRepo } from '../users/repos/users.repo';
+import { UsersService } from '../users/users.service';
+import { UserSessionDto } from './dtos/userSession.dto';
 
 
 @Injectable()
 export class SecurityService {
   constructor(
     private readonly rolesRepository: RolesRepo,
-    private readonly usersRepository: UsersRepo
+    private readonly usersRepository: UsersRepo,
+    private jwtService: JwtService
   ) { }
 
   public async getUserById(userId: string) {
@@ -19,13 +22,15 @@ export class SecurityService {
     return await this.rolesRepository.getRoleById(roleId);
   }
 
-  // TODO replace UserEntity with security interface
-  // async generateToken(entity: UserEntity) {
-  //   const payload = UserSessionDto.fromEntity(entity, []);
-  //   const access_token = this.jwtService.sign(payload);
+  public async getUser(user: UserSessionDto) {
+    return await this.usersRepository.getUserById(user.id);
+  }
 
-  //   return {
-  //     access_token,
-  //   } as JwtTokenDto;
-  // }
+  async generateToken(user: UserSessionDto) {
+    const payload = UserSessionDto.fromPayload(user);
+
+    return {
+      access_token: this.jwtService.sign(payload),
+    }
+  }
 }

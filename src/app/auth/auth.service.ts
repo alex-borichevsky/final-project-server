@@ -7,6 +7,7 @@ import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dtos/login.dto';
 import { Payload } from './dtos/payload.dto';
 import {I18nService} from "nestjs-i18n";
+import { SecurityService } from '../security/security.service';
 
 @Injectable()
 export class AuthService {
@@ -15,6 +16,7 @@ export class AuthService {
     private usersRepo: UsersRepo,
     private usersService: UsersService,
     private jwtService: JwtService,
+    private securityService: SecurityService
   ) { }
   async registration(dto: RegistrationDto) {
 
@@ -32,9 +34,8 @@ export class AuthService {
       ...dto, password: hashPassword
     })
     const payload = { email: newUser.email, id: newUser.id, roleId: newUser.roleId };
-    return {
-      access_token: this.jwtService.sign(payload),
-    }
+
+    return this.securityService.generateToken(payload);
   }
 
   async login(dto: LoginDto) {
@@ -45,9 +46,7 @@ export class AuthService {
     const payload = { email: user.email, id: user.id, roleId: user.roleId };
     const isMatch = await bcrypt.compare(dto.password, user.password);
     if (isMatch) {
-      return {
-        access_token: this.jwtService.sign(payload),
-      }
+      return this.securityService.generateToken(payload);
     }
     throw new BadRequestException(this.i18n.t('errors.ERRORS.IncorrectPasswordException'));
   }

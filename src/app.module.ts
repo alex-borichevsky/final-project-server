@@ -15,6 +15,8 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import * as path from "path";
 import { AcceptLanguageResolver, I18nModule, QueryResolver } from "nestjs-i18n";
+import { ScheduleModule } from '@nestjs/schedule';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 
 @Module({
@@ -30,6 +32,8 @@ import { AcceptLanguageResolver, I18nModule, QueryResolver } from "nestjs-i18n";
         AcceptLanguageResolver,
       ],
     }),
+    ScheduleModule.forRoot(),
+    EventEmitterModule.forRoot(),
     ConfigModule.forRoot({
       envFilePath: '.development.env',
     }),

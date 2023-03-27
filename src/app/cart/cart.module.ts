@@ -9,9 +9,11 @@ import { CartRepo } from "./repos/cart.repo";
 import { UsersRepo } from '../users/repos/users.repo';
 import { UserEntity } from '../users/entities/users.entity';
 import { SecurityModule } from '../security/security.module';
+import { ScheduledTasksService } from './scheduled-tasks.service';
+import { AbadonedCartListener } from './listeners/abadoned-cart.listener';
 
 @Module({
-  providers: [CartService, CartRepo, UsersRepo],
+  providers: [CartService, CartRepo, UsersRepo, ScheduledTasksService, AbadonedCartListener],
   exports: [CartRepo],
   controllers: [CartController],
   imports: [

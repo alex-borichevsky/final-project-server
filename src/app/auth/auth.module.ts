@@ -8,9 +8,11 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { UsersRepo } from '../users/repos/users.repo';
 import { UserEntity } from '../users/entities/users.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { SecurityModule } from '../security/security.module';
 
 @Module({
   imports: [
+    SecurityModule,
     UsersModule,
     PassportModule,
     TypeOrmModule.forFeature([
@@ -18,7 +20,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   ]),
     JwtModule.register({
       secret: "SECRET",
-      signOptions: { expiresIn: '1h' },
+      signOptions: { expiresIn: '30s' },
     }),
   ],
   providers: [AuthService, JwtStrategy,UsersRepo],

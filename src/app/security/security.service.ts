@@ -31,6 +31,7 @@ export class SecurityService {
 
     return {
       access_token: this.jwtService.sign(payload),
+      expired_at: (Number(new Date().getTime()) + 3600000)
     }
   }
 }

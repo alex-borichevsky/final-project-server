@@ -20,7 +20,7 @@ import { SecurityModule } from '../security/security.module';
   ]),
     JwtModule.register({
       secret: "SECRET",
-      signOptions: { expiresIn: '3h' },
+      signOptions: { expiresIn: '1h' },
     }),
   ],
   providers: [AuthService, JwtStrategy,UsersRepo],

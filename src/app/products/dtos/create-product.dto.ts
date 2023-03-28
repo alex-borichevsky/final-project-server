@@ -33,5 +33,5 @@ export class CreateProductDto {
     description: "Product category",
     required: false
   })
-  readonly categoryName?: string;
+  readonly categoryId?: number;
 }

@@ -30,10 +30,14 @@ export class ProductsController {
   })
   @UseInterceptors(FileInterceptor('image'))
   @Post()
-  @UseGuards(JwtPermissionsGuard)
+  // @UseGuards(JwtPermissionsGuard)
   @RequirePermissions(UserPermissions.CreateProduct)
-  async createProduct(@Body() body: CreateProductDto, @UploadedFile() image) {
-    return await this.productService.createProduct(body, image);
+  async createProduct(@Body() body: CreateProductDto, 
+  // @UploadedFile() image
+  ) {
+    return await this.productService.createProduct(body
+      // ,image
+      );
   }
 
   @ApiOperation({ summary: "Get product" })
@@ -80,7 +84,7 @@ export class ProductsController {
     type: CreateProductDto,
   })
   @Put(':id')
-  @UseGuards(JwtPermissionsGuard)
+  // @UseGuards(JwtPermissionsGuard)
   @RequirePermissions(UserPermissions.UpdateProduct)
   updateProduct(@Param('id') id: string, @Body() dto: CreateProductDto) {
     return this.productService.updateProduct(id, dto);

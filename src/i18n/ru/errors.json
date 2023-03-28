@@ -10,6 +10,7 @@
     "NewPasswordException": "Новые пароли не совпадают",
     "UpdateInfoException": "Forbidden to update personal info",
     "NotFoundException": "Пользователь или роль не найдены",
-    "UserUnauthorizedException": "Пользователь не авторизован"
+    "UserUnauthorizedException": "Пользователь не авторизован",
+    "UserForbiddenException": "Пользователь деактивирован"
   }
 }

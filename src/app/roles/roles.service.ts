@@ -25,7 +25,12 @@ export class RolesService {
   }
 
   public updateRole(updateId: number, dto: CreateRoleDto) {
-    return this.roleRepository.update(updateId, { ...dto, updated: new Date()});
+    // return this.roleRepository.update(updateId, { ...dto, updated: new Date()});
+    return this.roleRepository.save({
+      id: updateId,
+      ...dto,
+      updated: new Date()
+    })
   }
 
   public deleteRole(id: number) {

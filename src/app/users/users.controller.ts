@@ -4,19 +4,14 @@ import { UsersService } from './users.service';
 import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
 import { UserPermissions } from '../roles/enums/user-permissions.enum';
 import { RequirePermissions } from '../security/decorators/permissions.decorator';
-import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserPasswordDto } from './dtos/update-user-password.dto';
 import { AddUserInfoDto } from './dtos/add-user-info.dto';
 import { AddRoleDto } from './dtos/add-role.dto';
-import {I18n, I18nContext} from "nestjs-i18n";
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger/dist';
-import { RegistrationDto } from '../auth/dtos/registration.dto';
-import { UserEntity } from './entities/users.entity';
-import { DeleteResult, UpdateResult } from 'typeorm';
-import { UserInfoEntity } from './entities/user-info.entity';
 import { UserDto } from './dtos/user.dto';
 import { User } from './decorators/user.decorator';
 import { UserSessionDto } from '../security/dtos/userSession.dto';
+import { UpdateUserStatusDto } from './dtos/update-status.dto';
 
 @ApiTags('users')
 @Controller('users') 
@@ -36,7 +31,7 @@ export class UsersController {
   @Get()
   @RequirePermissions(UserPermissions.GetUsers)
   async getUsers() {
-    return await this.usersService.getUsers();
+    return await this.usersService.getUsersFromView();
   }
 
   @ApiOperation({ summary: "Get user" })
@@ -48,19 +43,19 @@ export class UsersController {
   @Get(':id')
   @RequirePermissions(UserPermissions.GetUserById)
   async getUserById(@Param('id') id : string) {
-    return await this.usersService.getUserById(id);
+    return await this.usersService.getUserByIdFromView(id);
   }
 
-  @ApiOperation({ summary: "Delete user" })
+  @ApiOperation({ summary: "Update user" })
   @ApiResponse({
     status: HttpStatus.OK,
     description: "HttpStatus:200:OK",
     type: UserDto,
   })
-  @Delete(':id')
-  @RequirePermissions(UserPermissions.DeleteUser)
-  async deleteUser(@Param('id') id : string) {
-    return await this.usersService.deleteUser(id);
+  @Put('/status/:id')
+  @RequirePermissions(UserPermissions.UpdateUserStatus)
+  async updateUserStatus(@Param('id') id : string, @Body() body: UpdateUserStatusDto) {
+    return await this.usersService.updateUserStatus(id, body);
   }
 
   @ApiOperation({ summary: "Update user" })

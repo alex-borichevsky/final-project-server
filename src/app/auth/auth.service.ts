@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersRepo } from '../users/repos/users.repo';
 import { UsersService } from '../users/users.service';
@@ -43,6 +43,9 @@ export class AuthService {
     if (!user) {
       throw new BadRequestException(this.i18n.t('errors.ERRORS.UserDoesntExistException'));
     }
+    if (!user.status)
+      throw new HttpException({message:`${this.i18n.t('errors.ERRORS.UserForbiddenException')}`}, HttpStatus.FORBIDDEN);
+      
     const payload = { email: user.email, id: user.id, roleId: user.roleId };
     const isMatch = await bcrypt.compare(dto.password, user.password);
     if (isMatch) {

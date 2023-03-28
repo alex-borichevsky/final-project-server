@@ -12,6 +12,8 @@ import { UpdateUserPasswordDto } from './dtos/update-user-password.dto';
 import * as bcrypt from 'bcrypt';
 import {I18nService} from "nestjs-i18n";
 import { UserSessionDto } from '../security/dtos/userSession.dto';
+import { UserInfoView } from './views/user-info.view';
+import { UpdateUserStatusDto } from './dtos/update-status.dto';
 
 @Injectable()
 export class UsersService {
@@ -19,7 +21,8 @@ export class UsersService {
     private readonly i18n: I18nService,
     private readonly usersRepository: UsersRepo,
     private readonly rolesRepository: RolesRepo,
-    @InjectRepository(UserInfoEntity) private infoRepository: Repository<UserInfoEntity>
+    @InjectRepository(UserInfoEntity) private infoRepository: Repository<UserInfoEntity>,
+    @InjectRepository(UserInfoView) private userInfoViewRepository: Repository<UserInfoView>
   ) { }
 
   // Users
@@ -28,8 +31,16 @@ export class UsersService {
     return await this.usersRepository.getAllUsers();
   }
 
+  async getUsersFromView() {
+    return await this.userInfoViewRepository.find();
+  }
+
   async getUserById(id : string) {
     return await this.usersRepository.getUserById(id);
+  }
+
+  async getUserByIdFromView(id : string) {
+    return await this.userInfoViewRepository.findOne({ where: { id } });;
   }
 
   async createUser(dto: CreateUserDto) {
@@ -77,6 +88,12 @@ export class UsersService {
     return await this.usersRepository.save(user);
   }
 
+  public async updateUserStatus(id: string, dto: UpdateUserStatusDto) {
+    const user = await this.getUserById(id);
+    user.status = dto.status;
+    return await this.usersRepository.save(user);
+  }
+
   // User Info
 
   public async getUserInfo(userDto: UserSessionDto) {
@@ -97,6 +114,7 @@ export class UsersService {
     });
   }
 
+
   // Roles
 
   public async assignRole(userId: string, dto: AddRoleDto) {
@@ -107,7 +125,6 @@ export class UsersService {
       user.roleId = role.id;
       user.roleType = dto.type;
       return await this.usersRepository.save(user);
-
     }
     throw new HttpException(`${this.i18n.t('errors.ERRORS.NotFoundException')}`, HttpStatus.NOT_FOUND);
   }

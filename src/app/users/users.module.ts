@@ -15,6 +15,7 @@ import { CategoryEntity } from "../categories/entities/category.entity";
 import { ProductsEntity } from "../products/entities/products.entity";
 import { SecurityModule } from '../security/security.module';
 import { RolesRepo } from '../roles/repos/roles.repo';
+import { UserInfoView } from './views/user-info.view';
 
 
 @Module({
@@ -32,7 +33,8 @@ import { RolesRepo } from '../roles/repos/roles.repo';
       OrdersEntity,
       UserInfoEntity,
       CategoryEntity,
-      ProductsEntity
+      ProductsEntity,
+      UserInfoView
     ]),
     SecurityModule
   ]

@@ -9,8 +9,7 @@ export enum UserPermissions {
   GetUserRole = "get-user-role",
   DeleteUser = "delete-user",
   UpdatePassword = "update-password",
-  UpdateBanStatus = "update-ban-status",
-  UpdateBanReason = "update-ban-reason",
+  UpdateUserStatus = "update-user-status",
 
   // ============== users info ==========
   GetUserInfo = "get-user-info",

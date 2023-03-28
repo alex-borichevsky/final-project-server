@@ -10,6 +10,7 @@
     "NewPasswordException": "New passwords does not match",
     "UpdateInfoException": "Forbidden to update personal info",
     "NotFoundException": "User or Role not found",
-    "UserUnauthorizedException": "User unauthorized"
+    "UserUnauthorizedException": "User unauthorized",
+    "UserForbiddenException": "User is deactivated"
   }
 }

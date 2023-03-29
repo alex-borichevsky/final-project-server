@@ -31,7 +31,7 @@ export class CreateProductDto {
   
   @ApiProperty({
     description: "Product category",
-    required: false
+    required: true
   })
-  readonly categoryName?: string;
+  readonly categoryId!: number;
 }

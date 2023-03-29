@@ -32,8 +32,12 @@ export class ProductsController {
   @Post()
   @UseGuards(JwtPermissionsGuard)
   @RequirePermissions(UserPermissions.CreateProduct)
-  async createProduct(@Body() body: CreateProductDto, @UploadedFile() image) {
-    return await this.productService.createProduct(body, image);
+  async createProduct(@Body() body: CreateProductDto, 
+  // @UploadedFile() image
+  ) {
+    return await this.productService.createProduct(body
+      // ,image
+      );
   }
 
   @ApiOperation({ summary: "Get product" })

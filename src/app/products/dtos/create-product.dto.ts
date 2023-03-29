@@ -16,7 +16,13 @@ export class CreateProductDto {
     required: false
   })
   readonly description?: string;
-  
+
+  @ApiProperty({
+    description: "Product image",
+    required: false
+  })
+  readonly image?: string;
+
   @ApiProperty({
     description: "Product quantity",
     required: false

@@ -11,8 +11,6 @@ import { OrdersModule } from './app/orders/orders.module';
 import { CategoriesModule } from './app/categories/categories.module';
 import { CartModule } from './app/cart/cart.module';
 import { dataSourceOptions } from "./config/typeOrm.config";
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
 import * as path from "path";
 import { AcceptLanguageResolver, I18nModule, QueryResolver } from "nestjs-i18n";
 import { ScheduleModule } from '@nestjs/schedule';
@@ -36,9 +34,6 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     EventEmitterModule.forRoot(),
     ConfigModule.forRoot({
       envFilePath: '.development.env',
-    }),
-    ServeStaticModule.forRoot({
-      rootPath: path.resolve(__dirname, 'app/static')
     }),
     TypeOrmModule.forRoot(dataSourceOptions),
     UsersModule,

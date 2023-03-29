@@ -9,7 +9,6 @@ import { CategoryRepo } from '../categories/repos/category.repo';
 export class ProductsService {
   constructor(private readonly productsRepository: ProductsRepo,
               private readonly categoryRepository: CategoryRepo,
-              private fileService: FilesService
               ) {}
 
   async getProductById(id: string) {
@@ -21,26 +20,7 @@ export class ProductsService {
   }
 
   async createProduct(dto: CreateProductDto
-    // , image: any
     ) {
-
-    // const fileName = await this.fileService.createFile(image);
-    // let category = dto.categoryId;
-
-    // if (!dto.categoryId) {
-    //   category = await this.categoryRepository.getCategoryByName('Furniture');
-
-    // }
-    // category = await this.categoryRepository.getCategoryByName(dto.categoryName);
-
-    // const newProduct = this.productsRepository.create({
-    //   name: dto.name,
-    //   price: dto.price,
-    //   description: dto.description,
-    //   quantity: dto.quantity,
-    //   brand: dto.brand,
-    //   category: dto.categoryId
-    // });
       return await this.productsRepository.save(dto);
   }
 

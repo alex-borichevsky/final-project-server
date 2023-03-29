@@ -16,7 +16,6 @@ import { SecurityModule } from '../security/security.module';
   controllers: [ProductsController],
   imports: [
     TypeOrmModule.forFeature([ProductsEntity, CategoryEntity]),
-    FilesModule,
     SecurityModule
   ],
   exports: [ProductsRepo]

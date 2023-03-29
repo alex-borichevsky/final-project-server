@@ -28,16 +28,13 @@ export class ProductsController {
     description: "HttpStatus:200:OK",
     type: CreateProductDto
   })
-  @UseInterceptors(FileInterceptor('image'))
+
   @Post()
   @UseGuards(JwtPermissionsGuard)
   @RequirePermissions(UserPermissions.CreateProduct)
-  async createProduct(@Body() body: CreateProductDto, 
-  // @UploadedFile() image
+  async createProduct(@Body() body: CreateProductDto,
   ) {
-    return await this.productService.createProduct(body
-      // ,image
-      );
+    return await this.productService.createProduct(body);
   }
 
   @ApiOperation({ summary: "Get product" })

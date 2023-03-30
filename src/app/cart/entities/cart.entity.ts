@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany } from "typeorm";
 import { ProductsEntity } from "../../products/entities/products.entity";
 import { UUIDEntity } from '../../../shared/entities/uuid.entity';
-import { UserEntity } from "src/app/users/entities/users.entity";
+import { UserEntity } from "../../users/entities/users.entity";
 
 @Entity("carts")
 export class CartEntity extends UUIDEntity{

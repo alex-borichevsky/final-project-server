@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { OrdersRepo } from "./repos/orders.repo";
 import { CreateOrderDto } from "./dtos/create-order.dto";
 import { UsersRepo } from '../users/repos/users.repo';
-import {I18nService} from "nestjs-i18n";
+import { I18nService } from "nestjs-i18n";
 import { UserSessionDto } from '../security/dtos/userSession.dto';
 import { CartRepo } from '../cart/repos/cart.repo';
 
@@ -10,9 +10,8 @@ import { CartRepo } from '../cart/repos/cart.repo';
 export class OrdersService {
 
   constructor(
-      private readonly i18n: I18nService,
+    private readonly i18n: I18nService,
     private readonly ordersRepo: OrdersRepo,
-    private readonly usersRepo: UsersRepo,
     private readonly cartRepo: CartRepo,
   ) { }
 
@@ -20,7 +19,7 @@ export class OrdersService {
     return await this.ordersRepo.getAllOrders();
   }
 
-  async getOrderById(id : string) {
+  async getOrderById(id: string) {
     return await this.ordersRepo.getOrderById(id);
   }
 

@@ -2,11 +2,11 @@ import { Injectable, CanActivate, ExecutionContext, UnauthorizedException, HttpE
 
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
-import { RoleDto } from 'src/app/roles/dtos/role.dto';
+import { RoleDto } from '../../roles/dtos/role.dto';
 
-import { UserPermissions } from 'src/app/roles/enums/user-permissions.enum';
-import { UserRoleTypes } from 'src/app/roles/enums/user-role-types.enum';
-import { UserDto } from 'src/app/users/dtos/user.dto';
+import { UserPermissions } from '../../roles/enums/user-permissions.enum';
+import { UserRoleTypes } from '../../roles/enums/user-role-types.enum';
+import { UserDto } from '../../users/dtos/user.dto';
 import { PERMISSION_KEY } from '../decorators/permissions.decorator';
 import { UserSessionDto } from '../dtos/userSession.dto';
 import { SecurityService } from '../security.service';

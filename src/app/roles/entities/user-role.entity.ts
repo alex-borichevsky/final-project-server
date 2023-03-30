@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
-import { IDEntity } from "src/shared/entities/id.entity";
+import { IDEntity } from "../../../shared/entities/id.entity";
 
 import { UserRoleTypes } from "../enums/user-role-types.enum";
 import { UserPermissions } from "../enums/user-permissions.enum";

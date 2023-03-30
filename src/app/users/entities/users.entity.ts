@@ -3,8 +3,8 @@ import { UserInfoEntity } from "./user-info.entity";
 import { UserRoleEntity } from "../../roles/entities/user-role.entity";
 import { CartEntity } from "../../cart/entities/cart.entity";
 import { OrdersEntity } from "../../orders/entities/orders.entity";
-import { UUIDEntity } from "src/shared/entities/uuid.entity";
-import { UserRoleTypes } from "src/app/roles/enums/user-role-types.enum";
+import { UUIDEntity } from "../../../shared/entities/uuid.entity";
+import { UserRoleTypes } from "../../roles/enums/user-role-types.enum";
 
 @Entity('users')
 export class UserEntity extends UUIDEntity {

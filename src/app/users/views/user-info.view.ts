@@ -1,4 +1,4 @@
-import { UserRoleTypes } from "src/app/roles/enums/user-role-types.enum";
+import { UserRoleTypes } from "../../roles/enums/user-role-types.enum";
 import { ViewColumn, ViewEntity } from "typeorm";
 
 @ViewEntity({

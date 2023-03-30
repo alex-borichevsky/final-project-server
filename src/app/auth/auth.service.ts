@@ -6,21 +6,19 @@ import { RegistrationDto } from './dtos/registration.dto';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dtos/login.dto';
 import { Payload } from './dtos/payload.dto';
-import {I18nService} from "nestjs-i18n";
+import { I18nService } from "nestjs-i18n";
 import { SecurityService } from '../security/security.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-      private readonly i18n: I18nService,
-    private usersRepo: UsersRepo,
-    private usersService: UsersService,
-    private jwtService: JwtService,
-    private securityService: SecurityService
+    private readonly i18n: I18nService,
+    private readonly usersService: UsersService,
+    private readonly securityService: SecurityService
   ) { }
   async registration(dto: RegistrationDto) {
 
-    const user = await this.usersRepo.getUserByEmail(dto.email);
+    const user = await this.usersService.getUserByEmail(dto.email);
 
     if (user) {
       throw new BadRequestException(this.i18n.t('errors.ERRORS.UserExistsException'));
@@ -39,13 +37,13 @@ export class AuthService {
   }
 
   async login(dto: LoginDto) {
-    const user = await this.usersRepo.getUserByEmail(dto.email);
+    const user = await this.usersService.getUserByEmail(dto.email);
     if (!user) {
       throw new BadRequestException(this.i18n.t('errors.ERRORS.UserDoesntExistException'));
     }
     if (!user.status)
-      throw new HttpException({message:`${this.i18n.t('errors.ERRORS.UserForbiddenException')}`}, HttpStatus.FORBIDDEN);
-      
+      throw new HttpException({ message: `${this.i18n.t('errors.ERRORS.UserForbiddenException')}` }, HttpStatus.FORBIDDEN);
+
     const payload = { email: user.email, id: user.id, roleId: user.roleId };
     const isMatch = await bcrypt.compare(dto.password, user.password);
     if (isMatch) {
@@ -56,7 +54,7 @@ export class AuthService {
 
 
   async validateUser(payload: Payload) {
-    const user = await this.usersRepo.getUserByEmail(payload.email);
+    const user = await this.usersService.getUserByEmail(payload.email);
     if (user) {
       return user;
     }

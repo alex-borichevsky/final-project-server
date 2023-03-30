@@ -1,6 +1,6 @@
-import { UUIDDto } from "src/shared/dtos/uuid.dto";
+import { UUIDDto } from "../../../shared/dtos/uuid.dto";
 
-import { UserRoleTypes } from "src/app/roles/enums/user-role-types.enum";
+import { UserRoleTypes } from "../../roles/enums/user-role-types.enum";
 import { UserEntity } from "../entities/users.entity";
 import { ApiProperty } from "@nestjs/swagger";
 

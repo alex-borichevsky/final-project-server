@@ -1,8 +1,8 @@
-import { UserRoleTypes } from "src/app/roles/enums/user-role-types.enum";
+import { UserRoleTypes } from "../../roles/enums/user-role-types.enum";
 import { UserPermissions } from "../enums/user-permissions.enum";
 
 import { UserRoleEntity } from "../entities/user-role.entity";
-import { UUIDDto } from "src/shared/dtos/id.dto";
+import { UUIDDto } from "../../../shared/dtos/id.dto";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class RoleDto extends UUIDDto {

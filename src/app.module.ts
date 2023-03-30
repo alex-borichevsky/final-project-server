@@ -15,6 +15,7 @@ import * as path from "path";
 import { AcceptLanguageResolver, I18nModule, QueryResolver } from "nestjs-i18n";
 import { ScheduleModule } from '@nestjs/schedule';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { GptModule } from './app/gpt/gpt.module';
 
 
 @Module({
@@ -42,7 +43,8 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     OrdersModule,
     CategoriesModule,
     CartModule,
-    AuthModule
+    AuthModule,
+    GptModule
   ],
   controllers: [],
   providers: [],

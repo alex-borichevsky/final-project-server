@@ -1,6 +1,6 @@
 import { Entity, Column, OneToOne } from "typeorm";
 
-import { UUIDEntity } from "src/shared/entities/uuid.entity";
+import { UUIDEntity } from "../../../shared/entities/uuid.entity";
 import { UserEntity } from "./users.entity";
 
 @Entity({ name: "user_info"})

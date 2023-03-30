@@ -14,6 +14,8 @@ import {I18nService} from "nestjs-i18n";
 import { UserSessionDto } from '../security/dtos/userSession.dto';
 import { UserInfoView } from './views/user-info.view';
 import { UpdateUserStatusDto } from './dtos/update-status.dto';
+import { InfoRepo } from './repos/info.repo';
+import { InfoViewRepo } from './repos/info.view.repo';
 
 @Injectable()
 export class UsersService {
@@ -21,8 +23,8 @@ export class UsersService {
     private readonly i18n: I18nService,
     private readonly usersRepository: UsersRepo,
     private readonly rolesRepository: RolesRepo,
-    @InjectRepository(UserInfoEntity) private infoRepository: Repository<UserInfoEntity>,
-    @InjectRepository(UserInfoView) private userInfoViewRepository: Repository<UserInfoView>
+    private readonly infoRepository: InfoRepo,
+    private readonly userInfoViewRepository: InfoViewRepo
   ) { }
 
   // Users
@@ -32,15 +34,19 @@ export class UsersService {
   }
 
   async getUsersFromView() {
-    return await this.userInfoViewRepository.find();
+    return await this.userInfoViewRepository.getUsersFromView();
   }
 
   async getUserById(id : string) {
     return await this.usersRepository.getUserById(id);
   }
 
+  async getUserByEmail(email: string) {
+    return await this.usersRepository.getUserByEmail(email);
+  }
+
   async getUserByIdFromView(id : string) {
-    return await this.userInfoViewRepository.findOne({ where: { id } });;
+    return await this.userInfoViewRepository.getUserByIdFromView(id);
   }
 
   async createUser(dto: CreateUserDto) {

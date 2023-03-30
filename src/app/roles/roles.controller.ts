@@ -25,8 +25,8 @@ export class RolesController {
   })
   @Get()
   @RequirePermissions(UserPermissions.GetRoles)
-  async getRoles() {
-    return await this.rolesService.getAllRoles();
+  getRoles() {
+    return this.rolesService.getAllRoles();
   }
 
   @ApiOperation({ summary: "Get role" })
@@ -37,8 +37,8 @@ export class RolesController {
   })
   @Get(':id')
   @RequirePermissions(UserPermissions.GetRoleById)
-  async getRoleById(@Param('id') id : number) {
-    return await this.rolesService.getRoleById(id);
+  getRoleById(@Param('id') id : number) {
+    return this.rolesService.getRoleById(id);
   }
 
   @ApiOperation({ summary: "Crdate role" })
@@ -50,8 +50,8 @@ export class RolesController {
   })
   @Post()
   @RequirePermissions(UserPermissions.CreateRole)
-  async createRole(@Body() body : CreateRoleDto) {
-    return await this.rolesService.createRole(body);
+  createRole(@Body() body : CreateRoleDto) {
+    return this.rolesService.createRole(body);
   }
 
   @ApiOperation({ summary: "Delete role" })
@@ -62,8 +62,8 @@ export class RolesController {
   })
   @Delete(':id')
   @RequirePermissions(UserPermissions.DeleteRole)
-  async deleteRole(@Param('id') id : number) {
-    return await this.rolesService.deleteRole(id);
+  deleteRole(@Param('id') id : number) {
+    return this.rolesService.deleteRole(id);
   }
 
   @ApiOperation({ summary: "Update role" })
@@ -75,8 +75,8 @@ export class RolesController {
   })
   @Put(':id')
   @RequirePermissions(UserPermissions.UpdateRole)
-  async updateRole(@Param('id') id : number, @Body() body: CreateRoleDto) {
-    return await this.rolesService.updateRole(id, body);
+  updateRole(@Param('id') id : number, @Body() body: CreateRoleDto) {
+    return this.rolesService.updateRole(id, body);
   }
   
 }

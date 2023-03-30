@@ -33,7 +33,7 @@ export class AuthController {
     type: PostLoginResponse
   })
   @Post('registration')
-  registraton(@Body() user: RegistrationDto) {
+  registration(@Body() user: RegistrationDto) {
     return this.authService.registration(user);
   }
 

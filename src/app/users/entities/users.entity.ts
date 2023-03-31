@@ -28,10 +28,6 @@ export class UserEntity extends UUIDEntity {
   @Column({ name: "role_type" })
   roleType!: UserRoleTypes;
 
-
-  // @Column({ name: "userInfoId"})
-  // userInfoId!: string;
-
   @OneToOne(() => UserInfoEntity)
   @JoinColumn({name: "userInfoId"})
   userInfo?: UserInfoEntity;

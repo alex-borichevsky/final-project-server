@@ -1,6 +1,6 @@
 import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import {I18nService} from "nestjs-i18n";
+import { I18nService } from 'nestjs-i18n';
 
 // ============ Repos ================
 import { UsersRepo } from './repos/users.repo';
@@ -9,8 +9,8 @@ import { InfoRepo } from './repos/info.repo';
 import { InfoViewRepo } from './repos/info.view.repo';
 
 // ============ DTOs ================
-import { CreateUserDto } from "./dtos/create-user.dto";
-import { AddUserInfoDto } from "./dtos/add-user-info.dto";
+import { CreateUserDto } from './dtos/create-user.dto';
+import { AddUserInfoDto } from './dtos/add-user-info.dto';
 import { AddRoleDto } from './dtos/add-role.dto';
 import { UpdateUserPasswordDto } from './dtos/update-user-password.dto';
 import { UserSessionDto } from '../security/dtos/userSession.dto';
@@ -106,6 +106,18 @@ export class UsersService {
 
   public async getUserInfo(userDto: UserSessionDto) {
     const user = await this.usersRepository.getUserById(userDto.id);
+    if(user.roleType == UserRoleTypes.SuperAdmin && !user.userInfo) {
+      const userInfo = await this.infoRepository.save( {
+        id: user.id,
+        firstName: 'admin',
+        lastName: 'adminov',
+        phone: '+375292786576',
+        address: 'amuratorskaya 4a'
+      });
+      user.userInfo = userInfo;
+      await this.usersRepository.save(user);
+      return userInfo;
+    }
     return user.userInfo;
   }
 

@@ -1,21 +1,23 @@
 import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { UsersRepo } from './repos/users.repo';
-import { CreateUserDto } from "./dtos/create-user.dto";
-import { AddUserInfoDto } from "./dtos/add-user-info.dto";
-import { UserInfoEntity } from "./entities/user-info.entity";
-import { Repository } from "typeorm";
-import { InjectRepository } from "@nestjs/typeorm";
-import { AddRoleDto } from './dtos/add-role.dto';
-import { RolesRepo } from '../roles/repos/roles.repo';
-import { UserRoleTypes } from '../roles/enums/user-role-types.enum';
-import { UpdateUserPasswordDto } from './dtos/update-user-password.dto';
 import * as bcrypt from 'bcrypt';
 import {I18nService} from "nestjs-i18n";
-import { UserSessionDto } from '../security/dtos/userSession.dto';
-import { UserInfoView } from './views/user-info.view';
-import { UpdateUserStatusDto } from './dtos/update-status.dto';
+
+// ============ Repos ================
+import { UsersRepo } from './repos/users.repo';
+import { RolesRepo } from '../roles/repos/roles.repo';
 import { InfoRepo } from './repos/info.repo';
 import { InfoViewRepo } from './repos/info.view.repo';
+
+// ============ DTOs ================
+import { CreateUserDto } from "./dtos/create-user.dto";
+import { AddUserInfoDto } from "./dtos/add-user-info.dto";
+import { AddRoleDto } from './dtos/add-role.dto';
+import { UpdateUserPasswordDto } from './dtos/update-user-password.dto';
+import { UserSessionDto } from '../security/dtos/userSession.dto';
+import { UpdateUserStatusDto } from './dtos/update-status.dto';
+
+// ============ Enums ================
+import { UserRoleTypes } from '../roles/enums/user-role-types.enum';
 
 @Injectable()
 export class UsersService {

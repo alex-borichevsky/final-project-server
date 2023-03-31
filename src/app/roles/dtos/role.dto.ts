@@ -1,9 +1,14 @@
+import { ApiProperty } from "@nestjs/swagger";
+
+// ============ Enums ================
 import { UserRoleTypes } from "../../roles/enums/user-role-types.enum";
 import { UserPermissions } from "../enums/user-permissions.enum";
 
+// ============ Entities ================
 import { UserRoleEntity } from "../entities/user-role.entity";
+
+// ============ DTOs ================
 import { UUIDDto } from "../../../shared/dtos/id.dto";
-import { ApiProperty } from "@nestjs/swagger";
 
 export class RoleDto extends UUIDDto {
   @ApiProperty({

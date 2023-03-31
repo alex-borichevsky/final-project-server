@@ -1,14 +1,21 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-// ============ App ================
-import { ProductsController } from './products.controller';
-import { ProductsService } from './products.service';
-import { ProductsEntity } from "./entities/products.entity";
+// ============ Repos ================
 import { ProductsRepo } from './repos/products.repo';
-import { FilesModule } from '../files/files.module';
 import { CategoryRepo } from '../categories/repos/category.repo';
+
+// ============ Entities ================
+import { ProductsEntity } from "./entities/products.entity";
 import { CategoryEntity } from '../categories/entities/category.entity';
+
+// ============ Services ================
+import { ProductsService } from './products.service';
+
+// ============ Controllers ================
+import { ProductsController } from './products.controller';
+
+// ============ Modules ================
 import { SecurityModule } from '../security/security.module';
 
 @Module({

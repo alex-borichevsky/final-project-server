@@ -1,6 +1,7 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+// ============ Entities ================
 import { CategoryEntity } from './../entities/category.entity';
 
 export class CategoryRepo extends Repository<CategoryEntity> {

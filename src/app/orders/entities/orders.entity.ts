@@ -5,9 +5,12 @@ import {
   ManyToOne
 } from "typeorm";
 
+// ============ Entities ================
 import { UUIDEntity } from '../../../shared/entities/uuid.entity';
-import { ProductOrderDto } from "../dtos/order-products.dto";
 import { UserEntity } from "../../users/entities/users.entity";
+
+// ============ DTOs ================
+import { ProductOrderDto } from "../dtos/order-products.dto";
 
 @Entity('orders')
 export class OrdersEntity extends UUIDEntity{

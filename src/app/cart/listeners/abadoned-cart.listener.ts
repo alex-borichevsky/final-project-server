@@ -1,6 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
+
+// =========== Events =======================
 import { AbadonedCartEvent } from '../events/abadoned-cart.event';
+
+// =========== Services =======================
 import { ScheduledTasksService } from '../scheduled-tasks.service';
 
 @Injectable()

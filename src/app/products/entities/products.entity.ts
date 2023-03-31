@@ -6,6 +6,8 @@ import {
   OneToMany,
 } from "typeorm";
 
+
+// ============ Entities ================
 import { CartEntity } from "../../cart/entities/cart.entity";
 import { CategoryEntity } from "../../categories/entities/category.entity";
 import { UUIDEntity } from '../../../shared/entities/uuid.entity';

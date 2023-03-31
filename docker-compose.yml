@@ -20,7 +20,7 @@ services:
     build:
       context: .
     ports:
-      - "5000:5000"
+      - "3000:5000"
     depends_on:
       - "postgres"
 
@@ -31,7 +31,7 @@ services:
     image: dpage/pgadmin4
     restart: always
     ports:
-      - "5050:80"
+      - "82:80"
 
   client:
     container_name: client
@@ -39,7 +39,7 @@ services:
       context: https://github.com/borichevskiy/final-project-frontend-client.git#main
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "8000:3000"
 
   admin:
     container_name: admin
@@ -47,7 +47,7 @@ services:
       context: https://github.com/borichevskiy/final-project-frontend-admin.git#main
       dockerfile: Dockerfile
     ports:
-    - "3001:3000"
+    - "8001:3000"
 
 volumes:
   dbdata: # create the volume for persisting data.

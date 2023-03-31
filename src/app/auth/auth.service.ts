@@ -1,13 +1,15 @@
 import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { UsersRepo } from '../users/repos/users.repo';
-import { UsersService } from '../users/users.service';
-import { RegistrationDto } from './dtos/registration.dto';
 import * as bcrypt from 'bcrypt';
+import { I18nService } from "nestjs-i18n";
+
+// =========== Services =======================
+import { UsersService } from '../users/users.service';
+import { SecurityService } from '../security/security.service';
+
+// =========== DTOs =======================
+import { RegistrationDto } from './dtos/registration.dto';
 import { LoginDto } from './dtos/login.dto';
 import { Payload } from './dtos/payload.dto';
-import { I18nService } from "nestjs-i18n";
-import { SecurityService } from '../security/security.service';
 
 @Injectable()
 export class AuthService {

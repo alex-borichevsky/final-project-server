@@ -1,6 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
+
+// ============ Guards ================
 import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
+
+// ============ Controllers ================
 import { CategoriesController } from './categories.controller';
+
+// ============ Services ================
 import { CategoriesService } from './categories.service';
 
 describe('CategoriesController', () => {

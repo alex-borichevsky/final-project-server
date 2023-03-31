@@ -1,13 +1,15 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-
 import { JwtModule } from "@nestjs/jwt";
 
+// ============ Services ================
 import { SecurityService } from "./security.service";
 
+// ============ Repos ================
 import { RolesRepo } from "../roles/repos/roles.repo";
 import { UsersRepo } from "../users/repos/users.repo";
 
+// ============ Entities ================
 import { UserRoleEntity } from "../roles/entities/user-role.entity";
 import { UserEntity } from "../users/entities/users.entity";
 

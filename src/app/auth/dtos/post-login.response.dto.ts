@@ -2,5 +2,8 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class PostLoginResponse {
     @ApiProperty()
-    readonly accessToken: string;
+    readonly access_token: string;
+
+    @ApiProperty()
+    readonly expired_at: string;
   }

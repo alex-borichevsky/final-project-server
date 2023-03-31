@@ -1,12 +1,20 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-// ============ App ================
+// ============ Services ================
 import { RolesService } from './roles.service';
+
+// ============ Controllers ================
 import { RolesController } from './roles.controller';
+
+// ============ Repos ================
 import { RolesRepo } from './repos/roles.repo';
-import { UserRoleEntity } from './entities/user-role.entity';
+
+// ============ Modules ================
 import { SecurityModule } from '../security/security.module';
+
+// ============ Entities ================
+import { UserRoleEntity } from './entities/user-role.entity';
 
 @Module({
   providers: [RolesService,RolesRepo],

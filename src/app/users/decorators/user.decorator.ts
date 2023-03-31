@@ -1,4 +1,6 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+
+// ============ DTOs ================
 import { UserSessionDto } from '../../security/dtos/userSession.dto';
 
 export const User = createParamDecorator(

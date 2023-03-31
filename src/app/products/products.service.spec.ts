@@ -1,11 +1,20 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CartEntity } from '../cart/entities/cart.entity';
+
+// ============ Repos ================
 import { CategoryRepo } from '../categories/repos/category.repo';
-import { UserRoleTypes } from '../roles/enums/user-role-types.enum';
-import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
-import { ProductsController } from './products.controller';
-import { ProductsService } from './products.service';
 import { ProductsRepo } from './repos/products.repo';
+
+// ============ Enums ================
+import { UserRoleTypes } from '../roles/enums/user-role-types.enum';
+
+// ============ Guards ================
+import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
+
+// ============ Controllers ================
+import { ProductsController } from './products.controller';
+
+// ============ Services ================
+import { ProductsService } from './products.service';
 
 describe('ProductsService', () => {
   let productsService: ProductsService;

@@ -1,4 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
+
+// ============ Gateway ================
 import { GptGateway } from './gpt.gateway';
 
 describe('GptGateway', () => {

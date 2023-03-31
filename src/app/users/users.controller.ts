@@ -1,15 +1,25 @@
-import { BadRequestException, Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Param, Put, UseGuards } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger/dist';
 
+// ============ Services ================
 import { UsersService } from './users.service';
+
+// ============ Guards ================
 import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
+
+// ============ Enums ================
 import { UserPermissions } from '../roles/enums/user-permissions.enum';
+
+
+// ============ Decorators ================
 import { RequirePermissions } from '../security/decorators/permissions.decorator';
+import { User } from './decorators/user.decorator';
+
+// ============ DTOs ================
 import { UpdateUserPasswordDto } from './dtos/update-user-password.dto';
 import { AddUserInfoDto } from './dtos/add-user-info.dto';
 import { AddRoleDto } from './dtos/add-role.dto';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger/dist';
 import { UserDto } from './dtos/user.dto';
-import { User } from './decorators/user.decorator';
 import { UserSessionDto } from '../security/dtos/userSession.dto';
 import { UpdateUserStatusDto } from './dtos/update-status.dto';
 

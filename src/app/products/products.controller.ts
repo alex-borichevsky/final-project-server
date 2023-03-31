@@ -1,20 +1,23 @@
-import {
-  Body,
-  Controller,
-  HttpStatus,
-  Post,
-  UploadedFile,
-  UseInterceptors,
-} from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { CreateProductDto } from './dtos/create-product.dto';
-import { ProductsService } from './products.service';
+import { Body, Controller, HttpStatus, Post } from '@nestjs/common';
 import { Delete, Get, Param, Put, UseGuards } from '@nestjs/common/decorators';
-import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
-import { RequirePermissions } from '../security/decorators/permissions.decorator';
-import { UserPermissions } from '../roles/enums/user-permissions.enum';
 import { ApiBody } from '@nestjs/swagger';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger/dist';
+
+// ============ Guards ================
+import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
+
+// ============ DTOs ================
+import { CreateProductDto } from './dtos/create-product.dto';
+
+// ============ Services ================
+import { ProductsService } from './products.service';
+
+// ============ Decorators ================
+import { RequirePermissions } from '../security/decorators/permissions.decorator';
+
+// ============ Enums ================
+import { UserPermissions } from '../roles/enums/user-permissions.enum';
+
 
 @ApiTags('products')
 @Controller('products')
@@ -28,7 +31,6 @@ export class ProductsController {
     description: "HttpStatus:200:OK",
     type: CreateProductDto
   })
-
   @Post()
   @UseGuards(JwtPermissionsGuard)
   @RequirePermissions(UserPermissions.CreateProduct)

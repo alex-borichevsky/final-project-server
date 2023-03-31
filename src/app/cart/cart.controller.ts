@@ -1,15 +1,28 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, UseGuards } from '@nestjs/common';
-import { UserPermissions } from '../roles/enums/user-permissions.enum';
-import { RequirePermissions } from '../security/decorators/permissions.decorator';
-import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
-import { CartService } from './cart.service';
-import { AddProductToCartDto } from './dtos/add-product-to-cart.dto';
-import { UpdateQuantityDto } from './dtos/update-quantity.dto';
 import { DeleteResult } from 'typeorm';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger/dist';
-import { CartEntity } from './entities/cart.entity';
+
+// =========== Enums =======================
+import { UserPermissions } from '../roles/enums/user-permissions.enum';
+
+// =========== Decorators =======================
+import { RequirePermissions } from '../security/decorators/permissions.decorator';
 import { User } from '../users/decorators/user.decorator';
+
+// =========== Guards =======================
+import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
+
+// =========== DTOs =======================
+import { AddProductToCartDto } from './dtos/add-product-to-cart.dto';
+import { UpdateQuantityDto } from './dtos/update-quantity.dto';
 import { UserSessionDto } from '../security/dtos/userSession.dto';
+
+// =========== Services =======================
+import { CartService } from './cart.service';
+
+// =========== Entities =======================
+import { CartEntity } from './entities/cart.entity';
+
 
 @ApiTags('cart')
 @Controller('cart')
@@ -29,18 +42,6 @@ export class CartController {
     getCarts() {
         return this.cartService.getCarts();
     }
-
-    // @ApiOperation({ summary: "Get cart" })
-    // @ApiResponse({
-    //     status: HttpStatus.OK,
-    //     description: "HttpStatus:200:OK",
-    //     type: CartEntity,
-    //   })
-    // @Get(':id')
-    // @RequirePermissions(UserPermissions.GetCartById)
-    // getCartById(@Param("id") id: string) {
-    //     //return this.cartService.getCartById(id);
-    // }
 
     @ApiOperation({ summary: "Add product to cart" })
     @ApiBody({ type: AddProductToCartDto })
@@ -87,6 +88,12 @@ export class CartController {
         return this.cartService.updateProductQuantity(body);
     }
 
+    @ApiOperation({ summary: "Get cart by user id" })
+    @ApiResponse({
+      status: HttpStatus.OK,
+      description: "HttpStatus:200:OK",
+      type: CartEntity,
+    })
     @RequirePermissions(UserPermissions.GetCartByUserId)
     @Get('/user')
     getCartByUserId(@User() user:UserSessionDto) {

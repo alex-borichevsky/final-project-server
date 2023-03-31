@@ -1,10 +1,13 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { OrdersRepo } from "./repos/orders.repo";
-import { CreateOrderDto } from "./dtos/create-order.dto";
-import { UsersRepo } from '../users/repos/users.repo';
 import { I18nService } from "nestjs-i18n";
-import { UserSessionDto } from '../security/dtos/userSession.dto';
+
+// ============ Repos ================
+import { OrdersRepo } from "./repos/orders.repo";
 import { CartRepo } from '../cart/repos/cart.repo';
+
+// ============ DTOs ================
+import { CreateOrderDto } from "./dtos/create-order.dto";
+import { UserSessionDto } from '../security/dtos/userSession.dto';
 
 @Injectable()
 export class OrdersService {

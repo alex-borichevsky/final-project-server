@@ -1,4 +1,3 @@
-import { ApiProperty } from '@nestjs/swagger';
 import { Column, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 export class UUIDEntity {

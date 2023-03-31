@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
+
+// ============ Repos ================
 import { CartRepo } from "./repos/cart.repo";
-import { UsersRepo } from '../users/repos/users.repo';
+
+// ============ DTOs ================
 import { AddProductToCartDto } from './dtos/add-product-to-cart.dto';
 import { UpdateQuantityDto } from './dtos/update-quantity.dto';
 import { UserSessionDto } from '../security/dtos/userSession.dto';

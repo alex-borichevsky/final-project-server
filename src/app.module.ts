@@ -1,8 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { ConfigModule, ConfigService } from "@nestjs/config";
+import { ConfigModule } from "@nestjs/config";
+import * as path from "path";
+import { AcceptLanguageResolver, I18nModule, QueryResolver } from "nestjs-i18n";
+import { ScheduleModule } from '@nestjs/schedule';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
-// ============ App ================
+// ============ Modules ================
 import { UsersModule } from './app/users/users.module';
 import { AuthModule } from './app/auth/auth.module';
 import { RolesModule } from './app/roles/roles.module';
@@ -10,12 +14,11 @@ import { ProductsModule } from './app/products/products.module';
 import { OrdersModule } from './app/orders/orders.module';
 import { CategoriesModule } from './app/categories/categories.module';
 import { CartModule } from './app/cart/cart.module';
-import { dataSourceOptions } from "./config/typeOrm.config";
-import * as path from "path";
-import { AcceptLanguageResolver, I18nModule, QueryResolver } from "nestjs-i18n";
-import { ScheduleModule } from '@nestjs/schedule';
-import { EventEmitterModule } from '@nestjs/event-emitter';
 import { GptModule } from './app/gpt/gpt.module';
+
+// ============ Config ================
+import { dataSourceOptions } from "./config/typeOrm.config";
+
 
 
 @Module({

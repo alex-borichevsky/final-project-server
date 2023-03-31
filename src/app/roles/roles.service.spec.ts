@@ -1,11 +1,22 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CartEntity } from '../cart/entities/cart.entity';
+
+// ============ Enums ================
 import { UserRoleTypes } from '../roles/enums/user-role-types.enum';
-import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
-import { UserEntity } from '../users/entities/users.entity';
 import { UserPermissions } from './enums/user-permissions.enum';
+
+// ============ Guards ================
+import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
+
+// ============ Entities ================
+import { UserEntity } from '../users/entities/users.entity';
+
+// ============ Repos ================
 import { RolesRepo } from './repos/roles.repo';
+
+// ============ Controllers ================
 import { RolesController } from './roles.controller';
+
+// ============ Services ================
 import { RolesService } from './roles.service';
 
 describe('RolesService', () => {

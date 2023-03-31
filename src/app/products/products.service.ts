@@ -1,9 +1,12 @@
 import { Injectable } from '@nestjs/common';
 
+// ============ Repos ================
 import { ProductsRepo } from './repos/products.repo';
-import { CreateProductDto } from './dtos/create-product.dto';
-import { FilesService } from '../files/files.service';
 import { CategoryRepo } from '../categories/repos/category.repo';
+
+// ============ DTOs ================
+import { CreateProductDto } from './dtos/create-product.dto';
+
 
 @Injectable()
 export class ProductsService {

@@ -1,13 +1,19 @@
-import { BadRequestException } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import { I18nService } from 'nestjs-i18n';
+
+// =========== Guards =======================
 import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
-import { SecurityService } from '../security/security.service';
+
+
+// =========== Controllers =======================
 import { AuthController } from './auth.controller';
+
+// =========== Services =======================
 import { AuthService } from './auth.service';
-import { RegistrationDto } from './dtos/registration.dto';
+import { SecurityService } from '../security/security.service';
+
 
 describe('AuthController', () => {
   let authController: AuthController;

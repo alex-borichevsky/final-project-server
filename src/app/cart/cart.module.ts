@@ -1,15 +1,25 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-// ============ App ================
+// ============ Controllers ================
 import { CartController } from './cart.controller';
+
+// ============ Services ================
 import { CartService } from './cart.service';
+import { ScheduledTasksService } from './scheduled-tasks.service';
+
+// ============ Entities ================
 import { CartEntity } from "./entities/cart.entity";
+import { UserEntity } from '../users/entities/users.entity';
+
+// ============ Repos ================
 import { CartRepo } from "./repos/cart.repo";
 import { UsersRepo } from '../users/repos/users.repo';
-import { UserEntity } from '../users/entities/users.entity';
+
+// ============ Modules ================
 import { SecurityModule } from '../security/security.module';
-import { ScheduledTasksService } from './scheduled-tasks.service';
+
+// ============ Listeners ================
 import { AbadonedCartListener } from './listeners/abadoned-cart.listener';
 
 @Module({

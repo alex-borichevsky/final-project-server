@@ -1,5 +1,7 @@
-import { UserRoleTypes } from "../../roles/enums/user-role-types.enum";
 import { ViewColumn, ViewEntity } from "typeorm";
+
+// ============ Enums ================
+import { UserRoleTypes } from "../../roles/enums/user-role-types.enum";
 
 @ViewEntity({
   expression: `

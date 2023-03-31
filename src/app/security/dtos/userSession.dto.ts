@@ -1,6 +1,4 @@
 import { IsNumber, IsString, IsUUID } from "class-validator";
-import { UUIDDto } from '../../../shared/dtos/uuid.dto';
-
 
 export class UserSessionDto{
   @IsUUID()

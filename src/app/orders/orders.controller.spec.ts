@@ -1,7 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
+
+// ============ Guards ================
 import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
-import { ProductOrderDto } from './dtos/order-products.dto';
+
+// ============ Controllers ================
 import { OrdersController } from './orders.controller';
+
+// ============ Services ================
 import { OrdersService } from './orders.service';
 
 describe('OrdersController', () => {

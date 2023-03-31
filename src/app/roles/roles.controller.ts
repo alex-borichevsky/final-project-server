@@ -1,13 +1,20 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger/dist';
-import { DeleteResult, UpdateResult } from 'typeorm';
+
+// ============ Decorators ================
 import { RequirePermissions } from '../security/decorators/permissions.decorator';
+
+// ============ Guards ================
 import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
-import { UserDto } from '../users/dtos/user.dto';
+
+// ============ DTOs ================
 import { CreateRoleDto } from './dtos/create-role.dto';
 import { RoleDto } from './dtos/role.dto';
-import { UserRoleEntity } from './entities/user-role.entity';
+
+// ============ Enums ================
 import { UserPermissions } from './enums/user-permissions.enum';
+
+// ============ Services ================
 import { RolesService } from './roles.service';
 
 @ApiTags('roles')

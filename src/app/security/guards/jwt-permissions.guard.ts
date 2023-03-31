@@ -1,16 +1,24 @@
-import { Injectable, CanActivate, ExecutionContext, UnauthorizedException, HttpException, HttpStatus } from '@nestjs/common';
-
+import { Injectable, CanActivate, ExecutionContext, HttpException, HttpStatus } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
-import { RoleDto } from '../../roles/dtos/role.dto';
+import {I18nService} from "nestjs-i18n";
 
+// ============ DTOs ================
+import { RoleDto } from '../../roles/dtos/role.dto';
+import { UserSessionDto } from '../dtos/userSession.dto';
+
+// ============ Enums ================
 import { UserPermissions } from '../../roles/enums/user-permissions.enum';
 import { UserRoleTypes } from '../../roles/enums/user-role-types.enum';
+
+// ============ DTOs ================
 import { UserDto } from '../../users/dtos/user.dto';
+
+// ============ Decorators ================
 import { PERMISSION_KEY } from '../decorators/permissions.decorator';
-import { UserSessionDto } from '../dtos/userSession.dto';
+
+// ============ Services ================
 import { SecurityService } from '../security.service';
-import {I18nService} from "nestjs-i18n";
 
 @Injectable()
 export class JwtPermissionsGuard implements CanActivate {

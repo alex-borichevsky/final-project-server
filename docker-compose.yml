@@ -44,11 +44,10 @@ services:
   admin:
     container_name: admin
     build:
-      context: https://github.com/borichevskiy/final-project-frontend-admin.gitmain
+      context: https://github.com/borichevskiy/final-project-frontend-admin.git#main
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"
-
+    - "3001:3000"
 
 volumes:
   dbdata: # create the volume for persisting data.

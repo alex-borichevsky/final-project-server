@@ -29,7 +29,7 @@ export class UserEntity extends UUIDEntity {
   roleType!: UserRoleTypes;
 
   @OneToOne(() => UserInfoEntity)
-  @JoinColumn()
+  @JoinColumn({name: "userInfoId"})
   userInfo?: UserInfoEntity;
 
   @OneToMany(() => CartEntity, cart => cart.user)

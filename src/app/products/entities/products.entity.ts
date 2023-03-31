@@ -26,8 +26,11 @@ export class ProductsEntity extends UUIDEntity {
   @Column({ name: 'quantity' })
   quantity: number;
 
-  @Column({default: ''})
-  image: string
+  @Column({ 
+    name: 'image_url' , 
+    default: 'https://res.cloudinary.com/dzouilf8r/image/upload/v1680113277/photo-1631679706909-1844bbd07221_qkpg37.avif'
+  })
+  image: string;
 
   @Column({default: ''})
   brand: string;

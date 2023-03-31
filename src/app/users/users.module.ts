@@ -33,8 +33,6 @@ import { UserInfoView } from './views/user-info.view';
 import { InfoRepo } from './repos/info.repo';
 import { InfoViewRepo } from './repos/info.view.repo';
 
-
-
 @Module({
   providers: [UsersService, UsersRepo, RolesRepo, InfoRepo, InfoViewRepo],
   controllers: [UsersController],

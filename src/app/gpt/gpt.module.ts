@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common';
+
+// ============ Gateway ================
 import { GptGateway } from './gpt.gateway';
 
 @Module({

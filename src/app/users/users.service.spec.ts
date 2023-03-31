@@ -1,22 +1,28 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { I18nService } from 'nestjs-i18n';
-import { userInfo } from 'os';
-import { Repository } from 'typeorm';
-import { CartEntity } from '../cart/entities/cart.entity';
-import { UserRoleEntity } from '../roles/entities/user-role.entity';
-import { UserPermissions } from '../roles/enums/user-permissions.enum';
-
-import { UserRoleTypes } from '../roles/enums/user-role-types.enum';
-import { RolesRepo } from '../roles/repos/roles.repo';
-import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
-import { UserInfoEntity } from './entities/user-info.entity';
-import { UserEntity } from './entities/users.entity';
-import { InfoRepo } from './repos/info.repo';
-import { UsersRepo } from './repos/users.repo';
-import { UsersService } from './users.service';
 import * as bcrypt from 'bcrypt';
 import { BadRequestException, HttpException } from '@nestjs/common';
+
+// ============ Entities ================
+import { UserRoleEntity } from '../roles/entities/user-role.entity';
+import { UserInfoEntity } from './entities/user-info.entity';
+import { UserEntity } from './entities/users.entity';
+
+// ============ Enums ================
+import { UserPermissions } from '../roles/enums/user-permissions.enum';
+import { UserRoleTypes } from '../roles/enums/user-role-types.enum';
+
+// ============ Repos ================
+import { RolesRepo } from '../roles/repos/roles.repo';
+import { InfoRepo } from './repos/info.repo';
+import { UsersRepo } from './repos/users.repo';
 import { InfoViewRepo } from './repos/info.view.repo';
+
+// ============ Guards ================
+import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
+
+// ============ Services ================
+import { UsersService } from './users.service';
 
 
 describe('UsersService', () => {

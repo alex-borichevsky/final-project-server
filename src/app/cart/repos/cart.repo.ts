@@ -1,6 +1,7 @@
 import { Repository } from "typeorm";
-import { UserEntity } from "../../users/entities/users.entity";
 import { InjectRepository } from "@nestjs/typeorm";
+
+// =========== Entities =======================
 import { CartEntity } from "../entities/cart.entity";
 
 export class CartRepo extends Repository<CartEntity> {

@@ -1,16 +1,19 @@
 import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { getRepositoryToken } from '@nestjs/typeorm';
 import { I18nService } from 'nestjs-i18n';
-import { DeleteResult, Repository } from 'typeorm';
+
+// ============ Repos ================
 import { CartRepo } from '../cart/repos/cart.repo';
-import { UserRoleTypes } from '../roles/enums/user-role-types.enum';
-import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
-import { UserEntity } from '../users/entities/users.entity';
-import { OrdersEntity } from './entities/orders.entity';
-import { OrdersController } from './orders.controller';
-import { OrdersService } from './orders.service';
 import { OrdersRepo } from './repos/orders.repo';
+
+// ============ Enums ================
+import { UserRoleTypes } from '../roles/enums/user-role-types.enum';
+
+// ============ Guards ================
+import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
+
+// ============ Services ================
+import { OrdersService } from './orders.service';
 
 
 describe('OrdersService', () => {

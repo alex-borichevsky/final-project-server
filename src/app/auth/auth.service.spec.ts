@@ -1,21 +1,24 @@
 import { BadRequestException, HttpException } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { JwtModule, JwtService, JwtSignOptions } from '@nestjs/jwt';
+import { JwtModule } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
-import { getRepositoryToken } from '@nestjs/typeorm';
-import exp from 'constants';
 import { I18nService } from 'nestjs-i18n';
-import { UserRoleTypes } from '../roles/enums/user-role-types.enum';
-import { CreateUserDto } from '../users/dtos/create-user.dto';
-import { UserDto } from '../users/dtos/user.dto';
-import { UserEntity } from '../users/entities/users.entity';
-import { UsersService } from '../users/users.service';
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
 import * as bcrypt from 'bcrypt';
-import { LoginDto } from './dtos/login.dto';
-import { JwtStrategy } from './strategies/jwt.strategy';
+
+// ============ Enums ================
+import { UserRoleTypes } from '../roles/enums/user-role-types.enum';
+
+// ============ Entities ================
+import { UserEntity } from '../users/entities/users.entity';
+
+// ============ Services ================
+import { UsersService } from '../users/users.service';
+import { AuthService } from './auth.service';
 import { SecurityService } from '../security/security.service';
+
+// ============ Controllers ================
+import { AuthController } from './auth.controller';
+
 
 describe('AuthService', () => {
   let authService: AuthService;

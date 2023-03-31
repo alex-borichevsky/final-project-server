@@ -1,13 +1,24 @@
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger/dist';
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, UseGuards } from '@nestjs/common';
+
+// ============ Permissions ================
 import { UserPermissions } from '../roles/enums/user-permissions.enum';
+
+// ============ Decorators ================
 import { RequirePermissions } from '../security/decorators/permissions.decorator';
-import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
-import { CreateOrderDto } from './dtos/create-order.dto';
-import { OrdersService } from './orders.service';
-import { ProductOrderDto } from './dtos/order-products.dto';
 import { User } from '../users/decorators/user.decorator';
+
+// ============ Guards ================
+import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
+
+// ============ DTOs ================
+import { CreateOrderDto } from './dtos/create-order.dto';
+import { ProductOrderDto } from './dtos/order-products.dto';
 import { UserSessionDto } from '../security/dtos/userSession.dto';
+
+// ============ Services ================
+import { OrdersService } from './orders.service';
+
 
 @ApiTags('orders')
 @Controller('orders')
@@ -40,6 +51,12 @@ export class OrdersController {
         return this.ordersService.getOrderById(id);
     }
 
+    @ApiOperation({ summary: "Get order by user id" })
+    @ApiResponse({
+      status: HttpStatus.OK,
+      description: "HttpStatus:200:OK",
+      type: ProductOrderDto
+    })
     @RequirePermissions(UserPermissions.GetOrderByUserId)
     @Get('/user')
     getOrderByUserId(@User() user: UserSessionDto) {

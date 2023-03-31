@@ -1,5 +1,4 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ProductOrderDto } from './order-products.dto';
 
 export class CreateOrderDto {
 

@@ -1,7 +1,11 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { CartService } from './cart.service';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+
+// ============ Services ================
+import { CartService } from './cart.service';
+
+// ============ Events ================
 import { AbadonedCartEvent } from './events/abadoned-cart.event';
 
 @Injectable()

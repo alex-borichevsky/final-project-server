@@ -1,9 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from "@nestjs/jwt";
+
+// ============ Repos ================
 import { RolesRepo } from '../roles/repos/roles.repo';
 import { RolesService } from '../roles/roles.service';
 import { UsersRepo } from '../users/repos/users.repo';
-import { UsersService } from '../users/users.service';
+
+// ============ DTOs ================
 import { UserSessionDto } from './dtos/userSession.dto';
 
 

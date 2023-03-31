@@ -1,12 +1,24 @@
 import { Test, TestingModule } from '@nestjs/testing';
+
+// =========== Entities =======================
 import { ProductsEntity } from '../products/entities/products.entity';
-import { UserRoleTypes } from '../roles/enums/user-role-types.enum';
-import { UserSessionDto } from '../security/dtos/userSession.dto';
-import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
 import { UserEntity } from '../users/entities/users.entity';
-import { CartController } from './cart.controller';
-import { CartService } from './cart.service';
 import { CartEntity } from './entities/cart.entity';
+
+// =========== DTOs =======================
+import { UserSessionDto } from '../security/dtos/userSession.dto';
+
+// =========== Enums =======================
+import { UserRoleTypes } from '../roles/enums/user-role-types.enum';
+
+// =========== Guards =======================
+import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
+
+// =========== Controllers =======================
+import { CartController } from './cart.controller';
+
+// =========== Services =======================
+import { CartService } from './cart.service';
 
 describe('CartController', () => {
     let cartController: CartController;

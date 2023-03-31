@@ -1,8 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
+
+// ============ Guards ================
 import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
+
+// ============ Enums ================
 import { UserPermissions } from './enums/user-permissions.enum';
 import { UserRoleTypes } from './enums/user-role-types.enum';
+
+// ============ Controllers ================
 import { RolesController } from './roles.controller';
+
+// ============ Services ================
 import { RolesService } from './roles.service';
 
 describe('RolesController', () => {

@@ -1,12 +1,22 @@
 import { Controller, HttpStatus, UseGuards } from '@nestjs/common';
 import { Body, Delete, Get, Param, Post, Put } from '@nestjs/common/decorators';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger/dist';
+
+// =========== DTOs =======================
 import { CreateProductDto } from '../products/dtos/create-product.dto';
-import { UserPermissions } from '../roles/enums/user-permissions.enum';
-import { RequirePermissions } from '../security/decorators/permissions.decorator';
-import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
-import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dtos/create-category.dto';
+
+// =========== Enums =======================
+import { UserPermissions } from '../roles/enums/user-permissions.enum';
+
+// =========== Guards =======================
+import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
+
+// =========== Decorators =======================
+import { RequirePermissions } from '../security/decorators/permissions.decorator';
+
+// =========== Services =======================
+import { CategoriesService } from './categories.service';
 
 @ApiTags('categories')
 @Controller('categories')

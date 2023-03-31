@@ -1,7 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { DeleteResult } from 'typeorm';
+
+// ============ Guards ================
 import { JwtPermissionsGuard } from '../security/guards/jwt-permissions.guard';
+
+// ============ Controllers ================
 import { ProductsController } from './products.controller';
+
+// ============ Services ================
 import { ProductsService } from './products.service';
 
 describe('ProductsController', () => {

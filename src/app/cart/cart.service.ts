@@ -24,6 +24,11 @@ export class CartService {
   }
 
   async addProductToCart(user: UserSessionDto, dto: AddProductToCartDto) {
+    const record = await this.cartRepo.findOne({where: {productId: dto.productId}});
+    if (record) {
+      record.quantity = record.quantity + dto.quantity;
+      return await this.cartRepo.save(record);
+    }
     const cartRecord = this.cartRepo.create({
       quantity: dto.quantity,
       productId: dto.productId,
@@ -40,7 +45,12 @@ export class CartService {
   async deleteProductFromCart(recordId: string) {
     return await this.cartRepo.delete(recordId);
   }
-  updateProductQuantity(dto: UpdateQuantityDto) {
-    return this.cartRepo.update(dto.recordId, { quantity: dto.quantity, updated: new Date()});
+  async updateProductQuantity(dto: UpdateQuantityDto) {
+    if (dto.quantity <= 0 )
+      return await this.cartRepo.delete(dto.recordId);
+    return await this.cartRepo.update(
+      dto.recordId, 
+      { quantity: dto.quantity, updated: new Date()}
+    );
   }
 }

@@ -15,81 +15,69 @@ import { UserSessionDto } from '../security/dtos/userSession.dto';
 @Controller('cart')
 @UseGuards(JwtPermissionsGuard)
 export class CartController {
-  constructor(private readonly cartService: CartService) {}
+  constructor(private readonly cartService: CartService) { }
 
-    @ApiOperation({ summary: "Get carts list" })
-    @ApiResponse({
-        status: HttpStatus.OK,
-        description: "HttpStatus:200:OK",
-        type: CartEntity,
-        isArray: true,
-      })
-    @Get()
-    @RequirePermissions(UserPermissions.GetCart)
-    getCarts() {
-        return this.cartService.getCarts();
-    }
+  @ApiOperation({ summary: "Get carts list" })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: "HttpStatus:200:OK",
+    type: CartEntity,
+    isArray: true,
+  })
+  @Get()
+  @RequirePermissions(UserPermissions.GetCart)
+  getCarts() {
+    return this.cartService.getCarts();
+  }
 
-    // @ApiOperation({ summary: "Get cart" })
-    // @ApiResponse({
-    //     status: HttpStatus.OK,
-    //     description: "HttpStatus:200:OK",
-    //     type: CartEntity,
-    //   })
-    // @Get(':id')
-    // @RequirePermissions(UserPermissions.GetCartById)
-    // getCartById(@Param("id") id: string) {
-    //     //return this.cartService.getCartById(id);
-    // }
+  @ApiOperation({ summary: "Add product to cart" })
+  @ApiBody({ type: AddProductToCartDto })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: "HttpStatus:200:OK",
+    type: AddProductToCartDto,
+  })
+  @Post('/product')
+  @RequirePermissions(UserPermissions.AddProductToCart)
+  addProductToCart(@User() user: UserSessionDto, @Body() dto: AddProductToCartDto) {
+    return this.cartService.addProductToCart(user, dto);
+  }
 
-    @ApiOperation({ summary: "Add product to cart" })
-    @ApiBody({ type: AddProductToCartDto })
-    @ApiResponse({
-        status: HttpStatus.OK,
-        description: "HttpStatus:200:OK",
-        type: AddProductToCartDto,
-      })
-    @Post('/product')
-    @RequirePermissions(UserPermissions.AddProductToCart)
-    addProductToCart(@User() user: UserSessionDto, @Body() dto : AddProductToCartDto) {
-        return this.cartService.addProductToCart(user, dto);
-    }
-
-    @Delete()
-    @RequirePermissions(UserPermissions.DeleteCartByUserId)
-    deleteCartByUserId(@User() user: UserSessionDto) {
+  @Delete()
+  @RequirePermissions(UserPermissions.DeleteCartByUserId)
+  deleteCartByUserId(@User() user: UserSessionDto) {
     return this.cartService.deleteCartByUserId(user);
-    }
+  }
 
 
-    @ApiOperation({ summary: "Delete product from cart" })
-    @ApiResponse({
-        status: HttpStatus.OK,
-        description: "HttpStatus:200:OK",
-        type: DeleteResult,
-      })
-    @Delete(':id')
-    @RequirePermissions(UserPermissions.DeleteProductFromCart)
-    deleteProductFromCart(@Param("recordId") recordId : string) {
-        return this.cartService.deleteProductFromCart(recordId);
-    }
+  @ApiOperation({ summary: "Delete product from cart" })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: "HttpStatus:200:OK",
+    type: DeleteResult,
+  })
+  @Delete(':id')
+  @RequirePermissions(UserPermissions.DeleteProductFromCart)
+  deleteProductFromCart(@Param("recordId") recordId: string) {
+    return this.cartService.deleteProductFromCart(recordId);
+  }
 
-    @ApiOperation({ summary: "Update product quantity" })
-    @ApiBody({ type: UpdateQuantityDto })
-    @ApiResponse({
-        status: HttpStatus.OK,
-        description: "HttpStatus:200:OK",
-        type: UpdateQuantityDto,
-      })
-    @Put()
-    @RequirePermissions(UserPermissions.UpdateProductQuantity)
-    updateProductQuantity(@Body() body : UpdateQuantityDto) {
-        return this.cartService.updateProductQuantity(body);
-    }
+  @ApiOperation({ summary: "Update product quantity" })
+  @ApiBody({ type: UpdateQuantityDto })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: "HttpStatus:200:OK",
+    type: UpdateQuantityDto,
+  })
+  @Put()
+  @RequirePermissions(UserPermissions.UpdateProductQuantity)
+  updateProductQuantity(@Body() body: UpdateQuantityDto) {
+    return this.cartService.updateProductQuantity(body);
+  }
 
-    @RequirePermissions(UserPermissions.GetCartByUserId)
-    @Get('/user')
-    getCartByUserId(@User() user:UserSessionDto) {
+  @RequirePermissions(UserPermissions.GetCartByUserId)
+  @Get('/user')
+  getCartByUserId(@User() user: UserSessionDto) {
     return this.cartService.getCartByUserId(user);
   }
 }

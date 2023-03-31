@@ -28,7 +28,6 @@ export class OrdersService {
   }
 
   async createOrder(user: UserSessionDto, dto: CreateOrderDto) {
-
     if (!user) {
       throw new BadRequestException(this.i18n.t('errors.ERRORS.InvalidUserIdException'));
     }
@@ -38,7 +37,7 @@ export class OrdersService {
     const products = [];
 
     userCart.forEach(cart => {
-      products.push(cart.products)
+      products.push({product: cart.products, quantity: cart.quantity})
     })
 
     const newOrder = this.ordersRepo.create({
@@ -48,7 +47,6 @@ export class OrdersService {
       products: products,
       totalPrice: dto.totalPrice
     })
-
     return await this.ordersRepo.save(newOrder);
   }
 

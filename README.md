@@ -84,7 +84,7 @@ For admin available:
 * edit your personal information
 * change password
 
-![image_2023-04-01_06-01-53](https://user-images.githubusercontent.com/99917629/229262967-0c2cc2d5-6a4e-47bc-897e-d8ccf7585c96.png)
+![image_2023-04-01_06-05-11](https://user-images.githubusercontent.com/99917629/229263010-d288cb4b-99be-4dee-b203-2d8e9ee33d7e.png)
 
 Default static is located on cloudinary service.
 

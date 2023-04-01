@@ -51,7 +51,7 @@ Then you need to register a server with
 * username - *postgres*  
 * password - *postgres*
 
-![img.png](img.png)
+![image](https://user-images.githubusercontent.com/81485449/229263594-5c64de3b-7ae3-444a-86f5-778e4f0370f4.png)
 
 ---
 

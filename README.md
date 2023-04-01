@@ -3,6 +3,8 @@
 
 Fullstack application - online store of furniture.
 
+![image](https://user-images.githubusercontent.com/81485449/229263192-757a5277-d424-401b-94c4-62c507b2b875.png)
+
 Consists of 3 repositories - backend, client, admin.
 
 ## Links to repositories

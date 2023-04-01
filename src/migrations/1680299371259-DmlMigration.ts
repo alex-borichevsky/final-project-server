@@ -26,7 +26,6 @@ export class DmlMigration1680299371259 implements MigrationInterface {
               `INSERT INTO "users" (email, password, status, role_id, role_type) 
                         VALUES ('admin@admin.ru', '${await hashPassword('admin12345')}', true, 1, 'super-admin')`
         )
-
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

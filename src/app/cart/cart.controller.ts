@@ -88,15 +88,15 @@ export class CartController {
     return this.cartService.updateProductQuantity(body);
   }
 
-    @ApiOperation({ summary: "Get cart by user id" })
-    @ApiResponse({
-      status: HttpStatus.OK,
-      description: "HttpStatus:200:OK",
-      type: CartEntity,
-    })
-    @RequirePermissions(UserPermissions.GetCartByUserId)
-    @Get('/user')
-    getCartByUserId(@User() user:UserSessionDto) {
+  @ApiOperation({ summary: "Get cart by user id" })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: "HttpStatus:200:OK",
+    type: CartEntity,
+  })
+  @RequirePermissions(UserPermissions.GetCart)
+  @Get('/user')
+  getCartByUserId(@User() user:UserSessionDto) {
     return this.cartService.getCartByUserId(user);
   }
 }

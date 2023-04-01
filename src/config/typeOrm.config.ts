@@ -21,11 +21,6 @@ config();
 
 export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
-  // host: 'localhost',
-  // port: 5432,
-  // username: 'postgres',
-  // password: 'postgres',
-  // database: 'final_db',
   host: `${process.env.POSTGRES_HOST}`,
   port: Number(process.env.POSTGRES_PORT),
   username: `${process.env.POSTGRES_USER}`,

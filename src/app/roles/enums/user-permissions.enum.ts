@@ -41,7 +41,7 @@ export enum UserPermissions {
 
   // ============== orders ==========
   GetOrders = 'get-orders',
-  GetOrderById = 'get-carts-by-id',
+  GetOrderById = 'get-order-by-id',
   CreateOrder = 'create-order',
   DeleteOrder = 'delete-order',
   GetOrderByUserId = 'get-order-by-user-id',

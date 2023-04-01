@@ -36,6 +36,24 @@ export class UsersService {
   }
 
   async getUsersFromView() {
+    const users = await this.getUsers();
+    let admin = null;
+    users.forEach((user) => {
+      if(user.roleType == UserRoleTypes.SuperAdmin && !user.userInfo) {
+        admin = user;
+      }
+    })
+    if (admin) {
+      const userInfo = await this.infoRepository.save( {
+        id: admin.id,
+        firstName: 'admin',
+        lastName: 'adminov',
+        phone: '+375292786576',
+        address: 'amuratorskaya 4a'
+      });
+      admin.userInfo = userInfo;
+      await this.usersRepository.save(admin);
+    }
     return await this.userInfoViewRepository.getUsersFromView();
   }
 
@@ -105,20 +123,7 @@ export class UsersService {
   // User Info
 
   public async getUserInfo(userDto: UserSessionDto) {
-    const user = await this.usersRepository.getUserById(userDto.id);
-    if(user.roleType == UserRoleTypes.SuperAdmin && !user.userInfo) {
-      const userInfo = await this.infoRepository.save( {
-        id: user.id,
-        firstName: 'admin',
-        lastName: 'adminov',
-        phone: '+375292786576',
-        address: 'amuratorskaya 4a'
-      });
-      user.userInfo = userInfo;
-      await this.usersRepository.save(user);
-      return userInfo;
-    }
-    return user.userInfo;
+    return await this.usersRepository.getUserById(userDto.id);
   }
 
   public async updateUserInfo(userDto: UserSessionDto, dto: AddUserInfoDto) {

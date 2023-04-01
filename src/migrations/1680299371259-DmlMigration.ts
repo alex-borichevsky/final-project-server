@@ -19,7 +19,8 @@ export class DmlMigration1680299371259 implements MigrationInterface {
           ),
           await queryRunner.query(
             `INSERT INTO "user_roles" (type, name, permissions)
-                    VALUES ('client', 'user', '{"get-user-info", "update-user-info", "update-password", "get-all-products", "add-product-to-cart", "update-product-quantity","delete-product-from-cart", "get-all-orders", "create-order", "get-all-categories", "get-cart"}')`
+                    VALUES ('client', 'user', '{"get-user-info", "update-user-info", "update-password", "get-all-products", "add-product-to-cart", "update-product-quantity","delete-product-from-cart", "get-all-orders", "create-order", "get-all-categories", "get-cart", "delete-cart-by-user-id",
+                    "get-order-by-user-id"}')`
           )
           await queryRunner.query(
               `INSERT INTO "users" (email, password, status, role_id, role_type) 

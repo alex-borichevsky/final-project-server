@@ -64,7 +64,7 @@ Super admin is already exists in database. You can sign in with:
 
 To be able to buy products, you need to register.
 
-registration image!
+![image_2023-04-01_04-53-17](https://user-images.githubusercontent.com/99917629/229262976-1fca4d26-70e6-46a4-b84f-4f1185e7af2a.png)
 
 The following actions are available to you in your account:
 * edit your personal information
@@ -73,7 +73,7 @@ The following actions are available to you in your account:
 * chat GPT
 * view cart
 
-screen personalInfo
+![image_2023-04-01_06-01-53](https://user-images.githubusercontent.com/99917629/229262988-6cd972b7-cfc9-4e60-966e-3cbbd64f53ba.png)
 
 For admin available: 
 * manipulate with products
@@ -84,7 +84,7 @@ For admin available:
 * edit your personal information
 * change password
 
-!screen 
+![image_2023-04-01_06-01-53](https://user-images.githubusercontent.com/99917629/229262967-0c2cc2d5-6a4e-47bc-897e-d8ccf7585c96.png)
 
 Default static is located on cloudinary service.
 

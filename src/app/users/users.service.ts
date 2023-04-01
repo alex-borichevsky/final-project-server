@@ -123,7 +123,8 @@ export class UsersService {
   // User Info
 
   public async getUserInfo(userDto: UserSessionDto) {
-    return await this.usersRepository.getUserById(userDto.id);
+    const user = await this.usersRepository.getUserById(userDto.id);
+    return user.userInfo;
   }
 
   public async updateUserInfo(userDto: UserSessionDto, dto: AddUserInfoDto) {
